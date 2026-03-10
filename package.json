@@ -1,0 +1,35 @@
+{
+    "name": "scomodo-mappa-evento",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@gsap/react": "^2.1.2",
+        "bootstrap": "^5.3.8",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "gsap": "^3.13.0",
+        "lucide-react": "^0.546.0",
+        "motion": "^12.23.24",
+        "pdfjs-dist": "^5.4.296",
+        "react": "^18.3.1",
+        "react-bootstrap": "^2.10.10",
+        "react-dom": "^18.3.1",
+        "react-emoji": "^0.5.0",
+        "react-github-calendar": "^4.5.11",
+        "react-icons": "^5.5.0",
+        "react-pdf": "^10.2.0",
+        "react-router-dom": "^7.9.4",
+        "tailwind-merge": "^3.3.1",
+        "tailwindcss-animate": "^1.0.7"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.3.1",
+        "vite": "^5.4.2"
+    }
+}
