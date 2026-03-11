@@ -38,3 +38,5 @@ plz controllate che tutto ciò che scrivete funzioni anche da telefono tramite g
 
 per avere uno storico di cosa abbiamo fatto, cosa può aver creato errori plz aggiungete qui le vostre chat con i vari chatbot:
 ale 11/03: https://claude.ai/share/acbae2f4-ca00-4d81-bf2a-e496958b0020
+ale 11/03 (banner): https://claude.ai/share/a7e9e9cc-beb5-4cb7-8b05-0294b657525b
+
