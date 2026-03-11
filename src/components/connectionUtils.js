@@ -5,7 +5,7 @@ import { CONNECTION_COLOR_SCALE } from "../config";
  * "Milano" ↔ "Roma"  →  "Milano|||Roma"  (always sorted)
  */
 export function pairKey(a, b) {
-  return [a, b].sort().join("|||");
+    return [a, b].sort().join("|||");
 }
 
 /**
@@ -19,11 +19,13 @@ export function pairKey(a, b) {
  * @returns {string}          CSS colour string
  */
 export function colorForCount(count, maxCount) {
-  if (maxCount <= 1) return CONNECTION_COLOR_SCALE[0];
-  const idx = Math.round(
-    ((count - 1) / (maxCount - 1)) * (CONNECTION_COLOR_SCALE.length - 1),
-  );
-  return CONNECTION_COLOR_SCALE[Math.max(0, Math.min(idx, CONNECTION_COLOR_SCALE.length - 1))];
+    if (maxCount <= 1) return CONNECTION_COLOR_SCALE[0];
+    const idx = Math.round(
+        ((count - 1) / (maxCount - 1)) * (CONNECTION_COLOR_SCALE.length - 1),
+    );
+    return CONNECTION_COLOR_SCALE[
+        Math.max(0, Math.min(idx, CONNECTION_COLOR_SCALE.length - 1))
+    ];
 }
 
 /**
@@ -38,26 +40,26 @@ export function colorForCount(count, maxCount) {
  * @returns {{ connections: object[], maxCount: number }}
  */
 export function processConnections(rawConnections, locByName) {
-  const countMap = {};
-  rawConnections.forEach(({ from, to }) => {
-    const key = pairKey(from, to);
-    countMap[key] = (countMap[key] || 0) + 1;
-  });
+    const countMap = {};
+    rawConnections.forEach(({ from, to }) => {
+        const key = pairKey(from, to);
+        countMap[key] = (countMap[key] || 0) + 1;
+    });
 
-  const maxCount = Math.max(...Object.values(countMap), 1);
+    const maxCount = Math.max(...Object.values(countMap), 1);
 
-  const seen   = new Set();
-  const result = [];
-  rawConnections.forEach(({ from, to }) => {
-    const key = pairKey(from, to);
-    if (seen.has(key)) return;
-    seen.add(key);
-    const fromLoc = locByName[from];
-    const toLoc   = locByName[to];
-    if (fromLoc && toLoc) {
-      result.push({ from: fromLoc, to: toLoc, count: countMap[key] });
-    }
-  });
+    const seen = new Set();
+    const result = [];
+    rawConnections.forEach(({ from, to }) => {
+        const key = pairKey(from, to);
+        if (seen.has(key)) return;
+        seen.add(key);
+        const fromLoc = locByName[from];
+        const toLoc = locByName[to];
+        if (fromLoc && toLoc) {
+            result.push({ from: fromLoc, to: toLoc, count: countMap[key] });
+        }
+    });
 
-  return { connections: result, maxCount };
+    return { connections: result, maxCount };
 }

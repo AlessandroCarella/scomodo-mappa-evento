@@ -1,10 +1,7 @@
 import { colorForCount } from "./connectionUtils";
-import { buildPath }     from "./ConnectionHelpers/buildPath";
+import { buildPath } from "./ConnectionHelpers/buildPath";
 import { useConnectionAnim } from "./ConnectionHelpers/useConnectionAnim";
-import {
-  CONNECTION_WIDTH_MIN,
-  CONNECTION_WIDTH_MAX,
-} from "../config";
+import { CONNECTION_WIDTH_MIN, CONNECTION_WIDTH_MAX } from "../config";
 
 /**
  * Connection — "Width" encoding.
@@ -20,30 +17,46 @@ import {
  *   shape    : "arc" | "line"
  *   index    : render order (used for animation stagger)
  */
-export default function Connection({ from, to, count, maxCount, shape = "arc", index = 0 }) {
-  const color = colorForCount(count, maxCount);
+export default function Connection({
+    from,
+    to,
+    count,
+    maxCount,
+    shape = "arc",
+    index = 0,
+}) {
+    const color = colorForCount(count, maxCount);
 
-  const t           = maxCount > 1 ? (count - 1) / (maxCount - 1) : 0;
-  const strokeWidth = CONNECTION_WIDTH_MIN + t * (CONNECTION_WIDTH_MAX - CONNECTION_WIDTH_MIN);
+    const t = maxCount > 1 ? (count - 1) / (maxCount - 1) : 0;
+    const strokeWidth =
+        CONNECTION_WIDTH_MIN +
+        t * (CONNECTION_WIDTH_MAX - CONNECTION_WIDTH_MIN);
 
-  const { d, arcLen } = buildPath(from, to, shape);
-  const pathRef       = useConnectionAnim(arcLen, index);
+    const { d, arcLen } = buildPath(from, to, shape);
+    const pathRef = useConnectionAnim(arcLen, index);
 
-  return (
-    <g>
-      {/* glow halo */}
-      <path d={d} fill="none" stroke={color} strokeWidth={strokeWidth + 6} strokeOpacity={0.12} strokeLinecap="round" />
-      {/* main animated stroke */}
-      <path
-        ref={pathRef}
-        d={d}
-        fill="none"
-        stroke={color}
-        strokeWidth={strokeWidth}
-        strokeOpacity={0.85}
-        strokeLinecap="round"
-        style={{ strokeDasharray: arcLen, strokeDashoffset: arcLen }}
-      />
-    </g>
-  );
+    return (
+        <g>
+            {/* glow halo */}
+            <path
+                d={d}
+                fill="none"
+                stroke={color}
+                strokeWidth={strokeWidth + 6}
+                strokeOpacity={0.12}
+                strokeLinecap="round"
+            />
+            {/* main animated stroke */}
+            <path
+                ref={pathRef}
+                d={d}
+                fill="none"
+                stroke={color}
+                strokeWidth={strokeWidth}
+                strokeOpacity={0.85}
+                strokeLinecap="round"
+                style={{ strokeDasharray: arcLen, strokeDashoffset: arcLen }}
+            />
+        </g>
+    );
 }

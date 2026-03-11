@@ -2,16 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import { buildItalyMask } from "./buildItalyMask";
 import {
-  TILE_URL,
-  TILE_ATTRIBUTION,
-  MAP_MIN_ZOOM,
-  MAP_MAX_ZOOM,
-  MAP_ZOOM_SNAP,
-  ITALY_BOUNDS,
-  ITALY_BOUNDS_PADDING,
-  ITALY_GEOJSON_URL,
-  ITALY_POLYGON_STYLE,
-  WORLD_MASK_OPACITY,
+    TILE_URL,
+    TILE_ATTRIBUTION,
+    MAP_MIN_ZOOM,
+    MAP_MAX_ZOOM,
+    MAP_ZOOM_SNAP,
+    ITALY_BOUNDS,
+    ITALY_BOUNDS_PADDING,
+    ITALY_GEOJSON_URL,
+    ITALY_POLYGON_STYLE,
+    WORLD_MASK_OPACITY,
 } from "../../config";
 
 /**
@@ -26,57 +26,57 @@ import {
  *   ready   — boolean: true once GeoJSON has loaded and layers are added
  */
 export function useMapInit(containerRef) {
-  const mapRef  = useRef(null);
-  const [ready, setReady] = useState(false);
+    const mapRef = useRef(null);
+    const [ready, setReady] = useState(false);
 
-  useEffect(() => {
-    if (mapRef.current) return; // StrictMode guard
+    useEffect(() => {
+        if (mapRef.current) return; // StrictMode guard
 
-    const map = L.map(containerRef.current, {
-      zoomControl:      true,
-      attributionControl: true,
-      zoomSnap:         MAP_ZOOM_SNAP,
-    });
+        const map = L.map(containerRef.current, {
+            zoomControl: true,
+            attributionControl: true,
+            zoomSnap: MAP_ZOOM_SNAP,
+        });
 
-    L.tileLayer(TILE_URL, {
-      attribution: TILE_ATTRIBUTION,
-      maxZoom:     MAP_MAX_ZOOM,
-      minZoom:     MAP_MIN_ZOOM,
-    }).addTo(map);
-
-    map.fitBounds(ITALY_BOUNDS, { padding: ITALY_BOUNDS_PADDING });
-
-    mapRef.current = map;
-
-    fetch(ITALY_GEOJSON_URL)
-      .then((r) => r.json())
-      .then((geoJSON) => {
-        // Bail if StrictMode destroyed this instance before the fetch resolved
-        if (!mapRef.current || mapRef.current !== map) return;
-
-        // Italy highlight polygon
-        L.geoJSON(geoJSON, { style: ITALY_POLYGON_STYLE }).addTo(map);
-
-        // World dim-mask (inverted polygon)
-        L.polygon(buildItalyMask(geoJSON), {
-          fillColor:   "#000",
-          fillOpacity: WORLD_MASK_OPACITY,
-          stroke:      false,
-          interactive: false,
+        L.tileLayer(TILE_URL, {
+            attribution: TILE_ATTRIBUTION,
+            maxZoom: MAP_MAX_ZOOM,
+            minZoom: MAP_MIN_ZOOM,
         }).addTo(map);
 
-        setReady(true);
-      })
-      .catch((err) => {
-        console.error("Failed to load Italy GeoJSON:", err);
-        setReady(true); // degrade gracefully — show pins/connections anyway
-      });
+        map.fitBounds(ITALY_BOUNDS, { padding: ITALY_BOUNDS_PADDING });
 
-    return () => {
-      map.remove();
-      mapRef.current = null;
-    };
-  }, []);
+        mapRef.current = map;
 
-  return { mapRef, ready };
+        fetch(ITALY_GEOJSON_URL)
+            .then((r) => r.json())
+            .then((geoJSON) => {
+                // Bail if StrictMode destroyed this instance before the fetch resolved
+                if (!mapRef.current || mapRef.current !== map) return;
+
+                // Italy highlight polygon
+                L.geoJSON(geoJSON, { style: ITALY_POLYGON_STYLE }).addTo(map);
+
+                // World dim-mask (inverted polygon)
+                L.polygon(buildItalyMask(geoJSON), {
+                    fillColor: "#000",
+                    fillOpacity: WORLD_MASK_OPACITY,
+                    stroke: false,
+                    interactive: false,
+                }).addTo(map);
+
+                setReady(true);
+            })
+            .catch((err) => {
+                console.error("Failed to load Italy GeoJSON:", err);
+                setReady(true); // degrade gracefully — show pins/connections anyway
+            });
+
+        return () => {
+            map.remove();
+            mapRef.current = null;
+        };
+    }, []);
+
+    return { mapRef, ready };
 }

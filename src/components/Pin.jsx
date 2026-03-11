@@ -11,21 +11,29 @@ import { PIN_STYLE } from "../config";
  *   location : { name, lat, lng }
  */
 export default function Pin({ map, location }) {
-  const markerRef = useRef(null);
+    const markerRef = useRef(null);
 
-  useEffect(() => {
-    if (!map || !location) return;
+    useEffect(() => {
+        if (!map || !location) return;
 
-    const marker = L.circleMarker([location.lat, location.lng], PIN_STYLE).addTo(map);
+        const marker = L.circleMarker(
+            [location.lat, location.lng],
+            PIN_STYLE,
+        ).addTo(map);
 
-    marker.bindTooltip(
-      `<span class="pin-tooltip-name">${location.name}</span>`,
-      { permanent: false, direction: "top", offset: [0, -10], className: "pin-tooltip" },
-    );
+        marker.bindTooltip(
+            `<span class="pin-tooltip-name">${location.name}</span>`,
+            {
+                permanent: false,
+                direction: "top",
+                offset: [0, -10],
+                className: "pin-tooltip",
+            },
+        );
 
-    markerRef.current = marker;
-    return () => marker.remove();
-  }, [map, location]);
+        markerRef.current = marker;
+        return () => marker.remove();
+    }, [map, location]);
 
-  return null;
+    return null;
 }

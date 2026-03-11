@@ -13,21 +13,21 @@ import { CONNECTION_ARC_FACTOR } from "../../config";
  * @returns {{ d: string, arcLen: number }}
  */
 export function buildPath(from, to, shape) {
-  const dx  = to.x - from.x;
-  const dy  = to.y - from.y;
-  const len = Math.sqrt(dx * dx + dy * dy) || 1;
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const len = Math.sqrt(dx * dx + dy * dy) || 1;
 
-  if (shape === "arc") {
-    const cx = (from.x + to.x) / 2 - dy * CONNECTION_ARC_FACTOR;
-    const cy = (from.y + to.y) / 2 + dx * CONNECTION_ARC_FACTOR;
+    if (shape === "arc") {
+        const cx = (from.x + to.x) / 2 - dy * CONNECTION_ARC_FACTOR;
+        const cy = (from.y + to.y) / 2 + dx * CONNECTION_ARC_FACTOR;
+        return {
+            d: `M ${from.x} ${from.y} Q ${cx} ${cy} ${to.x} ${to.y}`,
+            arcLen: len * 1.12, // Bézier is slightly longer than straight distance
+        };
+    }
+
     return {
-      d:      `M ${from.x} ${from.y} Q ${cx} ${cy} ${to.x} ${to.y}`,
-      arcLen: len * 1.12, // Bézier is slightly longer than straight distance
+        d: `M ${from.x} ${from.y} L ${to.x} ${to.y}`,
+        arcLen: len,
     };
-  }
-
-  return {
-    d:      `M ${from.x} ${from.y} L ${to.x} ${to.y}`,
-    arcLen: len,
-  };
 }

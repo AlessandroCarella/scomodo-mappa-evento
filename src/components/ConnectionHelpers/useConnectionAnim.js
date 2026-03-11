@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import {
-  ANIM_BASE_DELAY,
-  ANIM_STAGGER_DELAY,
-  ANIM_DURATION,
-  ANIM_EASING,
+    ANIM_BASE_DELAY,
+    ANIM_STAGGER_DELAY,
+    ANIM_DURATION,
+    ANIM_EASING,
 } from "../../config";
 
 /**
@@ -18,25 +18,25 @@ import {
  * @returns {React.RefObject}  ref to attach to the <path> element
  */
 export function useConnectionAnim(arcLen, index) {
-  const pathRef = useRef(null);
-  const animRef = useRef(false);
+    const pathRef = useRef(null);
+    const animRef = useRef(false);
 
-  useEffect(() => {
-    const el = pathRef.current;
-    if (!el || animRef.current) return;
-    animRef.current = true;
+    useEffect(() => {
+        const el = pathRef.current;
+        if (!el || animRef.current) return;
+        animRef.current = true;
 
-    el.style.strokeDasharray  = arcLen;
-    el.style.strokeDashoffset = arcLen;
+        el.style.strokeDasharray = arcLen;
+        el.style.strokeDashoffset = arcLen;
 
-    const delay = ANIM_BASE_DELAY + index * ANIM_STAGGER_DELAY;
-    const timer = setTimeout(() => {
-      el.style.transition    = `stroke-dashoffset ${ANIM_DURATION} ${ANIM_EASING}`;
-      el.style.strokeDashoffset = "0";
-    }, delay);
+        const delay = ANIM_BASE_DELAY + index * ANIM_STAGGER_DELAY;
+        const timer = setTimeout(() => {
+            el.style.transition = `stroke-dashoffset ${ANIM_DURATION} ${ANIM_EASING}`;
+            el.style.strokeDashoffset = "0";
+        }, delay);
 
-    return () => clearTimeout(timer);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        return () => clearTimeout(timer);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return pathRef;
+    return pathRef;
 }

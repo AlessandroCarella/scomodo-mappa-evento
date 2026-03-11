@@ -15,23 +15,23 @@ import { useCallback, useEffect, useState } from "react";
  *   toPoint(lat, lng) → { x, y }   pixel position in container space
  */
 export function useMapSync(mapRef, ready) {
-  const [tick, setTick] = useState(0);
+    const [tick, setTick] = useState(0);
 
-  useEffect(() => {
-    if (!mapRef.current) return;
-    const handler = () => setTick((t) => t + 1);
-    mapRef.current.on("move zoom viewreset", handler);
-    return () => mapRef.current?.off("move zoom viewreset", handler);
-  }, [ready]);
+    useEffect(() => {
+        if (!mapRef.current) return;
+        const handler = () => setTick((t) => t + 1);
+        mapRef.current.on("move zoom viewreset", handler);
+        return () => mapRef.current?.off("move zoom viewreset", handler);
+    }, [ready]);
 
-  const toPoint = useCallback(
-    (lat, lng) => {
-      if (!mapRef.current) return { x: 0, y: 0 };
-      const p = mapRef.current.latLngToContainerPoint([lat, lng]);
-      return { x: p.x, y: p.y };
-    },
-    [tick], // eslint-disable-line react-hooks/exhaustive-deps
-  );
+    const toPoint = useCallback(
+        (lat, lng) => {
+            if (!mapRef.current) return { x: 0, y: 0 };
+            const p = mapRef.current.latLngToContainerPoint([lat, lng]);
+            return { x: p.x, y: p.y };
+        },
+        [tick], // eslint-disable-line react-hooks/exhaustive-deps
+    );
 
-  return { toPoint };
+    return { toPoint };
 }
