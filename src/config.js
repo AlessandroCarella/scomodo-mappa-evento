@@ -5,7 +5,6 @@
 // ─────────────────────────────────────────────────────────────
 
 // ── Data paths (served from /public, fetched at runtime) ─────
-// import.meta.env.BASE_URL is injected by Vite and handles any deploy subpath.
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 export const DATA_PATHS = {
     locations: `${BASE}/data/Locations.json`,
@@ -30,10 +29,9 @@ export const ITALY_BOUNDS = [
     [35.4, 6.6],
     [47.1, 18.8],
 ];
-export const ITALY_BOUNDS_PADDING = [24, 24]; // px padding inside viewport
+export const ITALY_BOUNDS_PADDING = [24, 24];
 
 // ── Italy GeoJSON ─────────────────────────────────────────────
-// Fetched at runtime from a public CDN — no local file needed.
 export const ITALY_GEOJSON_URL =
     "https://raw.githubusercontent.com/johan/world.geo.json/master/countries/ITA.geo.json";
 
@@ -51,29 +49,26 @@ export const WORLD_MASK_OPACITY = 0.32;
 
 // ── Connection color scale (5 stops, low → high count) ────────
 export const CONNECTION_COLOR_SCALE = [
-    "#5b9bd5", // 1 — steel blue
-    "#6ecda0", // 2 — seafoam
-    "#f0c040", // 3 — amber
-    "#f07840", // 4 — orange
-    "#e63030", // 5 — vivid red
+    "#5b9bd5",
+    "#6ecda0",
+    "#f0c040",
+    "#f07840",
+    "#e63030",
 ];
 
-// ── Connection width encoding (min/max stroke width in px) ────
+// ── Connection width encoding ─────────────────────────────────
 export const CONNECTION_WIDTH_MIN = 1.5;
 export const CONNECTION_WIDTH_MAX = 7.0;
 
-// ── Connection opacity encoding (min/max opacity) ─────────────
+// ── Connection opacity encoding ───────────────────────────────
 export const CONNECTION_OPACITY_MIN = 0.2;
 export const CONNECTION_OPACITY_MAX = 0.95;
-
-// Fixed stroke width used in opacity-encoding mode
 export const CONNECTION_OPACITY_STROKE_WIDTH = 2.5;
 
-// Bézier arc curvature factor (0 = straight, higher = more curved)
+// ── Bézier arc curvature ──────────────────────────────────────
 export const CONNECTION_ARC_FACTOR = 0.22;
 
 // ── Animation ─────────────────────────────────────────────────
-// Draw-on animation: base delay + per-connection stagger (both in ms)
 export const ANIM_BASE_DELAY = 100;
 export const ANIM_STAGGER_DELAY = 160;
 export const ANIM_DURATION = "1.2s";
@@ -88,3 +83,25 @@ export const PIN_STYLE = {
     fillOpacity: 0.95,
     opacity: 0.9,
 };
+
+// ── Banner ────────────────────────────────────────────────────
+
+// Set VITE_BANNER_ENABLED=false in .env or CLI to disable entirely:
+//   VITE_BANNER_ENABLED=false vite
+//   VITE_BANNER_ENABLED=false vite build
+export const BANNER_ENABLED = import.meta.env.VITE_BANNER_ENABLED !== "false";
+
+// Width of each side panel as a percentage of the viewport width.
+// Both left and right panels share the same value.
+export const BANNER_WIDTH_PERCENT = 30;
+
+// Text shown in the left and right banner panels
+export const BANNER_TEXT_LEFT = "HELLO HELLO HELLO";
+export const BANNER_TEXT_RIGHT = "HELLO HELLO HELLO";
+
+// Milliseconds of mouse inactivity before the banner reappears
+export const BANNER_REAPPEAR_DELAY = 1000;
+
+// Minimum viewport width (px) to show the banner.
+// Below this the panels are hidden via CSS media query.
+export const BANNER_DESKTOP_MIN_WIDTH = 1024;

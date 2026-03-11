@@ -1,0 +1,88 @@
+/* ── Banner panels ─────────────────────────────────────────── */
+/*
+ * Width is injected as the CSS custom property --banner-width
+ * by Banner.jsx (read from BANNER_WIDTH_PERCENT in config.js).
+ *
+ * The panels blur the map behind them via backdrop-filter.
+ */
+
+.banner-panel {
+    position: absolute;
+    top: 0;
+    width: var(--banner-width, 40%);
+    height: 100%;
+    z-index: 500;
+    pointer-events: none;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Blur the map behind the panel */
+    backdrop-filter: blur(18px) saturate(0.6);
+    -webkit-backdrop-filter: blur(18px) saturate(0.6);
+
+    /* Semi-transparent tint so the blur reads clearly */
+    background: rgba(6, 10, 20, 0.55);
+
+    /* Fade transition */
+    opacity: 1;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Soft inner-edge fade using mask so blur also fades out */
+.banner-panel--left {
+    left: 0;
+    -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
+    mask-image: linear-gradient(to right, black 60%, transparent 100%);
+}
+
+.banner-panel--right {
+    right: 0;
+    -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%);
+    mask-image: linear-gradient(to left, black 60%, transparent 100%);
+}
+
+/* ── Hidden state ──────────────────────────────────────────── */
+.banner-panel.banner-hidden {
+    opacity: 0;
+}
+
+/* ── Text ──────────────────────────────────────────────────── */
+.banner-inner {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    user-select: none;
+}
+
+.banner-text {
+    /*
+     * Font scales with viewport so it fills most of the panel width.
+     * With a 40 % panel the sweet spot sits around 3.2 vw per character
+     * cluster — adjust clamp() if you change BANNER_WIDTH_PERCENT.
+     */
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1rem, 3.2vw, 4.5rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(224, 208, 176, 0.82);
+    white-space: nowrap;
+    text-align: center;
+    line-height: 1;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* ── Mobile: hide panels ───────────────────────────────────── */
+@media (max-width: 1023px) {
+    .banner-panel {
+        display: none;
+    }
+}

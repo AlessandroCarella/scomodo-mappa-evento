@@ -4,6 +4,7 @@ import Pin from "./Pin";
 import Connection from "./Connection";
 import ConnectionAlt from "./ConnectionAlt";
 import ConnectionSwitcher from "./ConnectionSwitcher";
+import Banner from "./Banner";
 import { useMapInit } from "./MapHelpers/useMapInit";
 import { useMapSync } from "./MapHelpers/useMapSync";
 import { processConnections } from "./ConnectionHelpers/connectionUtils";
@@ -18,7 +19,6 @@ export default function Map() {
     const [shape, setShape] = useState("arc");
     const [encoding, setEncoding] = useState("width");
 
-    // Data fetched from public/ at runtime
     const [locations, setLocations] = useState([]);
     const [connections, setConnections] = useState([]);
     const [maxCount, setMaxCount] = useState(1);
@@ -87,6 +87,8 @@ export default function Map() {
                 locations.map((loc) => (
                     <Pin key={loc.name} map={mapRef.current} location={loc} />
                 ))}
+
+            <Banner />
 
             <ConnectionSwitcher
                 shape={shape}
