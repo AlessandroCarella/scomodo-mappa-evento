@@ -6,7 +6,7 @@ import ConnectionAlt from "./ConnectionAlt";
 import ConnectionSwitcher from "./ConnectionSwitcher";
 import { useMapInit } from "./MapHelpers/useMapInit";
 import { useMapSync } from "./MapHelpers/useMapSync";
-import { processConnections } from "./connectionUtils";
+import { processConnections } from "./ConnectionHelpers/connectionUtils";
 import { DATA_PATHS } from "@/config";
 
 export default function Map() {

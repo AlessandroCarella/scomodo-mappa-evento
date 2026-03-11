@@ -1,4 +1,4 @@
-import { CONNECTION_COLOR_SCALE } from "../config";
+import { CONNECTION_COLOR_SCALE } from "../../config";
 
 /**
  * Order-independent key for a city pair.
