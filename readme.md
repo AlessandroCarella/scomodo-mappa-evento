@@ -19,3 +19,9 @@ per check app
     npm run preview
 `
 
+live https://scomodo-mappa-evento.pages.dev/
+
+plz controllate che tutto ciò che scrivete funzioni anche da telefono tramite gli strumenti per dev sul browser, la gente accederà al sito per le entry nuove tramite telefono
+
+per avere uno storico di cosa abbiamo fatto, cosa può aver creato errori plz aggiungete qui le vostre chat con i vari chatbot:
+ale 11/03:  

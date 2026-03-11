@@ -1,20 +1,6 @@
-// src/App.jsx
 import "./styles/App.css";
+import Map from "./components/Map";
 
-function AppContent() {
-    return (
-        <>
-            <div className="app-container mt-4">
-                <p>mappa</p>
-            </div>
-        </>
-    );
+export default function App() {
+    return <Map />;
 }
-
-function App() {
-    return (
-        <AppContent />
-    );
-}
-
-export default App;

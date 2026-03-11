@@ -1,0 +1,12 @@
+[
+    { "name": "Milano", "lat": 45.464, "lng": 9.188 },
+    { "name": "Roma", "lat": 41.893, "lng": 12.483 },
+    { "name": "Venezia", "lat": 45.437, "lng": 12.335 },
+    { "name": "Napoli", "lat": 40.853, "lng": 14.268 },
+    { "name": "Torino", "lat": 45.07, "lng": 7.686 },
+    { "name": "Bari", "lat": 41.125, "lng": 16.866 },
+    { "name": "Firenze", "lat": 43.769, "lng": 11.256 },
+    { "name": "Palermo", "lat": 38.115, "lng": 13.361 },
+    { "name": "Bologna", "lat": 44.493, "lng": 11.342 },
+    { "name": "Catania", "lat": 37.502, "lng": 15.087 }
+]
