@@ -19,6 +19,10 @@ per check app
     npm run preview
 `
 
+node -v
+`v20.15.1`
+
+
 live https://scomodo-mappa-evento.pages.dev/
 
 plz controllate che tutto ciò che scrivete funzioni anche da telefono tramite gli strumenti per dev sul browser, la gente accederà al sito per le entry nuove tramite telefono
