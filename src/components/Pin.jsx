@@ -1,42 +1,31 @@
+import "./styles/Pin.css";
 import { useEffect, useRef } from "react";
 import L from "leaflet";
+import { PIN_STYLE } from "../config";
 
 /**
- * Pin – renders a single Leaflet circleMarker.
- * Tooltip shows city name in a large, styled popup.
+ * Pin — renders a single Leaflet circleMarker with a hover tooltip.
  *
  * Props:
  *   map      : Leaflet map instance
  *   location : { name, lat, lng }
  */
 export default function Pin({ map, location }) {
-    const markerRef = useRef(null);
+  const markerRef = useRef(null);
 
-    useEffect(() => {
-        if (!map || !location) return;
+  useEffect(() => {
+    if (!map || !location) return;
 
-        const marker = L.circleMarker([location.lat, location.lng], {
-            radius: 5,
-            fillColor: "#e8e0d0",
-            color: "#b0a080",
-            weight: 1.5,
-            fillOpacity: 0.95,
-            opacity: 0.9,
-        }).addTo(map);
+    const marker = L.circleMarker([location.lat, location.lng], PIN_STYLE).addTo(map);
 
-        marker.bindTooltip(
-            `<span class="pin-tooltip-name">${location.name}</span>`,
-            {
-                permanent: false,
-                direction: "top",
-                offset: [0, -10],
-                className: "pin-tooltip",
-            },
-        );
+    marker.bindTooltip(
+      `<span class="pin-tooltip-name">${location.name}</span>`,
+      { permanent: false, direction: "top", offset: [0, -10], className: "pin-tooltip" },
+    );
 
-        markerRef.current = marker;
-        return () => marker.remove();
-    }, [map, location]);
+    markerRef.current = marker;
+    return () => marker.remove();
+  }, [map, location]);
 
-    return null;
+  return null;
 }
