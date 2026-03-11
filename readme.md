@@ -20,7 +20,7 @@ per check app
 `
 
 node -v
-`v20.15.1`
+`v20.15.1` https://nodejs.org/en/blog/release/v20.15.1
 
 
 live https://scomodo-mappa-evento.pages.dev/
