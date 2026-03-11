@@ -1,24 +1,34 @@
 import { useCallback, useEffect, useState } from "react";
 
 /**
- * useMapSync
+ * Keeps SVG overlay coordinates in sync with a Leaflet map instance.
  *
- * Listens to Leaflet's move/zoom/viewreset events and increments a `tick`
- * counter on each event.  Components use the returned `toPoint` helper —
- * which is re-memoised on every tick — to convert lat/lng to live SVG
- * pixel coordinates.
+ * Listens for `move`, `zoom`, and `viewreset` events on the map and increments
+ * an internal tick counter on each, which invalidates `toPoint` and forces
+ * dependant components to recompute their pixel positions.
  *
- * @param {React.MutableRefObject} mapRef  — ref to the Leaflet map instance
- * @param {boolean}                ready  — only attach listeners once ready
+ * @param {React.RefObject<L.Map>} mapRef - Ref holding the Leaflet map instance.
+ * @param {boolean} ready - Signals that the map has finished initialising.
+ *   The event listener is not attached until this is `true`, and changes to
+ *   this value re-run the setup effect.
+ * @returns {{ toPoint: (lat: number, lng: number) => { x: number, y: number } }}
+ *   `toPoint` converts a lat/lng pair to pixel coordinates relative to the
+ *   map's container. Returns `{ x: 0, y: 0 }` when the map is unavailable.
  *
- * Returns:
- *   toPoint(lat, lng) → { x, y }   pixel position in container space
+ * @example
+ * const mapRef = useRef(null);
+ * const { toPoint } = useMapSync(mapRef, isReady);
+ *
+ * // Inside render — recalculates automatically after pan/zoom
+ * const { x, y } = toPoint(51.505, -0.09);
  */
 export function useMapSync(mapRef, ready) {
     const [tick, setTick] = useState(0);
 
     useEffect(() => {
         if (!mapRef.current) return;
+        // Force an initial tick so toPoint is recomputed with real coordinates
+        setTick((t) => t + 1);
         const handler = () => setTick((t) => t + 1);
         mapRef.current.on("move zoom viewreset", handler);
         return () => mapRef.current?.off("move zoom viewreset", handler);
