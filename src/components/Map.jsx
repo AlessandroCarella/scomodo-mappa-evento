@@ -19,6 +19,7 @@ export default function Map() {
     const [shape, setShape] = useState("arc");
     const [encoding, setEncoding] = useState("width");
 
+    // Data fetched from public/ at runtime
     const [locations, setLocations] = useState([]);
     const [connections, setConnections] = useState([]);
     const [maxCount, setMaxCount] = useState(1);

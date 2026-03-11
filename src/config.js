@@ -31,6 +31,7 @@ export const ITALY_BOUNDS = [
 ];
 export const ITALY_BOUNDS_PADDING = [24, 24];
 
+// Fetched at runtime from a public CDN — no local file needed.
 // ── Italy GeoJSON ─────────────────────────────────────────────
 export const ITALY_GEOJSON_URL =
     "https://raw.githubusercontent.com/johan/world.geo.json/master/countries/ITA.geo.json";
@@ -86,22 +87,53 @@ export const PIN_STYLE = {
 
 // ── Banner ────────────────────────────────────────────────────
 
-// Set VITE_BANNER_ENABLED=false in .env or CLI to disable entirely:
+// Set VITE_BANNER_ENABLED=false in .env or CLI to disable at build time:
 //   VITE_BANNER_ENABLED=false vite
 //   VITE_BANNER_ENABLED=false vite build
+// To toggle at runtime from the browser console see README / Banner.jsx.
 export const BANNER_ENABLED = import.meta.env.VITE_BANNER_ENABLED !== "false";
 
-// Width of each side panel as a percentage of the viewport width.
-// Both left and right panels share the same value.
+// Width of each side panel as a percentage of the viewport width
 export const BANNER_WIDTH_PERCENT = 30;
 
-// Text shown in the left and right banner panels
+// Text shown in each panel (each word will be measured independently)
 export const BANNER_TEXT_LEFT = "HELLO HELLO HELLO";
-export const BANNER_TEXT_RIGHT = "HELLO HELLO HELLO";
+export const BANNER_TEXT_RIGHT = "SCOMODO SCOMODO SCOMODO";
 
 // Milliseconds of mouse inactivity before the banner reappears
 export const BANNER_REAPPEAR_DELAY = 1000;
 
-// Minimum viewport width (px) to show the banner.
-// Below this the panels are hidden via CSS media query.
+// Minimum viewport width (px) to show the banner
 export const BANNER_DESKTOP_MIN_WIDTH = 1024;
+
+// ── Banner visual style ───────────────────────────────────────
+
+// Backdrop blur strength (px)
+export const BANNER_BLUR_PX = 6;
+
+// Background tint — keep alpha low to let map show through
+export const BANNER_BG_COLOR = "rgba(6, 10, 20, 0.25)";
+
+// Inner-edge fade solid stop (%) — higher = sharper edge
+export const BANNER_MASK_SOLID_STOP = 55;
+
+// Text color
+export const BANNER_TEXT_COLOR = "rgba(224, 208, 176, 0.90)";
+
+// Font families — can differ between left and right panels.
+// Any Google Font or system font is valid; make sure it is loaded in global.css.
+export const BANNER_FONT_FAMILY_LEFT = "'Syne', sans-serif";
+export const BANNER_FONT_FAMILY_RIGHT = "'Syne', sans-serif";
+
+// Font weight applied when measuring and rendering
+export const BANNER_FONT_WEIGHT = 700;
+
+// Letter spacing (em) — accounted for during font-size calculation
+export const BANNER_LETTER_SPACING = "0.10em";
+
+// Fraction of the panel's inner width the longest word should fill (0–1).
+// 0.9 = the longest word occupies 90 % of the available space.
+export const BANNER_FONT_FILL_RATIO = 0.9;
+
+// Fade in/out transition duration
+export const BANNER_TRANSITION_DURATION = "0.6s";
