@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap");
+
+.vg-nav-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 16px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    background: #f5f3ee;
+    border: 2px solid #111;
+    color: #111;
+    text-decoration: none;
+    font-family: "Syne", sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+}
+.vg-nav-btn:hover {
+    background: #111;
+    color: #f5f3ee;
+}
+.vg-nav-btn:hover .vg-nav-btn__dot {
+    background: #e8001c;
+}
+
+.vg-nav-btn__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #e8001c;
+    flex-shrink: 0;
+    transition: background 0.15s;
+}
+
+@media (max-width: 480px) {
+    .vg-nav-btn { bottom: 14px; right: 12px; padding: 8px 13px; }
+}
