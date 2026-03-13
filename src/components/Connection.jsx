@@ -1,7 +1,12 @@
 import { colorForCount } from "./ConnectionHelpers/connectionUtils";
 import { buildPath } from "./ConnectionHelpers/buildPath";
 import { useConnectionAnim } from "./ConnectionHelpers/useConnectionAnim";
-import { CONNECTION_WIDTH_MIN, CONNECTION_WIDTH_MAX } from "../config";
+import {
+    CONNECTION_WIDTH_MIN,
+    CONNECTION_WIDTH_MAX,
+    ENABLE_CONNECTION_HITBOX,
+    CONNECTION_HITBOX_WIDTH,
+} from "../config";
 
 /**
  * Connection — "Width" encoding.
@@ -24,6 +29,7 @@ export default function Connection({
     maxCount,
     shape = "arc",
     index = 0,
+    onClick,
 }) {
     const color = colorForCount(count, maxCount);
 
@@ -36,7 +42,10 @@ export default function Connection({
     const pathRef = useConnectionAnim(arcLen, index);
 
     return (
-        <g>
+        <g
+            style={{ cursor: "pointer", pointerEvents: "auto" }}
+            onClick={onClick}
+        >
             {/* glow halo */}
             <path
                 d={d}
@@ -57,6 +66,16 @@ export default function Connection({
                 strokeLinecap="round"
                 style={{ strokeDasharray: arcLen, strokeDashoffset: arcLen }}
             />
+
+            {ENABLE_CONNECTION_HITBOX && (
+                <path
+                    d={d}
+                    fill="none"
+                    stroke="transparent"
+                    strokeWidth={CONNECTION_HITBOX_WIDTH}
+                    strokeLinecap="round"
+                />
+            )}
         </g>
     );
 }

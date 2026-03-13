@@ -5,6 +5,8 @@ import {
     CONNECTION_OPACITY_MIN,
     CONNECTION_OPACITY_MAX,
     CONNECTION_OPACITY_STROKE_WIDTH,
+    ENABLE_CONNECTION_HITBOX,
+    CONNECTION_HITBOX_WIDTH,
 } from "../config";
 
 /**
@@ -28,6 +30,7 @@ export default function ConnectionAlt({
     maxCount,
     shape = "arc",
     index = 0,
+    onClick,
 }) {
     const color = colorForCount(count, maxCount);
 
@@ -40,7 +43,10 @@ export default function ConnectionAlt({
     const pathRef = useConnectionAnim(arcLen, index);
 
     return (
-        <g>
+        <g
+            style={{ cursor: "pointer", pointerEvents: "auto" }}
+            onClick={onClick}
+        >
             {/* glow halo — opacity-driven */}
             <path
                 d={d}
@@ -61,6 +67,16 @@ export default function ConnectionAlt({
                 strokeLinecap="round"
                 style={{ strokeDasharray: arcLen, strokeDashoffset: arcLen }}
             />
+
+            {ENABLE_CONNECTION_HITBOX && (
+                <path
+                    d={d}
+                    fill="none"
+                    stroke="transparent"
+                    strokeWidth={CONNECTION_HITBOX_WIDTH}
+                    strokeLinecap="round"
+                />
+            )}
         </g>
     );
 }

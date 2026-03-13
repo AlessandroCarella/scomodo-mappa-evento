@@ -99,6 +99,10 @@ export const PIN_STYLE = {
     opacity: 0.9,
 };
 
+// ── Stories overlay / connection interaction ────────────────────
+export const ENABLE_CONNECTION_HITBOX = true;
+export const CONNECTION_HITBOX_WIDTH = 25;
+
 // ── Banner ────────────────────────────────────────────────────
 
 // Set VITE_BANNER_ENABLED=false in .env or CLI to disable at build time:
@@ -151,3 +155,4 @@ export const BANNER_FONT_FILL_RATIO = 0.9;
 
 // Fade in/out transition duration
 export const BANNER_TRANSITION_DURATION = "0.6s";
+

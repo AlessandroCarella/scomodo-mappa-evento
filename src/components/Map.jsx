@@ -4,6 +4,7 @@ import Pin from "./Pin";
 import Connection from "./Connection";
 import ConnectionAlt from "./ConnectionAlt";
 import ConnectionSwitcher from "./ConnectionSwitcher";
+import StoriesOverlay from "./StoriesOverlay";
 import Banner from "./Banner";
 import { useMapInit } from "./MapHelpers/useMapInit";
 import { useMapSync } from "./MapHelpers/useMapSync";
@@ -18,6 +19,82 @@ export default function Map() {
 
     const [shape, setShape] = useState("arc");
     const [encoding, setEncoding] = useState("width");
+
+    const [activeStories, setActiveStories] = useState([]);
+
+    const [mockStories, setMockStories] = useState([]);
+
+    const passengers = [
+        "Martina",
+        "Nadir",
+        "Chiara",
+        "Elia",
+        "Sara",
+        "Giulio",
+        "Amina",
+        "Tommaso",
+        "Irene",
+        "Samuele",
+    ];
+
+    const periods = [
+        "Estate 2022",
+        "Autunno 2023",
+        "Inverno 2023",
+        "Primavera 2024",
+        "2024",
+        "Inizio 2025",
+    ];
+
+    function hashString(s) {
+        let h = 0;
+        for (let i = 0; i < s.length; i += 1) {
+            h = (h * 31 + s.charCodeAt(i)) >>> 0;
+        }
+        return h;
+    }
+
+    function buildStoryForConnection(conn, idx) {
+        const fromName = conn?.from?.name || "—";
+        const toName = conn?.to?.name || "—";
+        const key = `${fromName}→${toName}`;
+        const h = hashString(key);
+
+        const nome = passengers[h % passengers.length];
+        const periodoViaggio = periods[(h >>> 3) % periods.length];
+        const count = conn?.count ?? 1;
+
+        const testo = `Tra ${fromName} e ${toName} ho annotato questo post-it: “non è la distanza, è il cambio di passo”. ${
+            count > 1
+                ? `Questa tratta l’ho ripetuta ${count} volte: ogni volta una sfumatura diversa.`
+                : "Una sola corsa, ma mi è rimasta addosso."
+        }`;
+
+        return {
+            id: `conn-${idx}-${fromName}-${toName}`,
+            nome,
+            cittaProvenienza: fromName,
+            cittaDestinazione: toName,
+            periodoViaggio,
+            testo,
+        };
+    }
+
+    function handleConnectionClick(fromName, toName) {
+        const matches = mockStories.filter(
+            (s) =>
+                s.cittaProvenienza === fromName &&
+                s.cittaDestinazione === toName,
+        );
+        setActiveStories(matches);
+    }
+
+    function handlePinClick(locationName) {
+        const matches = mockStories.filter(
+            (s) => s.cittaDestinazione === locationName,
+        );
+        setActiveStories(matches);
+    }
 
     // Data fetched from public/ at runtime
     const [locations, setLocations] = useState([]);
@@ -41,6 +118,7 @@ export default function Map() {
 
                 setLocations(rawLocations);
                 setConnections(conns);
+                setMockStories(conns.map((c, i) => buildStoryForConnection(c, i)));
                 setMaxCount(max);
                 setDataReady(true);
             })
@@ -78,6 +156,12 @@ export default function Map() {
                                 maxCount={maxCount}
                                 shape={shape}
                                 index={i}
+                                onClick={() =>
+                                    handleConnectionClick(
+                                        conn.from.name,
+                                        conn.to.name,
+                                    )
+                                }
                             />
                         );
                     })}
@@ -86,7 +170,15 @@ export default function Map() {
 
             {showOverlay &&
                 locations.map((loc) => (
-                    <Pin key={loc.name} map={mapRef.current} location={loc} />
+                    <Pin
+                        key={loc.name}
+                        map={mapRef.current}
+                        location={loc}
+                        hasStories={mockStories.some(
+                            (s) => s.cittaDestinazione === loc.name,
+                        )}
+                        onClick={handlePinClick}
+                    />
                 ))}
 
             <Banner />
@@ -97,6 +189,13 @@ export default function Map() {
                 onShape={setShape}
                 onEncoding={setEncoding}
             />
+
+            {activeStories.length > 0 && (
+                <StoriesOverlay
+                    stories={activeStories}
+                    onClose={() => setActiveStories([])}
+                />
+            )}
         </div>
     );
 }
