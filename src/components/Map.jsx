@@ -4,6 +4,7 @@ import Pin from "./Pin";
 import Connection from "./Connection";
 import ConnectionAlt from "./ConnectionAlt";
 import ConnectionSwitcher from "./ConnectionSwitcher";
+import Banner from "./Banner";
 import { useMapInit } from "./MapHelpers/useMapInit";
 import { useMapSync } from "./MapHelpers/useMapSync";
 import { processConnections } from "./ConnectionHelpers/connectionUtils";
@@ -87,6 +88,8 @@ export default function Map() {
                 locations.map((loc) => (
                     <Pin key={loc.name} map={mapRef.current} location={loc} />
                 ))}
+
+            <Banner />
 
             <ConnectionSwitcher
                 shape={shape}
