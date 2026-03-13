@@ -1,0 +1,1193 @@
+[
+    {
+        "Sogno Bari Diventi Baresi": {
+            "quantità risposte": 20,
+            "parole chiavi": {
+                "sogno": {
+                    "quantità risposte rappresentative": 19,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno più eventi culturali internazionali che portino turisti e investimenti.",
+                            "testo processato": "sogno eventi culturali internazionali portino turisti investimenti",
+                            "lunghezza testo": 77,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una Bari che diventi meta del turismo culturale e gastronomico internazionale.",
+                            "testo processato": "sogno bari diventi meta turismo culturale gastronomico internazionale",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che il turismo porti benessere a tutti i baresi, non solo a pochi.",
+                            "testo processato": "sogno turismo porti benessere baresi solo pochi",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è una Bari che attragga investimenti esteri mantenendo la sua identità culturale.",
+                            "testo processato": "sogno bari attragga investimenti esteri mantenendo identità culturale",
+                            "lunghezza testo": 94,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che il Festival del Levante torni ad essere un evento internazionale.",
+                            "testo processato": "sogno festival levante torni essere evento internazionale",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 0.9985134104193178
+                        },
+                        {
+                            "testo originale": "Sogno più turismo sostenibile che rispetti la città e non la snaturi.",
+                            "testo processato": "sogno turismo sostenibile rispetti città snaturi",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 0.9927286487752945
+                        },
+                        {
+                            "testo originale": "Sogno più panchine e aree di sosta nel centro storico per i turisti e i cittadini.",
+                            "testo processato": "sogno panchine aree sosta centro storico turisti cittadini",
+                            "lunghezza testo": 82,
+                            "bertopic prob": 0.9678204368753699
+                        },
+                        {
+                            "testo originale": "Sogno una Bari cosmopolita e aperta al mondo, capace di attrarre talenti.",
+                            "testo processato": "sogno bari cosmopolita aperta mondo capace attrarre talenti",
+                            "lunghezza testo": 73,
+                            "bertopic prob": 0.8885423713420219
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che il waterfront di Bari diventi uno dei più belli d'Italia.",
+                            "testo processato": "sogno waterfront bari diventi belli italia",
+                            "lunghezza testo": 76,
+                            "bertopic prob": 0.824910018837508
+                        },
+                        {
+                            "testo originale": "Sogno quartieri riqualificati dove le persone vogliano tornare a vivere.",
+                            "testo processato": "sogno quartieri riqualificati persone vogliano tornare vivere",
+                            "lunghezza testo": 72,
+                            "bertopic prob": 0.8230660013083767
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che la fiera del Levante torni a essere il cuore del commercio meridionale.",
+                            "testo processato": "sogno fiera levante torni essere cuore commercio meridionale",
+                            "lunghezza testo": 90,
+                            "bertopic prob": 0.8230660013083767
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che i baresi si sentano orgogliosi della loro città e la rispettino.",
+                            "testo processato": "sogno baresi sentano orgogliosi città rispettino",
+                            "lunghezza testo": 83,
+                            "bertopic prob": 0.8230660013083767
+                        },
+                        {
+                            "testo originale": "Sogno una Bari dove non si senta la necessità di emigrare al nord per trovare lavoro.",
+                            "testo processato": "sogno bari senta necessità emigrare nord trovare lavoro",
+                            "lunghezza testo": 85,
+                            "bertopic prob": 0.8229158832213112
+                        },
+                        {
+                            "testo originale": "Sogno una Bari che diventi polo universitario di eccellenza riconosciuto in Europa.",
+                            "testo processato": "sogno bari diventi polo universitario eccellenza riconosciuto europa",
+                            "lunghezza testo": 83,
+                            "bertopic prob": 0.8161167465278915
+                        },
+                        {
+                            "testo originale": "Il mio sogno è una città che valorizzi la sua storia e la sua cultura millenaria.",
+                            "testo processato": "sogno città valorizzi storia cultura millenaria",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 0.7839434148520408
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che i giovani baresi possano costruire il loro futuro qui.",
+                            "testo processato": "sogno giovani baresi possano costruire futuro qui",
+                            "lunghezza testo": 73,
+                            "bertopic prob": 0.7772385931600564
+                        },
+                        {
+                            "testo originale": "Sogno una Bari che valorizzi la cultura contadina e i prodotti dell'entroterra pugliese.",
+                            "testo processato": "sogno bari valorizzi cultura contadina prodotti entroterra pugliese",
+                            "lunghezza testo": 88,
+                            "bertopic prob": 0.7101840653883364
+                        },
+                        {
+                            "testo originale": "Sogno più mercati rionali dove comprare prodotti locali freschi ogni giorno.",
+                            "testo processato": "sogno mercati rionali comprare prodotti locali freschi ogni giorno",
+                            "lunghezza testo": 76,
+                            "bertopic prob": 0.7067738686838656
+                        },
+                        {
+                            "testo originale": "Sogno una Bari sicura dove si possa camminare di notte senza paura.",
+                            "testo processato": "sogno bari sicura possa camminare notte senza paura",
+                            "lunghezza testo": 67,
+                            "bertopic prob": 0.7046274457084976
+                        }
+                    ]
+                },
+                "bari": {
+                    "quantità risposte rappresentative": 8,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno una Bari che diventi meta del turismo culturale e gastronomico internazionale.",
+                            "testo processato": "sogno bari diventi meta turismo culturale gastronomico internazionale",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è una Bari che attragga investimenti esteri mantenendo la sua identità culturale.",
+                            "testo processato": "sogno bari attragga investimenti esteri mantenendo identità culturale",
+                            "lunghezza testo": 94,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una Bari cosmopolita e aperta al mondo, capace di attrarre talenti.",
+                            "testo processato": "sogno bari cosmopolita aperta mondo capace attrarre talenti",
+                            "lunghezza testo": 73,
+                            "bertopic prob": 0.8885423713420219
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che il waterfront di Bari diventi uno dei più belli d'Italia.",
+                            "testo processato": "sogno waterfront bari diventi belli italia",
+                            "lunghezza testo": 76,
+                            "bertopic prob": 0.824910018837508
+                        },
+                        {
+                            "testo originale": "Sogno una Bari dove non si senta la necessità di emigrare al nord per trovare lavoro.",
+                            "testo processato": "sogno bari senta necessità emigrare nord trovare lavoro",
+                            "lunghezza testo": 85,
+                            "bertopic prob": 0.8229158832213112
+                        },
+                        {
+                            "testo originale": "Sogno una Bari che diventi polo universitario di eccellenza riconosciuto in Europa.",
+                            "testo processato": "sogno bari diventi polo universitario eccellenza riconosciuto europa",
+                            "lunghezza testo": 83,
+                            "bertopic prob": 0.8161167465278915
+                        },
+                        {
+                            "testo originale": "Sogno una Bari che valorizzi la cultura contadina e i prodotti dell'entroterra pugliese.",
+                            "testo processato": "sogno bari valorizzi cultura contadina prodotti entroterra pugliese",
+                            "lunghezza testo": 88,
+                            "bertopic prob": 0.7101840653883364
+                        },
+                        {
+                            "testo originale": "Sogno una Bari sicura dove si possa camminare di notte senza paura.",
+                            "testo processato": "sogno bari sicura possa camminare notte senza paura",
+                            "lunghezza testo": 67,
+                            "bertopic prob": 0.7046274457084976
+                        }
+                    ]
+                },
+                "diventi": {
+                    "quantità risposte rappresentative": 3,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno una Bari che diventi meta del turismo culturale e gastronomico internazionale.",
+                            "testo processato": "sogno bari diventi meta turismo culturale gastronomico internazionale",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che il waterfront di Bari diventi uno dei più belli d'Italia.",
+                            "testo processato": "sogno waterfront bari diventi belli italia",
+                            "lunghezza testo": 76,
+                            "bertopic prob": 0.824910018837508
+                        },
+                        {
+                            "testo originale": "Sogno una Bari che diventi polo universitario di eccellenza riconosciuto in Europa.",
+                            "testo processato": "sogno bari diventi polo universitario eccellenza riconosciuto europa",
+                            "lunghezza testo": 83,
+                            "bertopic prob": 0.8161167465278915
+                        }
+                    ]
+                },
+                "baresi": {
+                    "quantità risposte rappresentative": 3,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è che il turismo porti benessere a tutti i baresi, non solo a pochi.",
+                            "testo processato": "sogno turismo porti benessere baresi solo pochi",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che i baresi si sentano orgogliosi della loro città e la rispettino.",
+                            "testo processato": "sogno baresi sentano orgogliosi città rispettino",
+                            "lunghezza testo": 83,
+                            "bertopic prob": 0.8230660013083767
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che i giovani baresi possano costruire il loro futuro qui.",
+                            "testo processato": "sogno giovani baresi possano costruire futuro qui",
+                            "lunghezza testo": 73,
+                            "bertopic prob": 0.7772385931600564
+                        }
+                    ]
+                },
+                "turismo": {
+                    "quantità risposte rappresentative": 3,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno una Bari che diventi meta del turismo culturale e gastronomico internazionale.",
+                            "testo processato": "sogno bari diventi meta turismo culturale gastronomico internazionale",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che il turismo porti benessere a tutti i baresi, non solo a pochi.",
+                            "testo processato": "sogno turismo porti benessere baresi solo pochi",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno più turismo sostenibile che rispetti la città e non la snaturi.",
+                            "testo processato": "sogno turismo sostenibile rispetti città snaturi",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 0.9927286487752945
+                        }
+                    ]
+                },
+                "essere": {
+                    "quantità risposte rappresentative": 3,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è che il turismo porti benessere a tutti i baresi, non solo a pochi.",
+                            "testo processato": "sogno turismo porti benessere baresi solo pochi",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che il Festival del Levante torni ad essere un evento internazionale.",
+                            "testo processato": "sogno festival levante torni essere evento internazionale",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 0.9985134104193178
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che la fiera del Levante torni a essere il cuore del commercio meridionale.",
+                            "testo processato": "sogno fiera levante torni essere cuore commercio meridionale",
+                            "lunghezza testo": 90,
+                            "bertopic prob": 0.8230660013083767
+                        }
+                    ]
+                },
+                "europa": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio desiderio è un porto turistico moderno che attiri crocieristi da tutta Europa.",
+                            "testo processato": "desiderio porto turistico moderno attiri crocieristi tutta europa",
+                            "lunghezza testo": 85,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una Bari che diventi polo universitario di eccellenza riconosciuto in Europa.",
+                            "testo processato": "sogno bari diventi polo universitario eccellenza riconosciuto europa",
+                            "lunghezza testo": 83,
+                            "bertopic prob": 0.8161167465278915
+                        }
+                    ]
+                },
+                "cultura": {
+                    "quantità risposte rappresentative": 5,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno più eventi culturali internazionali che portino turisti e investimenti.",
+                            "testo processato": "sogno eventi culturali internazionali portino turisti investimenti",
+                            "lunghezza testo": 77,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una Bari che diventi meta del turismo culturale e gastronomico internazionale.",
+                            "testo processato": "sogno bari diventi meta turismo culturale gastronomico internazionale",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è una Bari che attragga investimenti esteri mantenendo la sua identità culturale.",
+                            "testo processato": "sogno bari attragga investimenti esteri mantenendo identità culturale",
+                            "lunghezza testo": 94,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è una città che valorizzi la sua storia e la sua cultura millenaria.",
+                            "testo processato": "sogno città valorizzi storia cultura millenaria",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 0.7839434148520408
+                        },
+                        {
+                            "testo originale": "Sogno una Bari che valorizzi la cultura contadina e i prodotti dell'entroterra pugliese.",
+                            "testo processato": "sogno bari valorizzi cultura contadina prodotti entroterra pugliese",
+                            "lunghezza testo": 88,
+                            "bertopic prob": 0.7101840653883364
+                        }
+                    ]
+                },
+                "prodotti": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno una Bari che valorizzi la cultura contadina e i prodotti dell'entroterra pugliese.",
+                            "testo processato": "sogno bari valorizzi cultura contadina prodotti entroterra pugliese",
+                            "lunghezza testo": 88,
+                            "bertopic prob": 0.7101840653883364
+                        },
+                        {
+                            "testo originale": "Sogno più mercati rionali dove comprare prodotti locali freschi ogni giorno.",
+                            "testo processato": "sogno mercati rionali comprare prodotti locali freschi ogni giorno",
+                            "lunghezza testo": 76,
+                            "bertopic prob": 0.7067738686838656
+                        }
+                    ]
+                },
+                "levante": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è che il Festival del Levante torni ad essere un evento internazionale.",
+                            "testo processato": "sogno festival levante torni essere evento internazionale",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 0.9985134104193178
+                        },
+                        {
+                            "testo originale": "Il mio sogno è che la fiera del Levante torni a essere il cuore del commercio meridionale.",
+                            "testo processato": "sogno fiera levante torni essere cuore commercio meridionale",
+                            "lunghezza testo": 90,
+                            "bertopic prob": 0.8230660013083767
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "Vorrei Città Abbandonati Urbanistico": {
+            "quantità risposte": 12,
+            "parole chiavi": {
+                "vorrei": {
+                    "quantità risposte rappresentative": 8,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei una città che investa sull'energia rinnovabile e la sostenibilità ambientale.",
+                            "testo processato": "vorrei città investa energia rinnovabile sostenibilità ambientale",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei una città che collabori con le città del Mediterraneo per progetti comuni.",
+                            "testo processato": "vorrei città collabori città mediterraneo progetti comuni",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei che il comune ascoltasse di più le proposte dei cittadini nelle scelte urbanistiche.",
+                            "testo processato": "vorrei comune ascoltasse proposte cittadini scelte urbanistiche",
+                            "lunghezza testo": 91,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei che Bari diventasse un modello di città sostenibile e innovativa per tutto il Mezzogiorno.",
+                            "testo processato": "vorrei bari diventasse modello città sostenibile innovativa mezzogiorno",
+                            "lunghezza testo": 97,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei più controllo della qualità dell'aria e politiche contro l'inquinamento.",
+                            "testo processato": "vorrei controllo qualità aria politiche inquinamento",
+                            "lunghezza testo": 79,
+                            "bertopic prob": 0.9326830037304936
+                        },
+                        {
+                            "testo originale": "Vorrei una città dove il mare sia al centro di ogni progetto urbanistico.",
+                            "testo processato": "vorrei città mare centro ogni progetto urbanistico",
+                            "lunghezza testo": 73,
+                            "bertopic prob": 0.9266174731675229
+                        },
+                        {
+                            "testo originale": "Vorrei una città che sostenga gli artisti e i creativi locali con fondi e spazi.",
+                            "testo processato": "vorrei città sostenga artisti creativi locali fondi spazi",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 0.7192510966378338
+                        },
+                        {
+                            "testo originale": "Vorrei vedere più murales e arte urbana che abbelliscano i muri dei quartieri.",
+                            "testo processato": "vorrei vedere murales arte urbana abbelliscano muri quartieri",
+                            "lunghezza testo": 78,
+                            "bertopic prob": 0.7063850877075611
+                        }
+                    ]
+                },
+                "città": {
+                    "quantità risposte rappresentative": 6,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei una città che investa sull'energia rinnovabile e la sostenibilità ambientale.",
+                            "testo processato": "vorrei città investa energia rinnovabile sostenibilità ambientale",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei una città che collabori con le città del Mediterraneo per progetti comuni.",
+                            "testo processato": "vorrei città collabori città mediterraneo progetti comuni",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei che Bari diventasse un modello di città sostenibile e innovativa per tutto il Mezzogiorno.",
+                            "testo processato": "vorrei bari diventasse modello città sostenibile innovativa mezzogiorno",
+                            "lunghezza testo": 97,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei una città dove il mare sia al centro di ogni progetto urbanistico.",
+                            "testo processato": "vorrei città mare centro ogni progetto urbanistico",
+                            "lunghezza testo": 73,
+                            "bertopic prob": 0.9266174731675229
+                        },
+                        {
+                            "testo originale": "Vorrei una città che sostenga gli artisti e i creativi locali con fondi e spazi.",
+                            "testo processato": "vorrei città sostenga artisti creativi locali fondi spazi",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 0.7192510966378338
+                        },
+                        {
+                            "testo originale": "Il mio sogno è una città che investa nel restauro dei palazzi storici abbandonati.",
+                            "testo processato": "sogno città investa restauro palazzi storici abbandonati",
+                            "lunghezza testo": 82,
+                            "bertopic prob": 0.7029370861919997
+                        }
+                    ]
+                },
+                "abbandonati": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno iniziative di riconversione degli edifici abbandonati in spazi comunitari.",
+                            "testo processato": "sogno iniziative riconversione edifici abbandonati spazi comunitari",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 0.7063850877075611
+                        },
+                        {
+                            "testo originale": "Il mio sogno è una città che investa nel restauro dei palazzi storici abbandonati.",
+                            "testo processato": "sogno città investa restauro palazzi storici abbandonati",
+                            "lunghezza testo": 82,
+                            "bertopic prob": 0.7029370861919997
+                        }
+                    ]
+                },
+                "urbanistico": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno una Bari con un piano urbanistico che rispetti il territorio e l'ambiente.",
+                            "testo processato": "sogno bari piano urbanistico rispetti territorio ambiente",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei una città dove il mare sia al centro di ogni progetto urbanistico.",
+                            "testo processato": "vorrei città mare centro ogni progetto urbanistico",
+                            "lunghezza testo": 73,
+                            "bertopic prob": 0.9266174731675229
+                        }
+                    ]
+                },
+                "iniziative": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno iniziative per ridurre il consumo di plastica e promuovere l'economia circolare.",
+                            "testo processato": "sogno iniziative ridurre consumo plastica promuovere economia circolare",
+                            "lunghezza testo": 86,
+                            "bertopic prob": 0.9041552016863048
+                        },
+                        {
+                            "testo originale": "Sogno iniziative di riconversione degli edifici abbandonati in spazi comunitari.",
+                            "testo processato": "sogno iniziative riconversione edifici abbandonati spazi comunitari",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 0.7063850877075611
+                        }
+                    ]
+                },
+                "investa": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei una città che investa sull'energia rinnovabile e la sostenibilità ambientale.",
+                            "testo processato": "vorrei città investa energia rinnovabile sostenibilità ambientale",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è una città che investa nel restauro dei palazzi storici abbandonati.",
+                            "testo processato": "sogno città investa restauro palazzi storici abbandonati",
+                            "lunghezza testo": 82,
+                            "bertopic prob": 0.7029370861919997
+                        }
+                    ]
+                },
+                "spazi": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei una città che sostenga gli artisti e i creativi locali con fondi e spazi.",
+                            "testo processato": "vorrei città sostenga artisti creativi locali fondi spazi",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 0.7192510966378338
+                        },
+                        {
+                            "testo originale": "Sogno iniziative di riconversione degli edifici abbandonati in spazi comunitari.",
+                            "testo processato": "sogno iniziative riconversione edifici abbandonati spazi comunitari",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 0.7063850877075611
+                        }
+                    ]
+                },
+                "sogno": {
+                    "quantità risposte rappresentative": 4,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno una Bari con un piano urbanistico che rispetti il territorio e l'ambiente.",
+                            "testo processato": "sogno bari piano urbanistico rispetti territorio ambiente",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno iniziative per ridurre il consumo di plastica e promuovere l'economia circolare.",
+                            "testo processato": "sogno iniziative ridurre consumo plastica promuovere economia circolare",
+                            "lunghezza testo": 86,
+                            "bertopic prob": 0.9041552016863048
+                        },
+                        {
+                            "testo originale": "Sogno iniziative di riconversione degli edifici abbandonati in spazi comunitari.",
+                            "testo processato": "sogno iniziative riconversione edifici abbandonati spazi comunitari",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 0.7063850877075611
+                        },
+                        {
+                            "testo originale": "Il mio sogno è una città che investa nel restauro dei palazzi storici abbandonati.",
+                            "testo processato": "sogno città investa restauro palazzi storici abbandonati",
+                            "lunghezza testo": 82,
+                            "bertopic prob": 0.7029370861919997
+                        }
+                    ]
+                },
+                "abbelliscano": {
+                    "quantità risposte rappresentative": 1,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei vedere più murales e arte urbana che abbelliscano i muri dei quartieri.",
+                            "testo processato": "vorrei vedere murales arte urbana abbelliscano muri quartieri",
+                            "lunghezza testo": 78,
+                            "bertopic prob": 0.7063850877075611
+                        }
+                    ]
+                },
+                "comuni": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei una città che collabori con le città del Mediterraneo per progetti comuni.",
+                            "testo processato": "vorrei città collabori città mediterraneo progetti comuni",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno iniziative di riconversione degli edifici abbandonati in spazi comunitari.",
+                            "testo processato": "sogno iniziative riconversione edifici abbandonati spazi comunitari",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 0.7063850877075611
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "Colleghi Rete Sogno Ciclabili": {
+            "quantità risposte": 10,
+            "parole chiavi": {
+                "colleghi": {
+                    "quantità risposte rappresentative": 3,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è un trasporto pubblico efficiente che colleghi tutta la città.",
+                            "testo processato": "sogno trasporto pubblico efficiente colleghi tutta città",
+                            "lunghezza testo": 76,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è una rete di trasporti che colleghi Bari ai paesi della provincia.",
+                            "testo processato": "sogno rete trasporti colleghi bari paesi provincia",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio desiderio è avere una metropolitana leggera che colleghi i quartieri più lontani.",
+                            "testo processato": "desiderio avere metropolitana leggera colleghi quartieri lontani",
+                            "lunghezza testo": 88,
+                            "bertopic prob": 0.7605810261170372
+                        }
+                    ]
+                },
+                "rete": {
+                    "quantità risposte rappresentative": 3,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è una rete di trasporti che colleghi Bari ai paesi della provincia.",
+                            "testo processato": "sogno rete trasporti colleghi bari paesi provincia",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una rete di trasporti pubblici notturni per chi lavora di sera.",
+                            "testo processato": "sogno rete trasporti pubblici notturni lavora sera",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 0.9870552274746374
+                        },
+                        {
+                            "testo originale": "Sogno una rete di piste ciclabili che attraversi tutta la città in sicurezza.",
+                            "testo processato": "sogno rete piste ciclabili attraversi tutta città sicurezza",
+                            "lunghezza testo": 77,
+                            "bertopic prob": 0.9030923668930385
+                        }
+                    ]
+                },
+                "sogno": {
+                    "quantità risposte rappresentative": 7,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è un trasporto pubblico efficiente che colleghi tutta la città.",
+                            "testo processato": "sogno trasporto pubblico efficiente colleghi tutta città",
+                            "lunghezza testo": 76,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una Bari con meno traffico e più piste ciclabili sicure.",
+                            "testo processato": "sogno bari meno traffico piste ciclabili sicure",
+                            "lunghezza testo": 62,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è una rete di trasporti che colleghi Bari ai paesi della provincia.",
+                            "testo processato": "sogno rete trasporti colleghi bari paesi provincia",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio sogno è un aeroporto con più collegamenti internazionali diretti.",
+                            "testo processato": "sogno aeroporto collegamenti internazionali diretti",
+                            "lunghezza testo": 72,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno più autobus elettrici e mezzi pubblici a basse emissioni.",
+                            "testo processato": "sogno autobus elettrici mezzi pubblici basse emissioni",
+                            "lunghezza testo": 63,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una rete di trasporti pubblici notturni per chi lavora di sera.",
+                            "testo processato": "sogno rete trasporti pubblici notturni lavora sera",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 0.9870552274746374
+                        },
+                        {
+                            "testo originale": "Sogno una rete di piste ciclabili che attraversi tutta la città in sicurezza.",
+                            "testo processato": "sogno rete piste ciclabili attraversi tutta città sicurezza",
+                            "lunghezza testo": 77,
+                            "bertopic prob": 0.9030923668930385
+                        }
+                    ]
+                },
+                "ciclabili": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno una Bari con meno traffico e più piste ciclabili sicure.",
+                            "testo processato": "sogno bari meno traffico piste ciclabili sicure",
+                            "lunghezza testo": 62,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una rete di piste ciclabili che attraversi tutta la città in sicurezza.",
+                            "testo processato": "sogno rete piste ciclabili attraversi tutta città sicurezza",
+                            "lunghezza testo": 77,
+                            "bertopic prob": 0.9030923668930385
+                        }
+                    ]
+                },
+                "pubblici": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno più autobus elettrici e mezzi pubblici a basse emissioni.",
+                            "testo processato": "sogno autobus elettrici mezzi pubblici basse emissioni",
+                            "lunghezza testo": 63,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una rete di trasporti pubblici notturni per chi lavora di sera.",
+                            "testo processato": "sogno rete trasporti pubblici notturni lavora sera",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 0.9870552274746374
+                        }
+                    ]
+                },
+                "piste": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno una Bari con meno traffico e più piste ciclabili sicure.",
+                            "testo processato": "sogno bari meno traffico piste ciclabili sicure",
+                            "lunghezza testo": 62,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una rete di piste ciclabili che attraversi tutta la città in sicurezza.",
+                            "testo processato": "sogno rete piste ciclabili attraversi tutta città sicurezza",
+                            "lunghezza testo": 77,
+                            "bertopic prob": 0.9030923668930385
+                        }
+                    ]
+                },
+                "trasporti": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è una rete di trasporti che colleghi Bari ai paesi della provincia.",
+                            "testo processato": "sogno rete trasporti colleghi bari paesi provincia",
+                            "lunghezza testo": 80,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una rete di trasporti pubblici notturni per chi lavora di sera.",
+                            "testo processato": "sogno rete trasporti pubblici notturni lavora sera",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 0.9870552274746374
+                        }
+                    ]
+                },
+                "tutta": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è un trasporto pubblico efficiente che colleghi tutta la città.",
+                            "testo processato": "sogno trasporto pubblico efficiente colleghi tutta città",
+                            "lunghezza testo": 76,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Sogno una rete di piste ciclabili che attraversi tutta la città in sicurezza.",
+                            "testo processato": "sogno rete piste ciclabili attraversi tutta città sicurezza",
+                            "lunghezza testo": 77,
+                            "bertopic prob": 0.9030923668930385
+                        }
+                    ]
+                },
+                "meno": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno una Bari con meno traffico e più piste ciclabili sicure.",
+                            "testo processato": "sogno bari meno traffico piste ciclabili sicure",
+                            "lunghezza testo": 62,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei meno rifiuti per strada e più coscienza civica nei comportamenti quotidiani.",
+                            "testo processato": "vorrei meno rifiuti strada coscienza civica comportamenti quotidiani",
+                            "lunghezza testo": 83,
+                            "bertopic prob": 0.5902690958462261
+                        }
+                    ]
+                },
+                "elettrici": {
+                    "quantità risposte rappresentative": 1,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Sogno più autobus elettrici e mezzi pubblici a basse emissioni.",
+                            "testo processato": "sogno autobus elettrici mezzi pubblici basse emissioni",
+                            "lunghezza testo": 63,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "Vorrei Alberi Quartiere Vedere": {
+            "quantità risposte": 8,
+            "parole chiavi": {
+                "vorrei": {
+                    "quantità risposte rappresentative": 7,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei vedere il lungomare sempre pulito e accessibile a tutti.",
+                            "testo processato": "vorrei vedere lungomare sempre pulito accessibile",
+                            "lunghezza testo": 63,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei più fontanelle pubbliche e aree di sosta ombreggiata in estate.",
+                            "testo processato": "vorrei fontanelle pubbliche aree sosta ombreggiata estate",
+                            "lunghezza testo": 70,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei che le biblioteche comunali fossero aperte anche la sera e il fine settimana.",
+                            "testo processato": "vorrei biblioteche comunali aperte sera fine settimana",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei vedere riqualificato il quartiere Libertà con nuovi servizi e spazi verdi.",
+                            "testo processato": "vorrei vedere riqualificato quartiere libertà nuovi servizi spazi verdi",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 0.9697441112738975
+                        },
+                        {
+                            "testo originale": "Vorrei vedere meno cemento e più spazi verdi aperti nei quartieri periferici.",
+                            "testo processato": "vorrei vedere meno cemento spazi verdi aperti quartieri periferici",
+                            "lunghezza testo": 77,
+                            "bertopic prob": 0.9027087136149499
+                        }
+                    ]
+                },
+                "alberi": {
+                    "quantità risposte rappresentative": 3,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio desiderio è avere più alberi lungo i viali cittadini per combattere il calore estivo.",
+                            "testo processato": "desiderio avere alberi lungo viali cittadini combattere calore estivo",
+                            "lunghezza testo": 92,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                },
+                "quartiere": {
+                    "quantità risposte rappresentative": 3,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei vedere riqualificato il quartiere Libertà con nuovi servizi e spazi verdi.",
+                            "testo processato": "vorrei vedere riqualificato quartiere libertà nuovi servizi spazi verdi",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 0.9697441112738975
+                        }
+                    ]
+                },
+                "vedere": {
+                    "quantità risposte rappresentative": 3,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei vedere il lungomare sempre pulito e accessibile a tutti.",
+                            "testo processato": "vorrei vedere lungomare sempre pulito accessibile",
+                            "lunghezza testo": 63,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei vedere riqualificato il quartiere Libertà con nuovi servizi e spazi verdi.",
+                            "testo processato": "vorrei vedere riqualificato quartiere libertà nuovi servizi spazi verdi",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 0.9697441112738975
+                        },
+                        {
+                            "testo originale": "Vorrei vedere meno cemento e più spazi verdi aperti nei quartieri periferici.",
+                            "testo processato": "vorrei vedere meno cemento spazi verdi aperti quartieri periferici",
+                            "lunghezza testo": 77,
+                            "bertopic prob": 0.9027087136149499
+                        }
+                    ]
+                },
+                "verdi": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei vedere riqualificato il quartiere Libertà con nuovi servizi e spazi verdi.",
+                            "testo processato": "vorrei vedere riqualificato quartiere libertà nuovi servizi spazi verdi",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 0.9697441112738975
+                        },
+                        {
+                            "testo originale": "Vorrei vedere meno cemento e più spazi verdi aperti nei quartieri periferici.",
+                            "testo processato": "vorrei vedere meno cemento spazi verdi aperti quartieri periferici",
+                            "lunghezza testo": 77,
+                            "bertopic prob": 0.9027087136149499
+                        }
+                    ]
+                },
+                "verde": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                },
+                "parchi": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                },
+                "ogni": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei una città più verde con più alberi e parchi in ogni quartiere.",
+                            "testo processato": "vorrei città verde alberi parchi ogni quartiere",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                },
+                "spazi": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei vedere riqualificato il quartiere Libertà con nuovi servizi e spazi verdi.",
+                            "testo processato": "vorrei vedere riqualificato quartiere libertà nuovi servizi spazi verdi",
+                            "lunghezza testo": 81,
+                            "bertopic prob": 0.9697441112738975
+                        },
+                        {
+                            "testo originale": "Vorrei vedere meno cemento e più spazi verdi aperti nei quartieri periferici.",
+                            "testo processato": "vorrei vedere meno cemento spazi verdi aperti quartieri periferici",
+                            "lunghezza testo": 77,
+                            "bertopic prob": 0.9027087136149499
+                        }
+                    ]
+                },
+                "aperte": {
+                    "quantità risposte rappresentative": 1,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei che le biblioteche comunali fossero aperte anche la sera e il fine settimana.",
+                            "testo processato": "vorrei biblioteche comunali aperte sera fine settimana",
+                            "lunghezza testo": 84,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "Giovani Scuole Vorrei Avere": {
+            "quantità risposte": 7,
+            "parole chiavi": {
+                "giovani": {
+                    "quantità risposte rappresentative": 3,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei più opportunità di lavoro per i giovani laureati del territorio.",
+                            "testo processato": "vorrei opportunità lavoro giovani laureati territorio",
+                            "lunghezza testo": 71,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio desiderio è avere più asili nido e servizi per le famiglie giovani.",
+                            "testo processato": "desiderio avere asili nido servizi famiglie giovani",
+                            "lunghezza testo": 74,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei più campetti e strutture sportive nei quartieri per i giovani.",
+                            "testo processato": "vorrei campetti strutture sportive quartieri giovani",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 0.7682838358304936
+                        }
+                    ]
+                },
+                "scuole": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è avere scuole moderne con laboratori e spazi adeguati.",
+                            "testo processato": "sogno avere scuole moderne laboratori spazi adeguati",
+                            "lunghezza testo": 68,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei che le scuole insegnino il rispetto per l'ambiente fin dalla prima infanzia.",
+                            "testo processato": "vorrei scuole insegnino rispetto ambiente fin prima infanzia",
+                            "lunghezza testo": 83,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                },
+                "vorrei": {
+                    "quantità risposte rappresentative": 4,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei più opportunità di lavoro per i giovani laureati del territorio.",
+                            "testo processato": "vorrei opportunità lavoro giovani laureati territorio",
+                            "lunghezza testo": 71,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei che le scuole insegnino il rispetto per l'ambiente fin dalla prima infanzia.",
+                            "testo processato": "vorrei scuole insegnino rispetto ambiente fin prima infanzia",
+                            "lunghezza testo": 83,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei un sistema scolastico locale che formi i ragazzi alle competenze del futuro.",
+                            "testo processato": "vorrei sistema scolastico locale formi ragazzi competenze futuro",
+                            "lunghezza testo": 83,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Vorrei più campetti e strutture sportive nei quartieri per i giovani.",
+                            "testo processato": "vorrei campetti strutture sportive quartieri giovani",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 0.7682838358304936
+                        }
+                    ]
+                },
+                "avere": {
+                    "quantità risposte rappresentative": 2,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è avere scuole moderne con laboratori e spazi adeguati.",
+                            "testo processato": "sogno avere scuole moderne laboratori spazi adeguati",
+                            "lunghezza testo": 68,
+                            "bertopic prob": 1.0
+                        },
+                        {
+                            "testo originale": "Il mio desiderio è avere più asili nido e servizi per le famiglie giovani.",
+                            "testo processato": "desiderio avere asili nido servizi famiglie giovani",
+                            "lunghezza testo": 74,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                },
+                "competenze": {
+                    "quantità risposte rappresentative": 1,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei un sistema scolastico locale che formi i ragazzi alle competenze del futuro.",
+                            "testo processato": "vorrei sistema scolastico locale formi ragazzi competenze futuro",
+                            "lunghezza testo": 83,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                },
+                "adeguati": {
+                    "quantità risposte rappresentative": 1,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è avere scuole moderne con laboratori e spazi adeguati.",
+                            "testo processato": "sogno avere scuole moderne laboratori spazi adeguati",
+                            "lunghezza testo": 68,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                },
+                "asili": {
+                    "quantità risposte rappresentative": 1,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio desiderio è avere più asili nido e servizi per le famiglie giovani.",
+                            "testo processato": "desiderio avere asili nido servizi famiglie giovani",
+                            "lunghezza testo": 74,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                },
+                "campetti": {
+                    "quantità risposte rappresentative": 1,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Vorrei più campetti e strutture sportive nei quartieri per i giovani.",
+                            "testo processato": "vorrei campetti strutture sportive quartieri giovani",
+                            "lunghezza testo": 69,
+                            "bertopic prob": 0.7682838358304936
+                        }
+                    ]
+                },
+                "moderne": {
+                    "quantità risposte rappresentative": 1,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio sogno è avere scuole moderne con laboratori e spazi adeguati.",
+                            "testo processato": "sogno avere scuole moderne laboratori spazi adeguati",
+                            "lunghezza testo": 68,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                },
+                "nido": {
+                    "quantità risposte rappresentative": 1,
+                    "risposte rappresentative": [
+                        {
+                            "testo originale": "Il mio desiderio è avere più asili nido e servizi per le famiglie giovani.",
+                            "testo processato": "desiderio avere asili nido servizi famiglie giovani",
+                            "lunghezza testo": 74,
+                            "bertopic prob": 1.0
+                        }
+                    ]
+                }
+            }
+        }
+    }
+]

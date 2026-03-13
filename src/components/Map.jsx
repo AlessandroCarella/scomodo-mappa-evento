@@ -5,6 +5,7 @@ import Connection from "./Connection";
 import ConnectionAlt from "./ConnectionAlt";
 import ConnectionSwitcher from "./ConnectionSwitcher";
 import StoriesOverlay from "./StoriesOverlay";
+import Banner from "./Banner";
 import { useMapInit } from "./MapHelpers/useMapInit";
 import { useMapSync } from "./MapHelpers/useMapSync";
 import { processConnections } from "./ConnectionHelpers/connectionUtils";
@@ -179,6 +180,8 @@ export default function Map() {
                         onClick={handlePinClick}
                     />
                 ))}
+
+            <Banner />
 
             <ConnectionSwitcher
                 shape={shape}
