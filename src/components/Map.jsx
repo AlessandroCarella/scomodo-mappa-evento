@@ -21,32 +21,63 @@ export default function Map() {
 
     const [activeStories, setActiveStories] = useState([]);
 
-    const mockStories = [
-        {
-            id: "s1",
-            nome: "Martina",
-            cittaProvenienza: "Milano",
-            cittaDestinazione: "Roma",
-            periodoViaggio: "2024",
-            testo: "Sul treno per Roma ho trovato un post-it sotto il sedile. Diceva: “se ti senti fuori posto, forse sei semplicemente in viaggio”. L’ho attaccato al finestrino e l’ho lasciato andare con la prima galleria.",
-        },
-        {
-            id: "s2",
-            nome: "Nadir",
-            cittaProvenienza: "Bologna",
-            cittaDestinazione: "Firenze",
-            periodoViaggio: "Autunno 2023",
-            testo: "Pioveva forte, e la stazione sembrava un acquario. Ho scritto due righe su un post-it e l’ho infilato in un libro del book-crossing. Non so chi l’ha letto, ma spero gli abbia fatto compagnia almeno per una fermata.",
-        },
-        {
-            id: "s3",
-            nome: "Chiara",
-            cittaProvenienza: "Roma",
-            cittaDestinazione: "Napoli",
-            periodoViaggio: "Estate 2022",
-            testo: "Tra Roma e Napoli le luci cambiano colore. Avevo promesso che non avrei pianto, ma ho ceduto all’ultima curva prima del mare. Ho lasciato un post-it: “torna quando ti va, non quando devi”.",
-        },
+    const [mockStories, setMockStories] = useState([]);
+
+    const passengers = [
+        "Martina",
+        "Nadir",
+        "Chiara",
+        "Elia",
+        "Sara",
+        "Giulio",
+        "Amina",
+        "Tommaso",
+        "Irene",
+        "Samuele",
     ];
+
+    const periods = [
+        "Estate 2022",
+        "Autunno 2023",
+        "Inverno 2023",
+        "Primavera 2024",
+        "2024",
+        "Inizio 2025",
+    ];
+
+    function hashString(s) {
+        let h = 0;
+        for (let i = 0; i < s.length; i += 1) {
+            h = (h * 31 + s.charCodeAt(i)) >>> 0;
+        }
+        return h;
+    }
+
+    function buildStoryForConnection(conn, idx) {
+        const fromName = conn?.from?.name || "—";
+        const toName = conn?.to?.name || "—";
+        const key = `${fromName}→${toName}`;
+        const h = hashString(key);
+
+        const nome = passengers[h % passengers.length];
+        const periodoViaggio = periods[(h >>> 3) % periods.length];
+        const count = conn?.count ?? 1;
+
+        const testo = `Tra ${fromName} e ${toName} ho annotato questo post-it: “non è la distanza, è il cambio di passo”. ${
+            count > 1
+                ? `Questa tratta l’ho ripetuta ${count} volte: ogni volta una sfumatura diversa.`
+                : "Una sola corsa, ma mi è rimasta addosso."
+        }`;
+
+        return {
+            id: `conn-${idx}-${fromName}-${toName}`,
+            nome,
+            cittaProvenienza: fromName,
+            cittaDestinazione: toName,
+            periodoViaggio,
+            testo,
+        };
+    }
 
     function handleConnectionClick(fromName, toName) {
         const matches = mockStories.filter(
@@ -86,6 +117,7 @@ export default function Map() {
 
                 setLocations(rawLocations);
                 setConnections(conns);
+                setMockStories(conns.map((c, i) => buildStoryForConnection(c, i)));
                 setMaxCount(max);
                 setDataReady(true);
             })
