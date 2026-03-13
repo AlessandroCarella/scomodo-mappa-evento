@@ -156,3 +156,60 @@ export const BANNER_FONT_FILL_RATIO = 0.9;
 // Fade in/out transition duration
 export const BANNER_TRANSITION_DURATION = "0.6s";
 
+// ── RouteConnections ──────────────────────────────────────────
+
+// Number of geo-positions kept in each particle's trail buffer
+export const ROUTE_TRAIL_LEN = 18;
+
+// Cycling palette for particle colours
+export const ROUTE_PCOLORS = [
+    "#ff9aa2",
+    "#ffb347",
+    "#fdfd96",
+    "#b5ead7",
+    "#a2c4f5",
+    "#c9b1ff",
+    "#f7a8d8",
+];
+
+// Pixel radius used for click / hover hit detection
+export const ROUTE_HIT_RADIUS = 22;
+
+// Ghost route
+export const ROUTE_GHOST_COLOR      = "rgba(150, 150, 150, 0.22)";
+export const ROUTE_GHOST_WIDTH      = 1.5;   // px
+
+// Colour-fade grey target (0–255) — used in routeColor() when t → 0
+export const ROUTE_COLOR_GREY       = 150;
+
+// Progress line
+export const ROUTE_PROGRESS_WIDTH   = 2;     // px
+export const ROUTE_PROGRESS_ALPHA   = 0.82;
+
+// Dash pattern
+export const ROUTE_DASH_ON          = 6;     // px
+export const ROUTE_DASH_OFF         = 5;     // px
+
+// Trail
+export const ROUTE_TRAIL_WIDTH_MAX  = 5;     // px — scaled by frac
+export const ROUTE_TRAIL_ALPHA_MAX  = 0.7;   // scaled by frac
+
+// Active dot
+export const ROUTE_DOT_RADIUS       = 6;     // px base radius
+export const ROUTE_DOT_PULSE_AMP    = 0.1;   // fraction of radius
+export const ROUTE_DOT_PULSE_SPEED  = 400;   // ms per cycle
+export const ROUTE_DOT_STROKE       = "#111";
+export const ROUTE_DOT_STROKE_WIDTH = 1.5;   // px
+
+// Paused dot
+export const ROUTE_DOT_PAUSED_RADIUS = 8;    // px
+export const ROUTE_DOT_PAUSED_FILL   = "#fff";
+export const ROUTE_DOT_PAUSED_STROKE = "#111";
+export const ROUTE_DOT_PAUSED_WIDTH  = 2;    // px
+
+// Pause icon bars (offsets from dot centre, px)
+export const ROUTE_PAUSE_BAR_X1     = -3.5;
+export const ROUTE_PAUSE_BAR_X2     =  1;
+export const ROUTE_PAUSE_BAR_Y      = -3.5;
+export const ROUTE_PAUSE_BAR_W      =  2.5;
+export const ROUTE_PAUSE_BAR_H      =  7;

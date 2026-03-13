@@ -1,0 +1,15 @@
+/* ── RouteConnections canvas overlay ──────────────────────────────────────────
+   The canvas sits on top of the Leaflet map.
+   pointer-events: none lets all mouse/touch events fall through to Leaflet.
+   zIndex 450 sits just above Leaflet's tile/vector layers (≤ 400) but below
+   any UI chrome (tooltips, modals) that should stay on top.
+─────────────────────────────────────────────────────────────────────────── */
+
+.routeCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 450;
+}
