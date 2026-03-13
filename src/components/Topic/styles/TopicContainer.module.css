@@ -1,7 +1,10 @@
 .container {
-    width: 280px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    flex-shrink: 0;
     max-height: 680px;
-    margin-top: 108px;
+    margin-top: 0;
     padding: 16px 12px;
     background: #f8f9fa;
     border: 2px solid #dde1e7;
@@ -9,8 +12,6 @@
     overflow-y: auto;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     align-self: flex-start;
-    box-sizing: border-box;
-    flex-shrink: 0;
 }
 
 .title {

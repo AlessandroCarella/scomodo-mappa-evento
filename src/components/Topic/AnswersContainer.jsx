@@ -1,7 +1,7 @@
 import React from "react";
 import TextBox from "./TextBox";
 import { useSelection } from "../../pages/Topic/store/selectionStore";
-import { RESPONSES_MAX_H } from "../../pages/Topic/config";
+
 import styles from "./styles/AnswersContainer.module.css";
 
 export default function AnswersContainer() {
@@ -36,10 +36,7 @@ export default function AnswersContainer() {
                     Nessuna risposta disponibile per questa parola chiave.
                 </p>
             ) : (
-                <div
-                    className={styles.grid}
-                    style={{ maxHeight: RESPONSES_MAX_H }}
-                >
+                <div className={styles.grid}>
                     {responses.map((resp, i) => (
                         <TextBox key={i} response={resp} />
                     ))}
