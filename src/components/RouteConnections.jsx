@@ -10,7 +10,6 @@
  *   paths            Array     [{ from: "Roma", to: "Milano" }, ...]  (required)
  *   speedMult        number    Playback speed multiplier  (default: 2)
  *   locationsUrl     string    Full URL to Locations.json, already BASE_URL-prefixed
- *                              Pass: `${import.meta.env.BASE_URL.replace(/\/$/, "")}/data/Locations.json`
  *   loop             bool      Restart each route on completion  (default: true)
  *   onParticleClick  function  Called with { from, to } when a moving dot is clicked
  */
@@ -68,7 +67,7 @@ export default function RouteConnections({
     map,
     paths,
     speedMult = 2,
-    locationsUrl, // must be BASE_URL-prefixed — passed in from Map.jsx
+    locationsUrl,
     loop = true,
     onParticleClick,
 }) {
@@ -81,6 +80,13 @@ export default function RouteConnections({
         animFrame: null,
     });
 
+    // Keep latest onParticleClick in a ref so the native listener closure
+    // always calls the current prop without needing to re-register.
+    const onParticleClickRef = useRef(onParticleClick);
+    useEffect(() => {
+        onParticleClickRef.current = onParticleClick;
+    }, [onParticleClick]);
+
     // ── Keep speedMult live without restarting the loop ───────────────────────
     useEffect(() => {
         const S = stateRef.current;
@@ -91,7 +97,7 @@ export default function RouteConnections({
         });
     }, [speedMult]);
 
-    // ── Hit detection ─────────────────────────────────────────────────────────
+    // ── Hit detection — uses canvas bounding rect, safe to call from anywhere ─
     const getHit = useCallback((clientX, clientY) => {
         const canvas = canvasRef.current;
         if (!canvas) return null;
@@ -111,48 +117,19 @@ export default function RouteConnections({
         return hit;
     }, []);
 
-    const handleMouseMove = useCallback(
-        (e) => {
-            const canvas = canvasRef.current;
-            if (!canvas) return;
-            const parent = canvas.parentElement;
-            if (parent)
-                parent.style.cursor = getHit(e.clientX, e.clientY)
-                    ? "pointer"
-                    : "";
-        },
-        [getHit],
-    );
-
-    const handleClick = useCallback(
-        (e) => {
-            const hit = getHit(e.clientX, e.clientY);
-            if (hit && onParticleClick)
-                onParticleClick({ from: hit.from.name, to: hit.to.name });
-        },
-        [getHit, onParticleClick],
-    );
-
-    const handleTouchEnd = useCallback(
-        (e) => {
-            const t = e.changedTouches?.[0];
-            if (!t) return;
-            const hit = getHit(t.clientX, t.clientY);
-            if (hit && onParticleClick)
-                onParticleClick({ from: hit.from.name, to: hit.to.name });
-        },
-        [getHit, onParticleClick],
-    );
-
-    // ── Main animation effect ─────────────────────────────────────────────────
+    // ── Main effect: canvas + animation + native event listeners ─────────────
     useEffect(() => {
         if (!map || !locationsUrl) return;
         const S = stateRef.current;
         const canvas = canvasRef.current;
         if (!canvas) return;
 
+        // The Leaflet map container is the single source of all pointer events.
+        // We attach OUR listeners here alongside Leaflet's own — both receive
+        // every event, so drag / scroll-zoom / keyboard are never blocked.
         const container = map.getContainer();
 
+        // ── Canvas resize sync ────────────────────────────────────────────────
         const syncSize = () => {
             canvas.width = container.offsetWidth;
             canvas.height = container.offsetHeight;
@@ -161,9 +138,43 @@ export default function RouteConnections({
         window.addEventListener("resize", syncSize);
         map.on("resize", syncSize);
 
+        // ── Native pointer listeners on the map container ─────────────────────
+        const onMouseMove = (e) => {
+            const hit = getHit(e.clientX, e.clientY);
+            container.style.cursor = hit ? "pointer" : "";
+        };
+
+        const onClick = (e) => {
+            const hit = getHit(e.clientX, e.clientY);
+            if (hit && onParticleClickRef.current) {
+                onParticleClickRef.current({
+                    from: hit.from.name,
+                    to: hit.to.name,
+                });
+            }
+        };
+
+        const onTouchEnd = (e) => {
+            const t = e.changedTouches?.[0];
+            if (!t) return;
+            const hit = getHit(t.clientX, t.clientY);
+            if (hit && onParticleClickRef.current) {
+                onParticleClickRef.current({
+                    from: hit.from.name,
+                    to: hit.to.name,
+                });
+            }
+        };
+
+        container.addEventListener("mousemove", onMouseMove);
+        container.addEventListener("click", onClick);
+        container.addEventListener("touchend", onTouchEnd);
+
+        // ── Geo → canvas pixel ────────────────────────────────────────────────
         const cpt = (lat, lng) =>
             map.latLngToContainerPoint(L.latLng(lat, lng));
 
+        // ── Build particles ───────────────────────────────────────────────────
         const buildParticles = (locations) => {
             S.particles = [];
             const byName = Object.fromEntries(
@@ -200,6 +211,7 @@ export default function RouteConnections({
             });
         };
 
+        // ── rAF render loop ───────────────────────────────────────────────────
         const render = (now) => {
             const ctx = canvas.getContext("2d");
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -321,6 +333,7 @@ export default function RouteConnections({
             S.animFrame = requestAnimationFrame(render);
         };
 
+        // ── Fetch locations → build particles → start loop ────────────────────
         fetch(locationsUrl)
             .then((r) => {
                 if (!r.ok)
@@ -344,25 +357,28 @@ export default function RouteConnections({
         return () => {
             window.removeEventListener("resize", syncSize);
             map.off("resize", syncSize);
+            container.removeEventListener("mousemove", onMouseMove);
+            container.removeEventListener("click", onClick);
+            container.removeEventListener("touchend", onTouchEnd);
+            container.style.cursor = "";
             cancelAnimationFrame(S.animFrame);
             S.particles = [];
             S.locations = null;
         };
-    }, [map, paths, locationsUrl, loop]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [map, paths, locationsUrl, loop, getHit]); // eslint-disable-line react-hooks/exhaustive-deps
 
+    // Canvas is purely visual — pointer-events: none lets ALL events fall
+    // through to the Leaflet container beneath it.
     return (
         <canvas
             ref={canvasRef}
             aria-hidden="true"
-            onMouseMove={handleMouseMove}
-            onClick={handleClick}
-            onTouchEnd={handleTouchEnd}
             style={{
                 position: "absolute",
                 inset: 0,
                 width: "100%",
                 height: "100%",
-                pointerEvents: "auto",
+                pointerEvents: "none",
                 zIndex: 450,
             }}
         />
