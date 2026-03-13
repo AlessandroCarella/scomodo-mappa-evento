@@ -90,6 +90,35 @@
     grid-column: 6;
 } /* TreeMap */
 
+/* ── mobile layout (<1200px) ── */
+@media (max-width: 1200px) {
+    .page {
+        gap: 1rem;
+    }
+
+    .topBar {
+        padding: 0.75rem 1rem;
+    }
+
+    .vizRow {
+        display: flex;
+        flex-direction: column;
+        padding: 0 1rem;
+        gap: 1.25rem;
+    }
+
+    /* Reorder: TopicContainer first, then CircleMap, then TreeMap */
+    .vizRow > *:nth-child(1) {
+        order: 2; /* CircleMap  */
+    }
+    .vizRow > *:nth-child(2) {
+        order: 1; /* TopicContainer */
+    }
+    .vizRow > *:nth-child(3) {
+        order: 3; /* TreeMap */
+    }
+}
+
 /* ── loading / error states ── */
 .state {
     display: flex;

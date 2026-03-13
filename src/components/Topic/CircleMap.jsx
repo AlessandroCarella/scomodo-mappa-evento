@@ -234,7 +234,7 @@ export default function CircleMap({ data, maxTopics = 5, palette = "Set3" }) {
 
     return (
         <div className={styles.wrapper}>
-            <ChartTitle title="Circle Packing" />
+            <ChartTitle title="Raggruppamento per topics" />
             <div className={styles.chartFrame}>
                 <svg ref={svgRef} className={styles.svg} />
             </div>

@@ -240,7 +240,7 @@ export default function TreeMap({ data, maxTopics = 5, palette = "Set3" }) {
 
     return (
         <div className={styles.wrapper}>
-            <ChartTitle title="Treemap" />
+            <ChartTitle title="Parole più frequenti" />
             <div className={styles.chartFrame}>
                 <svg ref={svgRef} className={styles.svg} />
             </div>

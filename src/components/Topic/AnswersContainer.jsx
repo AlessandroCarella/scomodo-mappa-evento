@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import TextBox from "./TextBox";
 import { useSelection } from "../../pages/Topic/store/selectionStore";
 
@@ -6,10 +6,29 @@ import styles from "./styles/AnswersContainer.module.css";
 
 export default function AnswersContainer() {
     const { selectedKeyword } = useSelection();
+    const containerRef = useRef(null);
+    const isFirstKeyword = useRef(true);
+
+    useEffect(() => {
+        if (selectedKeyword) {
+            // Skip scroll on the initial auto-selection at page load;
+            // only scroll when the user explicitly clicks a keyword.
+            if (isFirstKeyword.current) {
+                isFirstKeyword.current = false;
+                return;
+            }
+            if (containerRef.current) {
+                containerRef.current.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+            }
+        }
+    }, [selectedKeyword]);
 
     if (!selectedKeyword) {
         return (
-            <section className={styles.container}>
+            <section ref={containerRef} className={styles.container}>
                 <h3 className={styles.title}>
                     Clicca su una parola chiave per vedere le risposte
                 </h3>
@@ -20,7 +39,7 @@ export default function AnswersContainer() {
     const responses = selectedKeyword.responses ?? [];
 
     return (
-        <section className={styles.container}>
+        <section ref={containerRef} className={styles.container}>
             <h3 className={styles.title}>
                 Risposte per:{" "}
                 <span className={styles.keyword}>
