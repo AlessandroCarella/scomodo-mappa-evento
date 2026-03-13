@@ -1,0 +1,794 @@
+[
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei una città più verde con più alberi e parchi in ogni quartiere."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei una città più verde con più alberi e parchi in ogni quartiere."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei una città più verde con più alberi e parchi in ogni quartiere."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è un trasporto pubblico efficiente che colleghi tutta la città."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una Bari con meno traffico e più piste ciclabili sicure."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei vedere il lungomare sempre pulito e accessibile a tutti."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è una città dove i giovani non siano costretti ad andarsene."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più spazi culturali come teatri, biblioteche e musei aperti a tutti."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei un sistema di raccolta differenziata che funzioni davvero in tutta la città."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è avere scuole moderne con laboratori e spazi adeguati."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una Bari sicura dove si possa camminare di notte senza paura."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei più opportunità di lavoro per i giovani laureati del territorio."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è una città con meno burocrazia e servizi digitali efficienti."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno quartieri riqualificati dove le persone vogliano tornare a vivere."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei vedere il porto di Bari trasformato in uno spazio pubblico vivace."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è una rete di trasporti che colleghi Bari ai paesi della provincia."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più eventi culturali internazionali che portino turisti e investimenti."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei una città che investa sull'energia rinnovabile e la sostenibilità ambientale."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è avere più asili nido e servizi per le famiglie giovani."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una Bari dove il mare sia pulito e balneabile in tutta la costa."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei strade ben tenute e marciapiedi accessibili anche per le persone disabili."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è una città che valorizzi la sua storia e la sua cultura millenaria."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più mercati rionali dove comprare prodotti locali freschi ogni giorno."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei vedere meno cemento e più spazi verdi aperti nei quartieri periferici."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è una città con meno corruzione e più trasparenza nella gestione pubblica."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una rete di piste ciclabili che attraversi tutta la città in sicurezza."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei che il centro storico di Bari Vecchia fosse restaurato e valorizzato."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è che i giovani baresi possano costruire il loro futuro qui."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più coworking e spazi di innovazione per le startup del territorio."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei una città dove il mare sia al centro di ogni progetto urbanistico."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è avere un sistema sanitario locale più efficiente e accessibile."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una Bari cosmopolita e aperta al mondo, capace di attrarre talenti."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei più fontanelle pubbliche e aree di sosta ombreggiata in estate."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è che il Festival del Levante torni ad essere un evento internazionale."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno quartieri con servizi di prossimità come negozi, medici e scuole a piedi."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei meno auto parcheggiate sui marciapiedi e più rispetto dello spazio pubblico."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è una città che investa nella formazione e nell'istruzione di qualità."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una Bari dove non si senta la necessità di emigrare al nord per trovare lavoro."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei vedere riqualificato il quartiere Libertà con nuovi servizi e spazi verdi."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è un aeroporto con più collegamenti internazionali diretti."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più attività sportive gratuite nei parchi per bambini e anziani."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei una città che tuteli e valorizzi le sue tradizioni gastronomiche uniche."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è avere più illuminazione pubblica nei quartieri periferici."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una Bari che diventi polo universitario di eccellenza riconosciuto in Europa."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei più controllo della qualità dell'aria e politiche contro l'inquinamento."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è che la fiera del Levante torni a essere il cuore del commercio meridionale."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno spazi culturali nei quartieri dove i ragazzi possano esprimersi creativamente."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei un sistema di bike sharing efficiente e diffuso in tutta la città."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è una città dove le imprese locali vengano supportate e valorizzate."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una rete di trasporti pubblici notturni per chi lavora di sera."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei vedere più murales e arte urbana che abbelliscano i muri dei quartieri."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è che i baresi si sentano orgogliosi della loro città e la rispettino."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più iniziative di volontariato e comunità che coinvolgano i cittadini attivamente."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei che le spiagge libere fossero accessibili e ben gestite per tutti."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è avere più alberi lungo i viali cittadini per combattere il calore estivo."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una Bari con un piano urbanistico che rispetti il territorio e l'ambiente."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei vedere la stazione centrale di Bari rinnovata e collegata meglio al centro."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è una città che investa nel restauro dei palazzi storici abbandonati."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più servizi digitali per i cittadini, dalla prenotazione medica alle pratiche comunali."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei meno rifiuti per strada e più coscienza civica nei comportamenti quotidiani."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è una città inclusiva dove tutti abbiano le stesse opportunità."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una Bari che diventi meta del turismo culturale e gastronomico internazionale."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei più campetti e strutture sportive nei quartieri per i giovani."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è che le famiglie possano permettersi di vivere in centro città."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno iniziative di riconversione degli edifici abbandonati in spazi comunitari."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei una città che sostenga gli artisti e i creativi locali con fondi e spazi."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è un porto turistico moderno che attiri crocieristi da tutta Europa."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più collaborazione tra università, imprese e comune per lo sviluppo locale."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei che i bambini potessero giocare in sicurezza nelle strade del quartiere."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è una Bari pulita dove chi sporca venga sanzionato con più rigore."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una città più solidale dove nessuno rimanga indietro per difficoltà economiche."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei più mense sociali e servizi per le persone in stato di fragilità."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è avere una metropolitana leggera che colleghi i quartieri più lontani."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una Bari che valorizzi la cultura contadina e i prodotti dell'entroterra pugliese."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei più eventi gratuiti all'aperto durante l'estate per tutte le famiglie."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è che il turismo porti benessere a tutti i baresi, non solo a pochi."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una città con più spazi di aggregazione per anziani nei quartieri periferici."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei che le scuole insegnino il rispetto per l'ambiente fin dalla prima infanzia."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è una Bari dove si investa seriamente nella digitalizzazione della pubblica amministrazione."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più panchine e aree di sosta nel centro storico per i turisti e i cittadini."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei che i mercati storici come il mercato del pesce fossero valorizzati e tutelati."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è una rete di orti urbani comunitari in ogni quartiere della città."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più autobus elettrici e mezzi pubblici a basse emissioni."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei una città che collabori con le città del Mediterraneo per progetti comuni."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è avere più servizi per l'integrazione delle comunità straniere residenti a Bari."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una Bari dove fare impresa sia semplice e lo Stato aiuti concretamente chi vuole crescere."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei più cinema d'essai e sale polivalenti nei quartieri fuori dal centro."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è che il waterfront di Bari diventi uno dei più belli d'Italia."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno iniziative per ridurre il consumo di plastica e promuovere l'economia circolare."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei che le biblioteche comunali fossero aperte anche la sera e il fine settimana."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è una città dove i disabili possano muoversi liberamente senza barriere architettoniche."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più connessione tra generazioni diverse attraverso progetti intergenerazionali nei quartieri."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei che il comune ascoltasse di più le proposte dei cittadini nelle scelte urbanistiche."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio sogno è una Bari che attragga investimenti esteri mantenendo la sua identità culturale."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno più turismo sostenibile che rispetti la città e non la snaturi."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei un sistema scolastico locale che formi i ragazzi alle competenze del futuro."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Il mio desiderio è vedere il Teatro Petruzzelli al centro di una stagione culturale ricca e accessibile."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Sogno una città dove sia facile e sicuro fare una passeggiata in bici dalla periferia al mare."
+    },
+    {
+        "nome": "",
+        "eta": 1,
+        "cittaPartenza": "",
+        "cittaArrivo": "",
+        "data": "",
+        "storia": "Vorrei che Bari diventasse un modello di città sostenibile e innovativa per tutto il Mezzogiorno."
+    }
+]
