@@ -12,8 +12,22 @@ export const DATA_PATHS = {
 };
 
 // ── Map tile layer ─────────────────────────────────────────────
-export const TILE_URL =
-    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png";
+export const TILE_URL = 
+    // satellite carino
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}" 
+    // // scuro ma con i nomi delle regioni
+    // "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}" 
+    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}"
+    // "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png"
+    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+
+    // "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //base
+    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
+    // "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
+    // "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
+    // "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png"
+    // "https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png"
+    // "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"; //bianco nera
 
 export const TILE_ATTRIBUTION =
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors ' +

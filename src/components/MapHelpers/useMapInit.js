@@ -55,15 +55,15 @@ export function useMapInit(containerRef) {
                 if (!mapRef.current || mapRef.current !== map) return;
 
                 // Italy highlight polygon
-                L.geoJSON(geoJSON, { style: ITALY_POLYGON_STYLE }).addTo(map);
+                // L.geoJSON(geoJSON, { style: ITALY_POLYGON_STYLE }).addTo(map);
 
-                // World dim-mask (inverted polygon)
-                L.polygon(buildItalyMask(geoJSON), {
-                    fillColor: "#000",
-                    fillOpacity: WORLD_MASK_OPACITY,
-                    stroke: false,
-                    interactive: false,
-                }).addTo(map);
+                // // World dim-mask (inverted polygon)
+                // L.polygon(buildItalyMask(geoJSON), {
+                //     fillColor: "#000",
+                //     fillOpacity: WORLD_MASK_OPACITY,
+                //     stroke: false,
+                //     interactive: false,
+                // }).addTo(map);
 
                 setReady(true);
             })
