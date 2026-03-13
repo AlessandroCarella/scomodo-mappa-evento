@@ -1,0 +1,124 @@
+.bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 18px 24px;
+    background: #ffffff;
+    border: 1px solid #dde1e7;
+    border-radius: 12px;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.label {
+    font-family: "DM Sans", "Segoe UI", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a2336;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.sliderRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 200px;
+    height: 4px;
+    background: #dde1e7;
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.2s ease;
+}
+
+.slider:hover {
+    background: #b0b8c4;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #3498db;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(52, 152, 219, 0.4);
+    cursor: pointer;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.55);
+}
+
+.slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #3498db;
+    border: 2px solid #fff;
+    cursor: pointer;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 24px;
+    padding: 0 8px;
+    background: #3498db;
+    color: #fff;
+    font-family: "DM Mono", "Fira Code", monospace;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    user-select: none;
+}
+
+.select {
+    padding: 7px 14px;
+    border: 2px solid #dde1e7;
+    border-radius: 8px;
+    background: #fff;
+    color: #1a2336;
+    font-family: "DM Sans", "Segoe UI", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 32px;
+}
+
+.select:hover {
+    border-color: #3498db;
+}
+
+.select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.18);
+}
