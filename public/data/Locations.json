@@ -1,12 +1,177 @@
 [
-    { "name": "Milano", "lat": 45.464, "lng": 9.188 },
-    { "name": "Roma", "lat": 41.893, "lng": 12.483 },
-    { "name": "Venezia", "lat": 45.437, "lng": 12.335 },
-    { "name": "Napoli", "lat": 40.853, "lng": 14.268 },
-    { "name": "Torino", "lat": 45.07, "lng": 7.686 },
-    { "name": "Bari", "lat": 41.125, "lng": 16.866 },
-    { "name": "Firenze", "lat": 43.769, "lng": 11.256 },
-    { "name": "Palermo", "lat": 38.115, "lng": 13.361 },
-    { "name": "Bologna", "lat": 44.493, "lng": 11.342 },
-    { "name": "Catania", "lat": 37.502, "lng": 15.087 }
+    {
+        "name": "Marsiglia",
+        "lat": 44.4637211,
+        "lng": 9.0645451
+    },
+    {
+        "name": "Torino",
+        "lat": 45.0677551,
+        "lng": 7.6824892
+    },
+    {
+        "name": "Madrid",
+        "lat": 40.416782,
+        "lng": -3.703507
+    },
+    {
+        "name": "Copenaghen",
+        "lat": 55.6867243,
+        "lng": 12.5700724
+    },
+    {
+        "name": "Milano",
+        "lat": 45.4641943,
+        "lng": 9.1896346
+    },
+    {
+        "name": "Varsavia",
+        "lat": 52.2319581,
+        "lng": 21.0067249
+    },
+    {
+        "name": "Bologna",
+        "lat": 44.4938203,
+        "lng": 11.3426327
+    },
+    {
+        "name": "Lione",
+        "lat": -13.6475017,
+        "lng": 35.1620275
+    },
+    {
+        "name": "Genova",
+        "lat": 44.40726,
+        "lng": 8.9338624
+    },
+    {
+        "name": "Venezia",
+        "lat": 45.4371908,
+        "lng": 12.3345898
+    },
+    {
+        "name": "Amsterdam",
+        "lat": 52.3730796,
+        "lng": 4.8924534
+    },
+    {
+        "name": "Atene",
+        "lat": 14.6398984,
+        "lng": 121.0781952
+    },
+    {
+        "name": "Londra",
+        "lat": -15.9034782,
+        "lng": -44.3030383
+    },
+    {
+        "name": "Firenze",
+        "lat": 43.7697955,
+        "lng": 11.2556404
+    },
+    {
+        "name": "Napoli",
+        "lat": 40.8358846,
+        "lng": 14.2487679
+    },
+    {
+        "name": "Roma",
+        "lat": 41.8933203,
+        "lng": 12.4829321
+    },
+    {
+        "name": "Vienna",
+        "lat": 48.2083537,
+        "lng": 16.3725042
+    },
+    {
+        "name": "Bruxelles",
+        "lat": 50.8467372,
+        "lng": 4.352493
+    },
+    {
+        "name": "Oslo",
+        "lat": 59.9133301,
+        "lng": 10.7389701
+    },
+    {
+        "name": "Lisbona",
+        "lat": 38.7077507,
+        "lng": -9.1365919
+    },
+    {
+        "name": "Monaco",
+        "lat": 43.7311424,
+        "lng": 7.4197576
+    },
+    {
+        "name": "Stoccolma",
+        "lat": 44.2964315,
+        "lng": 11.1819221
+    },
+    {
+        "name": "Rotterdam",
+        "lat": 51.9244424,
+        "lng": 4.47775
+    },
+    {
+        "name": "Budapest",
+        "lat": 47.4813896,
+        "lng": 19.1460941
+    },
+    {
+        "name": "Berlino",
+        "lat": 52.5173885,
+        "lng": 13.3951309
+    },
+    {
+        "name": "Barcellona",
+        "lat": 41.3825802,
+        "lng": 2.177073
+    },
+    {
+        "name": "Bari",
+        "lat": 41.1257843,
+        "lng": 16.8620293
+    },
+    {
+        "name": "Amburgo",
+        "lat": 49.4543662,
+        "lng": 11.8474021
+    },
+    {
+        "name": "Palermo",
+        "lat": 38.1112268,
+        "lng": 13.3524434
+    },
+    {
+        "name": "Praga",
+        "lat": 50.0850112,
+        "lng": 14.4265172
+    },
+    {
+        "name": "Siviglia",
+        "lat": 37.587794,
+        "lng": 14.155048
+    },
+    {
+        "name": "Dublino",
+        "lat": 53.3493795,
+        "lng": -6.2605593
+    },
+    {
+        "name": "Brema",
+        "lat": 53.0758196,
+        "lng": 8.8071646
+    },
+    {
+        "name": "Parigi",
+        "lat": 1.7859332,
+        "lng": 99.6936214
+    },
+    {
+        "name": "Zurigo",
+        "lat": 47.3744489,
+        "lng": 8.5410422
+    }
 ]
