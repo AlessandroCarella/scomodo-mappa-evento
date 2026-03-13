@@ -88,3 +88,7 @@ export const PIN_STYLE = {
     fillOpacity: 0.95,
     opacity: 0.9,
 };
+
+// ── Stories overlay / connection interaction ────────────────────
+export const ENABLE_CONNECTION_HITBOX = true;
+export const CONNECTION_HITBOX_WIDTH = 25;

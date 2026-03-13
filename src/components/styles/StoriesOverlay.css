@@ -1,0 +1,186 @@
+/* Modal backdrop */
+.stories-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(10, 10, 12, 0.68);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+}
+
+.stories-overlay__panel {
+    width: min(1000px, 96vw);
+    max-height: min(84vh, 900px);
+    overflow: hidden;
+    border-radius: 18px;
+    background: rgba(245, 239, 220, 0.92);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(20, 20, 22, 0.15);
+    position: relative;
+}
+
+.stories-overlay__close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid rgba(20, 20, 22, 0.2);
+    background: rgba(255, 255, 255, 0.65);
+    color: rgba(20, 20, 22, 0.9);
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.stories-overlay__close:hover {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.stories-overlay__header {
+    padding: 18px 18px 12px;
+    border-bottom: 1px dashed rgba(20, 20, 22, 0.18);
+}
+
+.stories-overlay__title {
+    font-family: "Syne", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    color: rgba(20, 20, 22, 0.92);
+}
+
+.stories-overlay__subtitle {
+    margin-top: 6px;
+    font-family: "Syne Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+        Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 12px;
+    color: rgba(20, 20, 22, 0.68);
+}
+
+.stories-overlay__list {
+    padding: 16px;
+    overflow: auto;
+    max-height: calc(min(84vh, 900px) - 74px);
+    display: grid;
+    gap: 14px;
+}
+
+/* Post-it card */
+.story-postit {
+    border-radius: 14px;
+    padding: 16px;
+    background: linear-gradient(180deg, #fff6b8 0%, #ffe98f 100%);
+    border: 1px solid rgba(40, 35, 18, 0.18);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+    display: grid;
+    gap: 14px;
+}
+
+.story-postit:nth-child(3n + 1) {
+    transform: rotate(-0.35deg);
+}
+.story-postit:nth-child(3n + 2) {
+    transform: rotate(0.25deg);
+}
+.story-postit:nth-child(3n) {
+    transform: rotate(-0.1deg);
+}
+
+.story-postit__meta {
+    display: grid;
+    gap: 10px;
+}
+
+.story-postit__row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.story-postit__label {
+    font-family: "Syne", system-ui, sans-serif;
+    font-weight: 650;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(20, 20, 22, 0.75);
+}
+
+.story-postit__text {
+    font-family: "Syne", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(20, 20, 22, 0.9);
+    white-space: pre-wrap;
+}
+
+/* Split-flap */
+.splitflap {
+    display: inline-flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    font-family: "Syne Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+        Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.splitflap__char {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 26px;
+    padding: 0 6px;
+    border-radius: 6px;
+    background: rgba(18, 18, 20, 0.92);
+    color: rgba(245, 245, 245, 0.95);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.splitflap__char::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    top: 50%;
+    height: 1px;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* Responsive: stack meta on top of text on mobile, side-by-side on desktop */
+@media (min-width: 820px) {
+    .story-postit {
+        grid-template-columns: 340px 1fr;
+        align-items: start;
+        gap: 18px;
+    }
+
+    .story-postit__meta {
+        padding-right: 10px;
+        border-right: 1px dashed rgba(40, 35, 18, 0.22);
+    }
+
+    .story-postit__text {
+        padding-left: 8px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 420px) {
+    .story-postit__row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+}
+
