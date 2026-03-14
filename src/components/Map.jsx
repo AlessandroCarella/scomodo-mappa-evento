@@ -1,10 +1,12 @@
 import "./styles/Map.css";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Pin from "./Pin";
 import RouteConnections from "./RouteConnections";
 import StoriesOverlay from "./StoriesOverlay";
 import Banner from "./Banner";
 import { useMapInit } from "./MapHelpers/useMapInit";
+import { useWasdNavigation } from "./MapHelpers/useWasdNavigation";
+import { useGamepad } from "./MapHelpers/useGamepad";
 import { processConnections } from "./ConnectionHelpers/connectionUtils";
 
 // Vite's BASE_URL respects the `base` option in vite.config.js.
@@ -19,11 +21,13 @@ export default function Map() {
     const { mapRef, ready } = useMapInit(containerRef);
 
     const [allStories, setAllStories] = useState([]);
+    const allStoriesRef = useRef([]);
     const [locations, setLocations] = useState([]);
     const [paths, setPaths] = useState([]);
     const [dataReady, setDataReady] = useState(false);
 
     const [activeStories, setActiveStories] = useState([]);
+    const isStoriesOpenRef = useRef(false);
 
     useEffect(() => {
         Promise.all([
@@ -60,6 +64,7 @@ export default function Map() {
                 );
 
                 setLocations(rawLocations);
+                allStoriesRef.current = rawStories;
                 setAllStories(rawStories);
                 setPaths(
                     conns.map((c) => ({ from: c.from.name, to: c.to.name })),
@@ -75,17 +80,90 @@ export default function Map() {
                 (s.cittaPartenza === fromName && s.cittaArrivo === toName) ||
                 (s.cittaPartenza === toName && s.cittaArrivo === fromName),
         );
-        setActiveStories(matches);
+        openStories(matches);
     }
 
     function handlePinClick(locationName) {
-        const matches = allStories.filter(
+        if (!locationName) return;
+        const matches = allStoriesRef.current.filter(
             (s) =>
                 s.cittaArrivo === locationName ||
                 s.cittaPartenza === locationName,
         );
-        setActiveStories(matches);
+        openStories(matches);
     }
+
+    const wasdTooltipRef = useRef(null);
+    const handleCityReached = useCallback(
+        (cityName) => {
+            const map = mapRef.current;
+            if (!map) return;
+
+            // Remove previous tooltip if any
+            if (wasdTooltipRef.current) {
+                wasdTooltipRef.current.remove();
+                wasdTooltipRef.current = null;
+            }
+
+            const city = locations.find((l) => l.name === cityName);
+            if (!city) return;
+            import("leaflet").then(({ default: L }) => {
+                const t = L.tooltip({
+                    permanent: true,
+                    direction: "top",
+                    offset: [0, -14],
+                    className: "pin-tooltip pin-tooltip--wasd",
+                })
+                    .setLatLng([city.lat, city.lng])
+                    .setContent(
+                        '<span class="pin-tooltip-name">' +
+                            city.name +
+                            "</span>",
+                    )
+                    .addTo(map);
+
+                wasdTooltipRef.current = t;
+
+                // Auto-dismiss after 2.5 s
+                setTimeout(() => {
+                    if (wasdTooltipRef.current === t) {
+                        t.remove();
+                        wasdTooltipRef.current = null;
+                    }
+                }, 2500);
+            });
+        },
+        [mapRef, locations],
+    );
+
+    const closeStories = () => {
+        isStoriesOpenRef.current = false;
+        setActiveStories([]);
+    };
+    const openStories = (matches) => {
+        if (matches.length > 0) {
+            isStoriesOpenRef.current = true;
+            setActiveStories(matches);
+        }
+    };
+
+    const { isAnimatingRef, currentCityRef, navigateToRef } = useWasdNavigation(
+        mapRef,
+        ready,
+        {
+            onCityReached: handleCityReached,
+            isStoriesOpenRef,
+        },
+    );
+
+    useGamepad(mapRef, ready, {
+        onPinClick: handlePinClick,
+        currentCityRef,
+        isAnimatingRef,
+        isStoriesOpenRef,
+        onCloseStories: closeStories,
+        navigateToRef,
+    });
 
     const showOverlay = ready && dataReady;
 
@@ -128,7 +206,7 @@ export default function Map() {
             {activeStories.length > 0 && (
                 <StoriesOverlay
                     stories={activeStories}
-                    onClose={() => setActiveStories([])}
+                    onClose={closeStories}
                 />
             )}
         </div>
