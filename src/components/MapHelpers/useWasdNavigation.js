@@ -1,19 +1,18 @@
-import { useEffect } from "react";
-import L from "leaflet";
+import { useEffect, useRef } from "react";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 const LOCATIONS_URL = `${BASE}/data/Locations.json`;
 
-/**
- * useWasdNavigation
- *
- * W/A/S/D — navigate map city to city.
- * On arrival, calls onCityReached(cityName) so the caller can show the pin tooltip.
- *
- * Also supports gamepad right stick (axes 2/3) via the Gamepad API —
- * same directional logic, triggered when stick deflection > threshold.
- */
-export function useWasdNavigation(mapRef, ready, { onCityReached } = {}) {
+export function useWasdNavigation(
+    mapRef,
+    ready,
+    { onCityReached, isStoriesOpenRef } = {},
+) {
+    const isAnimatingRef = useRef(false);
+    const currentCityRef = useRef(null);
+    // Exposed so useGamepad can call navigate from the right stick
+    const navigateToRef = useRef(null);
+
     useEffect(() => {
         if (!ready || !mapRef.current) return;
 
@@ -23,13 +22,27 @@ export function useWasdNavigation(mapRef, ready, { onCityReached } = {}) {
             .then((r) => r.json())
             .then((data) => {
                 cities = data;
+                // Init currentCity to the nearest city to the initial map centre
+                const centre = mapRef.current?.getCenter();
+                if (centre && !currentCityRef.current) {
+                    let best = null,
+                        bestDist = Infinity;
+                    for (const city of cities) {
+                        const d = Math.hypot(
+                            city.lat - centre.lat,
+                            city.lng - centre.lng,
+                        );
+                        if (d < bestDist) {
+                            bestDist = d;
+                            best = city;
+                        }
+                    }
+                    if (best) currentCityRef.current = best.name;
+                }
+                // Make navigateTo available to consumers (e.g. useGamepad right stick)
+                navigateToRef.current = navigateTo;
             })
-            .catch((err) =>
-                console.error(
-                    "useWasdNavigation: failed to load locations",
-                    err,
-                ),
-            );
+            .catch((err) => console.error("useWasdNavigation:", err));
 
         const KEY_DIR = {
             w: { dlat: 1, dlng: 0 },
@@ -39,7 +52,13 @@ export function useWasdNavigation(mapRef, ready, { onCityReached } = {}) {
         };
 
         const navigateTo = (dir) => {
-            if (!mapRef.current || cities.length === 0) return;
+            if (
+                isAnimatingRef.current ||
+                isStoriesOpenRef?.current ||
+                !mapRef.current ||
+                cities.length === 0
+            )
+                return;
             const map = mapRef.current;
             const centre = map.getCenter();
 
@@ -50,9 +69,11 @@ export function useWasdNavigation(mapRef, ready, { onCityReached } = {}) {
                 const dlng = city.lng - centre.lng;
                 if (Math.abs(dlat) < 0.01 && Math.abs(dlng) < 0.01) continue;
                 const dot = dir.dlat * dlat + dir.dlng * dlng;
-                if (dot <= 0) continue;
+                // Cone at ~120°: also accepts cities slightly off-axis
+                if (dot <= -0.3) continue;
                 const dist = Math.sqrt(dlat * dlat + dlng * dlng);
-                const score = dot / dist - dist * 0.01;
+                // Reward alignment, penalise distance slightly
+                const score = dot / dist - dist * 0.008;
                 if (score > bestScore) {
                     bestScore = score;
                     best = city;
@@ -60,6 +81,11 @@ export function useWasdNavigation(mapRef, ready, { onCityReached } = {}) {
             }
 
             if (best) {
+                isAnimatingRef.current = true;
+                currentCityRef.current = best.name;
+                map.once("moveend", () => {
+                    isAnimatingRef.current = false;
+                });
                 map.flyTo([best.lat, best.lng], map.getZoom(), {
                     animate: true,
                     duration: 0.6,
@@ -71,7 +97,11 @@ export function useWasdNavigation(mapRef, ready, { onCityReached } = {}) {
         const onKey = (e) => {
             if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")
                 return;
-            const dir = KEY_DIR[e.key.toLowerCase()];
+            // Stories overlay: block all keyboard navigation
+            if (isStoriesOpenRef?.current) return;
+
+            const key = e.key.toLowerCase();
+            const dir = KEY_DIR[key];
             if (!dir) return;
             e.preventDefault();
             navigateTo(dir);
@@ -79,45 +109,11 @@ export function useWasdNavigation(mapRef, ready, { onCityReached } = {}) {
 
         window.addEventListener("keydown", onKey);
 
-        // ── Gamepad right stick ──────────────────────────────────
-        // Polled in rAF loop (Gamepad API is not event-driven for axes)
-        let animFrame;
-        let stickCooldown = 0; // ms timestamp until next repeat is allowed
-        const STICK_THRESHOLD = 0.5;
-        const STICK_COOLDOWN_MS = 400;
-
-        const pollGamepad = (now) => {
-            animFrame = requestAnimationFrame(pollGamepad);
-            const pads = navigator.getGamepads?.() ?? [];
-            for (const pad of pads) {
-                if (!pad) continue;
-                const ax = pad.axes[2] ?? 0; // right stick X
-                const ay = pad.axes[3] ?? 0; // right stick Y
-                if (now < stickCooldown) continue;
-                if (
-                    Math.abs(ax) < STICK_THRESHOLD &&
-                    Math.abs(ay) < STICK_THRESHOLD
-                )
-                    continue;
-                // Dominant axis wins
-                const dir =
-                    Math.abs(ax) > Math.abs(ay)
-                        ? ax > 0
-                            ? { dlat: 0, dlng: 1 }
-                            : { dlat: 0, dlng: -1 }
-                        : ay > 0
-                          ? { dlat: -1, dlng: 0 }
-                          : { dlat: 1, dlng: 0 };
-                navigateTo(dir);
-                stickCooldown = now + STICK_COOLDOWN_MS;
-                break;
-            }
-        };
-        animFrame = requestAnimationFrame(pollGamepad);
-
         return () => {
             window.removeEventListener("keydown", onKey);
-            cancelAnimationFrame(animFrame);
+            navigateToRef.current = null;
         };
-    }, [mapRef, ready, onCityReached]);
+    }, [mapRef, ready, onCityReached, isStoriesOpenRef]);
+
+    return { isAnimatingRef, currentCityRef, navigateToRef };
 }

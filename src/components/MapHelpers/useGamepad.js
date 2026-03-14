@@ -1,39 +1,57 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-/**
- * useGamepad
- *
- * Maps Xbox controller to Leaflet map:
- *   Left stick  (axes 0/1) → pan  (like arrow keys)
- *   Right stick (axes 2/3) → WASD city navigation (handled in useWasdNavigation)
- *   LB (button 4)          → zoom out
- *   RB (button 5)          → zoom in
- *
- * Pan uses continuous rAF polling with velocity proportional to stick deflection.
- * Zoom fires once per button press (with a small cooldown).
- */
-export function useGamepad(mapRef, ready) {
+export function useGamepad(
+    mapRef,
+    ready,
+    {
+        onPinClick,
+        currentCityRef,
+        isAnimatingRef,
+        isStoriesOpenRef,
+        onCloseStories,
+        navigateToRef,
+    } = {},
+) {
+    // Keep refs to callbacks so the rAF loop always calls the latest version
+    const onPinClickRef = useRef(onPinClick);
+    useEffect(() => {
+        onPinClickRef.current = onPinClick;
+    }, [onPinClick]);
+
+    const onCloseStoriesRef = useRef(onCloseStories);
+    useEffect(() => {
+        onCloseStoriesRef.current = onCloseStories;
+    }, [onCloseStories]);
+
     useEffect(() => {
         if (!ready || !mapRef.current) return;
 
-        const PAN_SPEED = 400; // pixels per second at full deflection
-        const DEAD_ZONE = 0.12;
-        const ZOOM_COOLDOWN = 600; // ms between zoom steps
-        const STICK_THRESHOLD = 0.12;
+        // ── Left stick / LB / RB / A / B ─────────────────────────
+        const PAN_SPEED = 400;
+        const DEAD_ZONE = 0.15;
+        const ZOOM_COOLDOWN = 600;
 
         let animFrame;
         let lastTime = performance.now();
         let zoomCooldown = 0;
+        let prevLB = false,
+            prevRB = false,
+            prevLT = false,
+            prevRT = false,
+            prevA = false,
+            prevB = false;
 
-        // Track which buttons were pressed last frame to detect edges
-        const prevButtons = {};
+        // ── Right stick navigation ────────────────────────────────
+        let stickCooldown = 0;
+        const STICK_THRESHOLD = 0.5;
+        const STICK_COOLDOWN_MS = 400;
 
         const poll = (now) => {
             animFrame = requestAnimationFrame(poll);
             const map = mapRef.current;
             if (!map) return;
 
-            const dt = (now - lastTime) / 1000; // seconds
+            const dt = Math.min((now - lastTime) / 1000, 0.1);
             lastTime = now;
 
             const pads = navigator.getGamepads?.() ?? [];
@@ -41,37 +59,88 @@ export function useGamepad(mapRef, ready) {
                 if (!pad) continue;
 
                 // ── Left stick → pan ──────────────────────────────
-                const lx = Math.abs(pad.axes[0]) > DEAD_ZONE ? pad.axes[0] : 0;
-                const ly = Math.abs(pad.axes[1]) > DEAD_ZONE ? pad.axes[1] : 0;
-
-                if (lx !== 0 || ly !== 0) {
-                    const dx = lx * PAN_SPEED * dt;
-                    const dy = ly * PAN_SPEED * dt;
-                    map.panBy([dx, dy], { animate: false });
+                if (!isAnimatingRef?.current && !isStoriesOpenRef?.current) {
+                    const lx =
+                        Math.abs(pad.axes[0]) > DEAD_ZONE ? pad.axes[0] : 0;
+                    const ly =
+                        Math.abs(pad.axes[1]) > DEAD_ZONE ? pad.axes[1] : 0;
+                    if (lx !== 0 || ly !== 0)
+                        map.panBy([lx * PAN_SPEED * dt, ly * PAN_SPEED * dt], {
+                            animate: false,
+                        });
                 }
 
-                // ── LB (4) / RB (5) → zoom ────────────────────────
+                // ── LB / RB / LT / RT → zoom ─────────────────────────────
                 const lb = pad.buttons[4]?.pressed ?? false;
                 const rb = pad.buttons[5]?.pressed ?? false;
-
+                const lt = (pad.buttons[6]?.value ?? 0) > 0.5;
+                const rt = (pad.buttons[7]?.value ?? 0) > 0.5;
                 if (now >= zoomCooldown) {
-                    if (lb && !prevButtons[4]) {
+                    if ((lb && !prevLB) || (lt && !prevLT)) {
                         map.zoomOut(1, { animate: true });
                         zoomCooldown = now + ZOOM_COOLDOWN;
                     }
-                    if (rb && !prevButtons[5]) {
+                    if ((rb && !prevRB) || (rt && !prevRT)) {
                         map.zoomIn(1, { animate: true });
                         zoomCooldown = now + ZOOM_COOLDOWN;
                     }
                 }
+                prevLB = lb;
+                prevRB = rb;
+                prevLT = lt;
+                prevRT = rt;
 
-                prevButtons[4] = lb;
-                prevButtons[5] = rb;
-                break; // first connected pad wins
+                // ── Right stick → navigate to next city ──────────
+                if (
+                    !isAnimatingRef?.current &&
+                    !isStoriesOpenRef?.current &&
+                    navigateToRef?.current &&
+                    now >= stickCooldown
+                ) {
+                    const ax = pad.axes[2] ?? 0;
+                    const ay = pad.axes[3] ?? 0;
+                    if (
+                        Math.abs(ax) >= STICK_THRESHOLD ||
+                        Math.abs(ay) >= STICK_THRESHOLD
+                    ) {
+                        const dir =
+                            Math.abs(ax) > Math.abs(ay)
+                                ? ax > 0
+                                    ? { dlat: 0, dlng: 1 }
+                                    : { dlat: 0, dlng: -1 }
+                                : ay > 0
+                                  ? { dlat: -1, dlng: 0 }
+                                  : { dlat: 1, dlng: 0 };
+                        navigateToRef.current(dir);
+                        stickCooldown = now + STICK_COOLDOWN_MS;
+                    }
+                }
+
+                // ── A → open stories (only when stories NOT open) ─
+                const a = pad.buttons[0]?.pressed ?? false;
+                if (a && !prevA && !isStoriesOpenRef?.current) {
+                    const city = currentCityRef?.current;
+                    if (city) onPinClickRef.current?.(city);
+                }
+                prevA = a;
+
+                // ── B → close stories ─────────────────────────────
+                const b = pad.buttons[1]?.pressed ?? false;
+                if (b && !prevB) onCloseStoriesRef.current?.();
+                prevB = b;
+
+                break;
             }
         };
 
         animFrame = requestAnimationFrame(poll);
         return () => cancelAnimationFrame(animFrame);
-    }, [mapRef, ready]);
+    }, [
+        mapRef,
+        ready,
+        currentCityRef,
+        isAnimatingRef,
+        isStoriesOpenRef,
+        navigateToRef,
+    ]);
 }
