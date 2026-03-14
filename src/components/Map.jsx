@@ -4,8 +4,13 @@ import Pin from "./Pin";
 import RouteConnections from "./RouteConnections";
 import StoriesOverlay from "./StoriesOverlay";
 import Banner from "./Banner";
+import QRcode from "./QRcode";
+import StoryFormButton from "./StoryFormButton";
+import StoryForm from "./StoryForm";
 import { useMapInit } from "./MapHelpers/useMapInit";
+import { useWasdNavigation } from "./MapHelpers/useWasdNavigation";
 import { processConnections } from "./ConnectionHelpers/connectionUtils";
+import { QR_ENABLED, QR_LINK, QR_SIZE, FORM_ENABLED } from "../config";
 
 // Vite's BASE_URL respects the `base` option in vite.config.js.
 // Without this prefix, fetches return index.html (→ JSON parse error)
@@ -17,6 +22,7 @@ const STORIES_URL = `${BASE}/data/storie.json`;
 export default function Map() {
     const containerRef = useRef(null);
     const { mapRef, ready } = useMapInit(containerRef);
+    useWasdNavigation(mapRef, ready);
 
     const [allStories, setAllStories] = useState([]);
     const [locations, setLocations] = useState([]);
@@ -24,6 +30,7 @@ export default function Map() {
     const [dataReady, setDataReady] = useState(false);
 
     const [activeStories, setActiveStories] = useState([]);
+    const [formOpen, setFormOpen] = useState(false);
 
     useEffect(() => {
         Promise.all([
@@ -123,14 +130,26 @@ export default function Map() {
                     />
                 ))}
 
-            <Banner />
+            {/* Banner is hidden while the form is open */}
+            <Banner forceHidden={formOpen} />
 
+            {QR_ENABLED && <QRcode link={QR_LINK} size={QR_SIZE} />}
+
+            {/* Story submission button — bottom-right */}
+            {FORM_ENABLED && (
+                <StoryFormButton onClick={() => setFormOpen(true)} />
+            )}
+
+            {/* Stories reading overlay */}
             {activeStories.length > 0 && (
                 <StoriesOverlay
                     stories={activeStories}
                     onClose={() => setActiveStories([])}
                 />
             )}
+
+            {/* Story submission form overlay */}
+            {formOpen && <StoryForm onClose={() => setFormOpen(false)} />}
         </div>
     );
 }

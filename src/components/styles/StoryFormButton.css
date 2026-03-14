@@ -1,0 +1,152 @@
+/* ── Positioning ─────────────────────────────────────────────── */
+/*
+ * Mirrors .qr-anchor (bottom-left) but placed bottom-right so the
+ * two cards frame the map symmetrically.
+ */
+.form-btn-anchor {
+    position: absolute;
+    bottom: 18px;
+    right: 18px;
+    z-index: 600;
+
+    animation: form-btn-fadein 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation-delay: 0.15s; /* slight offset from QR card */
+}
+
+@keyframes form-btn-fadein {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Card shell ──────────────────────────────────────────────── */
+.form-btn-card {
+    position: relative;
+    width: var(--form-btn-size, min(25vw, 25vh));
+    height: var(--form-btn-size, min(25vw, 25vh));
+
+    border-radius: 10px;
+    overflow: hidden;
+
+    background: rgba(6, 10, 20, 0.88);
+    border: 1px solid rgba(180, 160, 120, 0.35);
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.55),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    cursor: pointer;
+    transition:
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        transform 0.22s ease;
+
+    /* Reset default button styles */
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.form-btn-card:hover {
+    border-color: rgba(224, 208, 176, 0.6);
+    box-shadow:
+        0 8px 36px rgba(0, 0, 0, 0.65),
+        0 0 0 1px rgba(224, 208, 176, 0.12);
+    transform: translateY(-2px) scale(1.015);
+}
+
+.form-btn-card:hover .form-btn-plus {
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* ── Inner content ───────────────────────────────────────────── */
+.form-btn-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12%;
+}
+
+.form-btn-plus {
+    font-family: "Syne", sans-serif;
+    font-size: clamp(22px, 5vmin, 38px);
+    font-weight: 300;
+    line-height: 1;
+    color: rgba(224, 208, 176, 0.85);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    user-select: none;
+}
+
+.form-btn-label {
+    font-family: "Syne Mono", ui-monospace, monospace;
+    font-size: clamp(7px, 1.4vmin, 11px);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(180, 160, 120, 0.7);
+    text-align: center;
+    line-height: 1.4;
+    user-select: none;
+}
+
+/* ── Corner accents — identical to QRcode ────────────────────── */
+.form-btn-corner {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    opacity: 0.45;
+}
+.form-btn-corner--tl {
+    top: 5px;
+    left: 5px;
+    border-top: 1.5px solid #b4a080;
+    border-left: 1.5px solid #b4a080;
+}
+.form-btn-corner--tr {
+    top: 5px;
+    right: 5px;
+    border-top: 1.5px solid #b4a080;
+    border-right: 1.5px solid #b4a080;
+}
+.form-btn-corner--bl {
+    bottom: 5px;
+    left: 5px;
+    border-bottom: 1.5px solid #b4a080;
+    border-left: 1.5px solid #b4a080;
+}
+.form-btn-corner--br {
+    bottom: 5px;
+    right: 5px;
+    border-bottom: 1.5px solid #b4a080;
+    border-right: 1.5px solid #b4a080;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    .form-btn-anchor {
+        bottom: 12px;
+        right: 12px;
+    }
+    .form-btn-card {
+        border-radius: 8px;
+    }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+    .form-btn-anchor {
+        bottom: 10px;
+        right: 10px;
+    }
+}

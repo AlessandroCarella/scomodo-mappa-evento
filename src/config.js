@@ -12,23 +12,23 @@ export const DATA_PATHS = {
 };
 
 // ── Map tile layer ─────────────────────────────────────────────
-export const TILE_URL = 
+export const TILE_URL =
     // satellite carino
-    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}" 
-    // // scuro ma con i nomi delle regioni
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}" 
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}"
-    // "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png"
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
-    // "https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}"
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}";
+// // scuro ma con i nomi delle regioni
+// "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+// "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}"
+// "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png"
+// "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+// "https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}"
 
-    // "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //base
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
-    // "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
-    // "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
-    // "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png"
-    // "https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png"
-    // "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"; //bianco nera
+// "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //base
+// "https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
+// "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
+// "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
+// "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png"
+// "https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png"
+// "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"; //bianco nera
 
 export const TILE_ATTRIBUTION =
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors ' +
@@ -36,7 +36,7 @@ export const TILE_ATTRIBUTION =
 
 // ── Zoom ──────────────────────────────────────────────────────
 export const MAP_MIN_ZOOM = 5;
-export const MAP_MAX_ZOOM = 10;
+export const MAP_MAX_ZOOM = 8.25;
 export const MAP_ZOOM_SNAP = 0.25;
 
 // Italy bounding box: [[south, west], [north, east]]
@@ -177,40 +177,170 @@ export const ROUTE_PCOLORS = [
 export const ROUTE_HIT_RADIUS = 22;
 
 // Ghost route
-export const ROUTE_GHOST_COLOR      = "rgba(150, 150, 150, 0.22)";
-export const ROUTE_GHOST_WIDTH      = 1.5;   // px
+export const ROUTE_GHOST_COLOR = "rgba(150, 150, 150, 0.22)";
+export const ROUTE_GHOST_WIDTH = 1.5; // px
 
 // Colour-fade grey target (0–255) — used in routeColor() when t → 0
-export const ROUTE_COLOR_GREY       = 150;
+export const ROUTE_COLOR_GREY = 150;
 
 // Progress line
-export const ROUTE_PROGRESS_WIDTH   = 2;     // px
-export const ROUTE_PROGRESS_ALPHA   = 0.82;
+export const ROUTE_PROGRESS_WIDTH = 2; // px
+export const ROUTE_PROGRESS_ALPHA = 0.82;
 
 // Dash pattern
-export const ROUTE_DASH_ON          = 6;     // px
-export const ROUTE_DASH_OFF         = 5;     // px
+export const ROUTE_DASH_ON = 6; // px
+export const ROUTE_DASH_OFF = 5; // px
 
 // Trail
-export const ROUTE_TRAIL_WIDTH_MAX  = 5;     // px — scaled by frac
-export const ROUTE_TRAIL_ALPHA_MAX  = 0.7;   // scaled by frac
+export const ROUTE_TRAIL_WIDTH_MAX = 5; // px — scaled by frac
+export const ROUTE_TRAIL_ALPHA_MAX = 0.7; // scaled by frac
 
 // Active dot
-export const ROUTE_DOT_RADIUS       = 6;     // px base radius
-export const ROUTE_DOT_PULSE_AMP    = 0.1;   // fraction of radius
-export const ROUTE_DOT_PULSE_SPEED  = 400;   // ms per cycle
-export const ROUTE_DOT_STROKE       = "#111";
-export const ROUTE_DOT_STROKE_WIDTH = 1.5;   // px
+export const ROUTE_DOT_RADIUS = 6; // px base radius
+export const ROUTE_DOT_PULSE_AMP = 0.1; // fraction of radius
+export const ROUTE_DOT_PULSE_SPEED = 400; // ms per cycle
+export const ROUTE_DOT_STROKE = "#111";
+export const ROUTE_DOT_STROKE_WIDTH = 1.5; // px
 
 // Paused dot
-export const ROUTE_DOT_PAUSED_RADIUS = 8;    // px
-export const ROUTE_DOT_PAUSED_FILL   = "#fff";
+export const ROUTE_DOT_PAUSED_RADIUS = 8; // px
+export const ROUTE_DOT_PAUSED_FILL = "#fff";
 export const ROUTE_DOT_PAUSED_STROKE = "#111";
-export const ROUTE_DOT_PAUSED_WIDTH  = 2;    // px
+export const ROUTE_DOT_PAUSED_WIDTH = 2; // px
 
 // Pause icon bars (offsets from dot centre, px)
-export const ROUTE_PAUSE_BAR_X1     = -3.5;
-export const ROUTE_PAUSE_BAR_X2     =  1;
-export const ROUTE_PAUSE_BAR_Y      = -3.5;
-export const ROUTE_PAUSE_BAR_W      =  2.5;
-export const ROUTE_PAUSE_BAR_H      =  7;
+export const ROUTE_PAUSE_BAR_X1 = -3.5;
+export const ROUTE_PAUSE_BAR_X2 = 1;
+export const ROUTE_PAUSE_BAR_Y = -3.5;
+export const ROUTE_PAUSE_BAR_W = 2.5;
+export const ROUTE_PAUSE_BAR_H = 7;
+
+// ── QR Code ───────────────────────────────────────────────────
+
+export const QR_ENABLED = true;
+
+// URL encoded into the QR code
+export const QR_LINK = "https://scomodo-mappa-evento.pages.dev/";
+
+// Size of the QR card.
+// Any valid CSS length works: px, vw, vh, min(), clamp(), etc.
+// Default: 1/16 of a 16:9 screen — one cell of a 4×4 grid.
+const QR_SIDE_SIZE = 17;
+export const QR_SIZE = `min(${QR_SIDE_SIZE}vw, ${QR_SIDE_SIZE}vh)`;
+
+// ── Story Form ────────────────────────────────────────────────
+
+// Set to false to hide the form button entirely
+export const FORM_ENABLED = true;
+
+// Size of the trigger button — same logic as QR_SIZE.
+// Any valid CSS length: px, vw, vh, min(), clamp(), etc.
+const FORM_SIDE_SIZE = 17;
+export const FORM_BUTTON_SIZE = `min(${FORM_SIDE_SIZE}vw, ${FORM_SIDE_SIZE}vh)`;
+
+// ── Story Form field constraints ──────────────────────────────
+export const FORM_STORIA_MAX_LENGTH = 1000;
+export const FORM_ETA_MIN = 1;
+export const FORM_ETA_MAX = 120;
+
+// ── Story Form UI strings ─────────────────────────────────────
+// Change these to localise or rebrand the form without touching JSX.
+export const FORM_EYEBROW = "Scomodo · Mappa dei viaggi";
+export const FORM_TITLE = "La tua storia";
+export const FORM_DESC =
+    "Hai viaggiato in Italia? Condividi la tua esperienza — apparirà sulla mappa insieme alle altre storie.";
+export const FORM_SUBMIT_LABEL = "Manda la tua storia →";
+export const FORM_SENDING_LABEL = "Invio in corso…";
+
+export const FORM_SUCCESS_TITLE = "Storia inviata!";
+export const FORM_SUCCESS_BODY = "Grazie per aver condiviso il tuo viaggio.";
+export const FORM_SUCCESS_RESET = "Invia un'altra storia";
+export const FORM_SUCCESS_CLOSE = "Chiudi";
+
+export const FORM_ERROR_TITLE = "Invio fallito";
+export const FORM_ERROR_BODY =
+    "Qualcosa è andato storto. Riprova tra qualche istante.";
+export const FORM_ERROR_RETRY = "Riprova";
+
+export const FORM_STORIA_LABEL = "Racconta la tua storia";
+export const FORM_STORIA_HINT =
+    "Cosa ti è rimasto di quel viaggio? Max {max} caratteri.";
+export const FORM_STORIA_PLACEHOLDER = "Scrivi qui la tua storia…";
+
+/**
+ * FIELDS
+ *
+ * Ordered list of field descriptors for the story submission form.
+ * Each entry drives both the rendered <input> and the validation logic —
+ * add, remove, or reorder entries here and the form updates automatically.
+ *
+ * Shape:
+ *   id           — matches the key in the form values object and storie.json
+ *   label        — visible label text
+ *   hint         — secondary helper text shown below the label
+ *   type         — HTML input type
+ *   placeholder  — input placeholder
+ *   autoComplete — HTML autocomplete attribute (omit to default to "off")
+ *   min / max    — numeric bounds (only meaningful when type === "number")
+ */
+export const FIELDS = [
+    {
+        id: "nome",
+        label: "Nome",
+        hint: "Come ti chiami?",
+        type: "text",
+        placeholder: "Es. Matteo",
+        autoComplete: "given-name",
+    },
+    {
+        id: "eta",
+        label: "Età",
+        hint: "Quanti anni hai?",
+        type: "number",
+        placeholder: "Es. 28",
+        min: FORM_ETA_MIN,
+        max: FORM_ETA_MAX,
+    },
+    {
+        id: "cittaPartenza",
+        label: "Città di partenza",
+        hint: "Da dove sei partito/a?",
+        type: "text",
+        placeholder: "Es. Milano",
+    },
+    {
+        id: "cittaArrivo",
+        label: "Città di arrivo",
+        hint: "Dove sei arrivato/a?",
+        type: "text",
+        placeholder: "Es. Torino",
+    },
+    {
+        id: "data",
+        label: "Data del viaggio",
+        hint: "Quando è avvenuto il viaggio?",
+        type: "date",
+        placeholder: "",
+    },
+];
+
+/**
+ * EMPTY_FORM
+ *
+ * Initial / reset state for the form values object.
+ * Derived automatically from FIELDS so it stays in sync if fields change.
+ * The `storia` textarea is not in FIELDS (it's rendered separately) so it
+ * is added explicitly.
+ */
+export const EMPTY_FORM = {
+    ...Object.fromEntries(FIELDS.map(({ id }) => [id, ""])),
+    storia: "",
+};
+
+// ── EmailJS ───────────────────────────────────────────────────
+// Fill these in after running: npm install @emailjs/browser
+// Get them from https://dashboard.emailjs.com
+export const EMAILJS_SERVICE_ID = "mappa_evento_arriv_parti"; // e.g. "service_xxxxxxx"
+export const EMAILJS_TEMPLATE_ID = "template_zv8c2s4"; // e.g. "template_xxxxxxx"
+export const EMAILJS_PUBLIC_KEY = "E5ISTDoY7oB1S-uC-"; // e.g. "xxxxxxxxxxxxxxxxxxxx"
+export const EMAILJS_TO_EMAIL = "scomodobarimappe@gmail.com"; // destination address
