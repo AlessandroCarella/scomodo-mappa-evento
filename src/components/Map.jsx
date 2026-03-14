@@ -5,6 +5,7 @@ import RouteConnections from "./RouteConnections";
 import StoriesOverlay from "./StoriesOverlay";
 import Banner from "./Banner";
 import { useMapInit } from "./MapHelpers/useMapInit";
+import { useWasdNavigation } from "./MapHelpers/useWasdNavigation";
 import { processConnections } from "./ConnectionHelpers/connectionUtils";
 
 // Vite's BASE_URL respects the `base` option in vite.config.js.
@@ -17,6 +18,7 @@ const STORIES_URL = `${BASE}/data/storie.json`;
 export default function Map() {
     const containerRef = useRef(null);
     const { mapRef, ready } = useMapInit(containerRef);
+    useWasdNavigation(mapRef, ready);
 
     const [allStories, setAllStories] = useState([]);
     const [locations, setLocations] = useState([]);
