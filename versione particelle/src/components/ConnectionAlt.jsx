@@ -1,4 +1,4 @@
-import { colorForCount } from "./ConnectionHelpers/connectionUtils";
+import { colorForCount } from "./connectionUtils";
 import { buildPath } from "./ConnectionHelpers/buildPath";
 import { useConnectionAnim } from "./ConnectionHelpers/useConnectionAnim";
 import {

@@ -1,0 +1,362 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap");
+
+/* ── Root ────────────────────────────────────────────────────── */
+.vg-root {
+    position: fixed;
+    inset: 0;
+    background: #f5f3ee;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: "Syne", sans-serif;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.vg-header {
+    position: relative;
+    z-index: 20;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 52px;
+    border-bottom: 2px solid #111;
+    background: #f5f3ee;
+}
+
+.vg-back {
+    font-family: "Syne", sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #111;
+    text-decoration: none;
+    min-width: 80px;
+    transition: color 0.15s;
+}
+.vg-back:hover { color: #e8001c; }
+
+.vg-title-block {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+}
+
+.vg-eyebrow {
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #e8001c;
+}
+
+.vg-title {
+    font-size: clamp(0.95rem, 2.5vw, 1.35rem);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #111;
+    margin: 0;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.vg-header-spacer { min-width: 80px; }
+
+/* ── Map wrapper ─────────────────────────────────────────────── */
+.vg-map-wrapper {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+}
+
+.vg-leaflet {
+    position: absolute;
+    inset: 0;
+    /* Light, desaturated — lets the B&W canvas graphics read clearly */
+    filter: brightness(1.05) saturate(0.15) contrast(0.9);
+}
+
+.vg-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+.vg-canvas--hit {
+    pointer-events: auto;
+    opacity: 0;
+}
+
+/* ── Controls ────────────────────────────────────────────────── */
+.vg-controls {
+    position: absolute;
+    bottom: 40px;
+    right: 16px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #f5f3ee;
+    border: 2px solid #111;
+    padding: 10px 14px;
+}
+
+.vg-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vg-slider-label {
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #111;
+    width: 52px;
+    flex-shrink: 0;
+}
+
+.vg-slider-val {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #e8001c;
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.vg-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100px;
+    height: 2px;
+    background: #111;
+    outline: none;
+    cursor: pointer;
+}
+.vg-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px; height: 12px;
+    background: #e8001c;
+    border: 2px solid #111;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+.vg-slider::-webkit-slider-thumb:hover { transform: scale(1.3); }
+.vg-slider::-moz-range-thumb {
+    width: 12px; height: 12px;
+    background: #e8001c;
+    border: 2px solid #111;
+    cursor: pointer;
+}
+
+/* ── Hint ────────────────────────────────────────────────────── */
+.vg-hint {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Syne", sans-serif;
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(17,17,17,0.25);
+    z-index: 20;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* ── Modal overlay ───────────────────────────────────────────── */
+.vg-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(17,17,17,0.55);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: vg-fade 0.18s ease;
+}
+@keyframes vg-fade { from{opacity:0} to{opacity:1} }
+
+.vg-modal {
+    background: #f5f3ee;
+    border: 2px solid #111;
+    max-width: 480px;
+    width: 100%;
+    padding: 32px 28px 24px;
+    position: relative;
+    animation: vg-up 0.22s ease;
+}
+@keyframes vg-up {
+    from { transform: translateY(16px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+.vg-modal-close {
+    position: absolute;
+    top: 10px; right: 12px;
+    background: none; border: none;
+    font-family: "Syne", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #aaa;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color 0.15s;
+    line-height: 1;
+}
+.vg-modal-close:hover { color: #e8001c; }
+
+.vg-modal-tag {
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #e8001c;
+    margin-bottom: 8px;
+}
+
+.vg-modal-route {
+    font-family: "Syne", sans-serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #111;
+    margin: 0 0 4px;
+    line-height: 1.05;
+}
+.vg-modal-route span {
+    color: #e8001c;
+    margin: 0 6px;
+    font-weight: 400;
+}
+
+.vg-modal-meta {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 14px;
+}
+
+.vg-modal-divider {
+    height: 2px;
+    background: #111;
+    margin-bottom: 16px;
+}
+
+.vg-modal-story {
+    font-family: "Syne", sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: #333;
+    font-weight: 400;
+    margin: 0 0 18px;
+}
+
+.vg-modal-prog {
+    height: 3px;
+    background: rgba(17,17,17,0.12);
+    margin-bottom: 4px;
+}
+.vg-modal-prog-bar {
+    height: 100%;
+    background: #e8001c;
+    transition: width 0.5s ease;
+}
+.vg-modal-prog-label {
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #888;
+}
+.vg-modal-paused {
+    color: #e8001c;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .vg-header { padding: 0 12px; height: 48px; }
+    .vg-header-spacer { display: none; }
+    .vg-controls {
+        bottom: auto; top: 60px; right: 10px;
+        padding: 8px 10px; gap: 5px;
+    }
+    .vg-slider { width: 80px; }
+    .vg-modal { padding: 26px 18px 20px; }
+}
+
+/* ── City markers (Leaflet DivIcon) ──────────────────────────── */
+.vg-city-marker {
+    position: relative;
+    width: 0;
+    height: 0;
+    overflow: visible;
+}
+.vg-city-dot {
+    position: absolute;
+    width:  10px;
+    height: 10px;
+    top:    -5px;
+    left:   -5px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1.5px solid #111111;
+    box-sizing: border-box;
+}
+/* black center dot */
+.vg-city-dot::after {
+    content: "";
+    position: absolute;
+    width:  4px;
+    height: 4px;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: #111111;
+}
+.vg-city-label {
+    position: absolute;
+    top:  10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Syne", sans-serif;
+    font-size:   8px;
+    font-weight: 700;
+    color: rgba(17,17,17,0.7);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ── City tooltip (Leaflet permanent label) ──────────────────── */
+.vg-city-tooltip {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    font-family: "Syne", sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+    color: rgba(17,17,17,0.7);
+    white-space: nowrap;
+    pointer-events: none;
+}
+.vg-city-tooltip::before {
+    display: none;
+}
