@@ -36,7 +36,7 @@ export const TILE_ATTRIBUTION =
 
 // ── Zoom ──────────────────────────────────────────────────────
 export const MAP_MIN_ZOOM = 5;
-export const MAP_MAX_ZOOM = 10;
+export const MAP_MAX_ZOOM = 8.25;
 export const MAP_ZOOM_SNAP = 0.25;
 
 // Italy bounding box: [[south, west], [north, east]]
@@ -214,3 +214,4 @@ export const ROUTE_PAUSE_BAR_X2     =  1;
 export const ROUTE_PAUSE_BAR_Y      = -3.5;
 export const ROUTE_PAUSE_BAR_W      =  2.5;
 export const ROUTE_PAUSE_BAR_H      =  7;
+
