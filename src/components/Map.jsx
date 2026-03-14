@@ -1,172 +1,112 @@
 import "./styles/Map.css";
 import { useState, useRef, useEffect } from "react";
 import Pin from "./Pin";
-import Connection from "./Connection";
-import ConnectionAlt from "./ConnectionAlt";
-import ConnectionSwitcher from "./ConnectionSwitcher";
+import RouteConnections from "./RouteConnections";
 import StoriesOverlay from "./StoriesOverlay";
 import Banner from "./Banner";
 import { useMapInit } from "./MapHelpers/useMapInit";
-import { useMapSync } from "./MapHelpers/useMapSync";
 import { processConnections } from "./ConnectionHelpers/connectionUtils";
-import { DATA_PATHS } from "@/config";
+
+// Vite's BASE_URL respects the `base` option in vite.config.js.
+// Without this prefix, fetches return index.html (→ JSON parse error)
+// when the app is served from a non-root path.
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+const LOCATIONS_URL = `${BASE}/data/Locations.json`;
+const STORIES_URL = `${BASE}/data/storie.json`;
 
 export default function Map() {
     const containerRef = useRef(null);
-
     const { mapRef, ready } = useMapInit(containerRef);
-    const { toPoint } = useMapSync(mapRef, ready);
 
-    const [shape, setShape] = useState("arc");
-    const [encoding, setEncoding] = useState("width");
+    const [allStories, setAllStories] = useState([]);
+    const [locations, setLocations] = useState([]);
+    const [paths, setPaths] = useState([]);
+    const [dataReady, setDataReady] = useState(false);
 
     const [activeStories, setActiveStories] = useState([]);
 
-    const [mockStories, setMockStories] = useState([]);
-
-    const passengers = [
-        "Martina",
-        "Nadir",
-        "Chiara",
-        "Elia",
-        "Sara",
-        "Giulio",
-        "Amina",
-        "Tommaso",
-        "Irene",
-        "Samuele",
-    ];
-
-    const periods = [
-        "Estate 2022",
-        "Autunno 2023",
-        "Inverno 2023",
-        "Primavera 2024",
-        "2024",
-        "Inizio 2025",
-    ];
-
-    function hashString(s) {
-        let h = 0;
-        for (let i = 0; i < s.length; i += 1) {
-            h = (h * 31 + s.charCodeAt(i)) >>> 0;
-        }
-        return h;
-    }
-
-    function buildStoryForConnection(conn, idx) {
-        const fromName = conn?.from?.name || "—";
-        const toName = conn?.to?.name || "—";
-        const key = `${fromName}→${toName}`;
-        const h = hashString(key);
-
-        const nome = passengers[h % passengers.length];
-        const periodoViaggio = periods[(h >>> 3) % periods.length];
-        const count = conn?.count ?? 1;
-
-        const testo = `Tra ${fromName} e ${toName} ho annotato questo post-it: “non è la distanza, è il cambio di passo”. ${
-            count > 1
-                ? `Questa tratta l’ho ripetuta ${count} volte: ogni volta una sfumatura diversa.`
-                : "Una sola corsa, ma mi è rimasta addosso."
-        }`;
-
-        return {
-            id: `conn-${idx}-${fromName}-${toName}`,
-            nome,
-            cittaProvenienza: fromName,
-            cittaDestinazione: toName,
-            periodoViaggio,
-            testo,
-        };
-    }
-
-    function handleConnectionClick(fromName, toName) {
-        const matches = mockStories.filter(
-            (s) =>
-                s.cittaProvenienza === fromName &&
-                s.cittaDestinazione === toName,
-        );
-        setActiveStories(matches);
-    }
-
-    function handlePinClick(locationName) {
-        const matches = mockStories.filter(
-            (s) => s.cittaDestinazione === locationName,
-        );
-        setActiveStories(matches);
-    }
-
-    // Data fetched from public/ at runtime
-    const [locations, setLocations] = useState([]);
-    const [connections, setConnections] = useState([]);
-    const [maxCount, setMaxCount] = useState(1);
-    const [dataReady, setDataReady] = useState(false);
-
     useEffect(() => {
         Promise.all([
-            fetch(DATA_PATHS.locations).then((r) => r.json()),
-            fetch(DATA_PATHS.connections).then((r) => r.json()),
+            fetch(LOCATIONS_URL).then((r) => {
+                if (!r.ok)
+                    throw new Error(
+                        `Locations fetch failed: ${r.status} ${r.url}`,
+                    );
+                return r.json();
+            }),
+            fetch(STORIES_URL).then((r) => {
+                if (!r.ok)
+                    throw new Error(
+                        `Stories fetch failed: ${r.status} ${r.url}`,
+                    );
+                return r.json();
+            }),
         ])
-            .then(([rawLocations, rawConnections]) => {
+            .then(([rawLocations, rawStories]) => {
                 const locByName = {};
                 rawLocations.forEach((l) => {
                     locByName[l.name] = l;
                 });
 
-                const { connections: conns, maxCount: max } =
-                    processConnections(rawConnections, locByName);
+                // Map storie.json fields → { from, to } for processConnections
+                const rawConnections = rawStories.map((s) => ({
+                    from: s.cittaPartenza,
+                    to: s.cittaArrivo,
+                }));
+
+                const { connections: conns } = processConnections(
+                    rawConnections,
+                    locByName,
+                );
 
                 setLocations(rawLocations);
-                setConnections(conns);
-                setMockStories(conns.map((c, i) => buildStoryForConnection(c, i)));
-                setMaxCount(max);
+                setAllStories(rawStories);
+                setPaths(
+                    conns.map((c) => ({ from: c.from.name, to: c.to.name })),
+                );
                 setDataReady(true);
             })
             .catch((err) => console.error("Failed to load data:", err));
     }, []);
 
-    const w = containerRef.current?.offsetWidth || 0;
-    const h = containerRef.current?.offsetHeight || 0;
+    function handleConnectionClick(fromName, toName) {
+        const matches = allStories.filter(
+            (s) =>
+                (s.cittaPartenza === fromName && s.cittaArrivo === toName) ||
+                (s.cittaPartenza === toName && s.cittaArrivo === fromName),
+        );
+        setActiveStories(matches);
+    }
 
-    const ConnectionComponent =
-        encoding === "width" ? Connection : ConnectionAlt;
-    const modeKey = `${shape}-${encoding}`;
+    function handlePinClick(locationName) {
+        const matches = allStories.filter(
+            (s) =>
+                s.cittaArrivo === locationName ||
+                s.cittaPartenza === locationName,
+        );
+        setActiveStories(matches);
+    }
+
     const showOverlay = ready && dataReady;
 
     return (
         <div className="map-root">
-            <div ref={containerRef} className="map-container" />
+            <div className="map-wrapper">
+                <div ref={containerRef} className="map-container" />
 
-            {showOverlay && (
-                <svg
-                    className="map-svg-overlay"
-                    width={w}
-                    height={h}
-                    style={{ pointerEvents: "none" }}
-                >
-                    {connections.map((conn, i) => {
-                        const from = toPoint(conn.from.lat, conn.from.lng);
-                        const to = toPoint(conn.to.lat, conn.to.lng);
-                        return (
-                            <ConnectionComponent
-                                key={`${conn.from.name}-${conn.to.name}-${modeKey}`}
-                                from={from}
-                                to={to}
-                                count={conn.count}
-                                maxCount={maxCount}
-                                shape={shape}
-                                index={i}
-                                onClick={() =>
-                                    handleConnectionClick(
-                                        conn.from.name,
-                                        conn.to.name,
-                                    )
-                                }
-                            />
-                        );
-                    })}
-                </svg>
-            )}
+                {showOverlay && (
+                    <RouteConnections
+                        map={mapRef.current}
+                        paths={paths}
+                        locationsUrl={LOCATIONS_URL}
+                        speedMult={2}
+                        loop={true}
+                        onParticleClick={({ from, to }) =>
+                            handleConnectionClick(from, to)
+                        }
+                    />
+                )}
+            </div>
 
             {showOverlay &&
                 locations.map((loc) => (
@@ -174,21 +114,16 @@ export default function Map() {
                         key={loc.name}
                         map={mapRef.current}
                         location={loc}
-                        hasStories={mockStories.some(
-                            (s) => s.cittaDestinazione === loc.name,
+                        hasStories={allStories.some(
+                            (s) =>
+                                s.cittaArrivo === loc.name ||
+                                s.cittaPartenza === loc.name,
                         )}
                         onClick={handlePinClick}
                     />
                 ))}
 
             <Banner />
-
-            <ConnectionSwitcher
-                shape={shape}
-                encoding={encoding}
-                onShape={setShape}
-                onEncoding={setEncoding}
-            />
 
             {activeStories.length > 0 && (
                 <StoriesOverlay

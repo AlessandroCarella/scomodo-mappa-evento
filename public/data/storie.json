@@ -80,14 +80,6 @@
         "storia": "Il mio sogno è avere scuole moderne con laboratori e spazi adeguati."
     },
     {
-        "nome": "Valentina",
-        "eta": 40,
-        "cittaPartenza": "Oslo",
-        "cittaArrivo": "Londra",
-        "data": "17-11-2018",
-        "storia": "Sogno una Bari sicura dove si possa camminare di notte senza paura."
-    },
-    {
         "nome": "Marco",
         "eta": 22,
         "cittaPartenza": "Copenaghen",
@@ -134,14 +126,6 @@
         "cittaArrivo": "Amsterdam",
         "data": "26-09-2020",
         "storia": "Sogno più eventi culturali internazionali che portino turisti e investimenti."
-    },
-    {
-        "nome": "Andrea",
-        "eta": 30,
-        "cittaPartenza": "Bologna",
-        "cittaArrivo": "Oslo",
-        "data": "09-08-2014",
-        "storia": "Vorrei una città che investa sull'energia rinnovabile e la sostenibilità ambientale."
     },
     {
         "nome": "Elisa",
@@ -272,22 +256,6 @@
         "storia": "Il mio sogno è che il Festival del Levante torni ad essere un evento internazionale."
     },
     {
-        "nome": "Matteo",
-        "eta": 38,
-        "cittaPartenza": "Oslo",
-        "cittaArrivo": "Bari",
-        "data": "22-07-2024",
-        "storia": "Sogno quartieri con servizi di prossimità come negozi, medici e scuole a piedi."
-    },
-    {
-        "nome": "Stefano",
-        "eta": 24,
-        "cittaPartenza": "Amburgo",
-        "cittaArrivo": "Oslo",
-        "data": "03-10-2011",
-        "storia": "Vorrei meno auto parcheggiate sui marciapiedi e più rispetto dello spazio pubblico."
-    },
-    {
         "nome": "Ilaria",
         "eta": 30,
         "cittaPartenza": "Praga",
@@ -406,14 +374,6 @@
         "cittaArrivo": "Atene",
         "data": "13-02-2013",
         "storia": "Vorrei vedere più murales e arte urbana che abbelliscano i muri dei quartieri."
-    },
-    {
-        "nome": "Elena",
-        "eta": 24,
-        "cittaPartenza": "Torino",
-        "cittaArrivo": "Oslo",
-        "data": "09-11-2020",
-        "storia": "Il mio sogno è che i baresi si sentano orgogliosi della loro città e la rispettino."
     },
     {
         "nome": "Valentina",
@@ -736,28 +696,12 @@
         "storia": "Sogno più connessione tra generazioni diverse attraverso progetti intergenerazionali nei quartieri."
     },
     {
-        "nome": "Andrea",
-        "eta": 23,
-        "cittaPartenza": "Varsavia",
-        "cittaArrivo": "Oslo",
-        "data": "28-11-2023",
-        "storia": "Vorrei che il comune ascoltasse di più le proposte dei cittadini nelle scelte urbanistiche."
-    },
-    {
         "nome": "Beatrice",
         "eta": 33,
         "cittaPartenza": "Rotterdam",
         "cittaArrivo": "Parigi",
         "data": "24-10-2017",
         "storia": "Il mio sogno è una Bari che attragga investimenti esteri mantenendo la sua identità culturale."
-    },
-    {
-        "nome": "Ilaria",
-        "eta": 25,
-        "cittaPartenza": "Oslo",
-        "cittaArrivo": "Amsterdam",
-        "data": "31-10-2017",
-        "storia": "Sogno più turismo sostenibile che rispetti la città e non la snaturi."
     },
     {
         "nome": "Gabriele",

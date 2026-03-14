@@ -1,31 +1,9 @@
-import { CONNECTION_COLOR_SCALE } from "../../config";
-
 /**
  * Order-independent key for a city pair.
  * "Milano" ↔ "Roma"  →  "Milano|||Roma"  (always sorted)
  */
 export function pairKey(a, b) {
     return [a, b].sort().join("|||");
-}
-
-/**
- * colorForCount
- *
- * Maps a connection count to a colour from the 5-step scale defined in config,
- * normalised against the dataset's maximum count so the full range is always used.
- *
- * @param {number} count
- * @param {number} maxCount  — highest count found in the dataset
- * @returns {string}          CSS colour string
- */
-export function colorForCount(count, maxCount) {
-    if (maxCount <= 1) return CONNECTION_COLOR_SCALE[0];
-    const idx = Math.round(
-        ((count - 1) / (maxCount - 1)) * (CONNECTION_COLOR_SCALE.length - 1),
-    );
-    return CONNECTION_COLOR_SCALE[
-        Math.max(0, Math.min(idx, CONNECTION_COLOR_SCALE.length - 1))
-    ];
 }
 
 /**
