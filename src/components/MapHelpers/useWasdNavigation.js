@@ -7,26 +7,17 @@ const LOCATIONS_URL = `${BASE}/data/Locations.json`;
 /**
  * useWasdNavigation
  *
- * W/A/S/D keys navigate the map city-to-city.
- * From the current map centre, finds the nearest city in the pressed direction
- * and flies to it.
+ * W/A/S/D — navigate map city to city.
+ * On arrival, calls onCityReached(cityName) so the caller can show the pin tooltip.
  *
- * Direction logic:
- *   W → north  (highest positive Δlat, must have some northward component)
- *   S → south  (most negative Δlat)
- *   A → west   (most negative Δlng)
- *   D → east   (most positive Δlng)
- *
- * Uses a "directional score" that rewards movement in the target axis
- * and penalises perpendicular drift, so pressing D from Napoli goes to Bari
- * rather than jumping to a city that's only slightly east but far north.
+ * Also supports gamepad right stick (axes 2/3) via the Gamepad API —
+ * same directional logic, triggered when stick deflection > threshold.
  */
-export function useWasdNavigation(mapRef, ready) {
+export function useWasdNavigation(mapRef, ready, { onCityReached } = {}) {
     useEffect(() => {
         if (!ready || !mapRef.current) return;
 
-        let cities = []; // [{name, lat, lng}]
-        let currentCity = null; // name of last city navigated to
+        let cities = [];
 
         fetch(LOCATIONS_URL)
             .then((r) => r.json())
@@ -47,62 +38,86 @@ export function useWasdNavigation(mapRef, ready) {
             d: { dlat: 0, dlng: 1 },
         };
 
-        const onKey = (e) => {
-            // Don't hijack if user is typing in an input/textarea
-            if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")
-                return;
-
-            const dir = KEY_DIR[e.key.toLowerCase()];
-            if (!dir || !mapRef.current || cities.length === 0) return;
-
-            e.preventDefault();
-
+        const navigateTo = (dir) => {
+            if (!mapRef.current || cities.length === 0) return;
             const map = mapRef.current;
             const centre = map.getCenter();
-            const clat = centre.lat;
-            const clng = centre.lng;
 
-            // Score each city: dot product with direction vector,
-            // normalised by distance so nearby cities don't always win.
-            // We only consider cities that have a positive component in the
-            // pressed direction (i.e., they are actually in that direction).
             let best = null,
                 bestScore = -Infinity;
-
             for (const city of cities) {
-                const dlat = city.lat - clat;
-                const dlng = city.lng - clng;
-
-                // Skip the city we're currently centred on
+                const dlat = city.lat - centre.lat;
+                const dlng = city.lng - centre.lng;
                 if (Math.abs(dlat) < 0.01 && Math.abs(dlng) < 0.01) continue;
-                // Skip if it's in the wrong half-plane
                 const dot = dir.dlat * dlat + dir.dlng * dlng;
                 if (dot <= 0) continue;
-
-                // Score = projection on desired axis / total distance
-                // This prefers cities that are mostly in the right direction
                 const dist = Math.sqrt(dlat * dlat + dlng * dlng);
-                const score = dot / dist; // cosine of angle, weighted by nothing
-
-                // Tie-break by proximity: among similar angles, prefer closer
-                const finalScore = score - dist * 0.01;
-
-                if (finalScore > bestScore) {
-                    bestScore = finalScore;
+                const score = dot / dist - dist * 0.01;
+                if (score > bestScore) {
+                    bestScore = score;
                     best = city;
                 }
             }
 
             if (best) {
-                currentCity = best.name;
                 map.flyTo([best.lat, best.lng], map.getZoom(), {
                     animate: true,
                     duration: 0.6,
                 });
+                onCityReached?.(best.name);
             }
         };
 
+        const onKey = (e) => {
+            if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")
+                return;
+            const dir = KEY_DIR[e.key.toLowerCase()];
+            if (!dir) return;
+            e.preventDefault();
+            navigateTo(dir);
+        };
+
         window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-    }, [mapRef, ready]);
+
+        // ── Gamepad right stick ──────────────────────────────────
+        // Polled in rAF loop (Gamepad API is not event-driven for axes)
+        let animFrame;
+        let stickCooldown = 0; // ms timestamp until next repeat is allowed
+        const STICK_THRESHOLD = 0.5;
+        const STICK_COOLDOWN_MS = 400;
+
+        const pollGamepad = (now) => {
+            animFrame = requestAnimationFrame(pollGamepad);
+            const pads = navigator.getGamepads?.() ?? [];
+            for (const pad of pads) {
+                if (!pad) continue;
+                const ax = pad.axes[2] ?? 0; // right stick X
+                const ay = pad.axes[3] ?? 0; // right stick Y
+                if (now < stickCooldown) continue;
+                if (
+                    Math.abs(ax) < STICK_THRESHOLD &&
+                    Math.abs(ay) < STICK_THRESHOLD
+                )
+                    continue;
+                // Dominant axis wins
+                const dir =
+                    Math.abs(ax) > Math.abs(ay)
+                        ? ax > 0
+                            ? { dlat: 0, dlng: 1 }
+                            : { dlat: 0, dlng: -1 }
+                        : ay > 0
+                          ? { dlat: -1, dlng: 0 }
+                          : { dlat: 1, dlng: 0 };
+                navigateTo(dir);
+                stickCooldown = now + STICK_COOLDOWN_MS;
+                break;
+            }
+        };
+        animFrame = requestAnimationFrame(pollGamepad);
+
+        return () => {
+            window.removeEventListener("keydown", onKey);
+            cancelAnimationFrame(animFrame);
+        };
+    }, [mapRef, ready, onCityReached]);
 }
