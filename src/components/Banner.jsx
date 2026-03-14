@@ -54,6 +54,9 @@ function BannerPanel({ side, text, fontFamily, panelCssVars, hidden }) {
 /**
  * Banner — two frosted-glass side panels that frame the map.
  *
+ * @param {boolean} forceHidden  When true the panels are hidden regardless
+ *   of mouse activity (used while the story form is open).
+ *
  * ── Console API ───────────────────────────────────────────────
  *   __banner.hide()    hide the banner permanently
  *   __banner.show()    show it again
@@ -61,7 +64,7 @@ function BannerPanel({ side, text, fontFamily, panelCssVars, hidden }) {
  *   __banner.status()  log current state
  * ─────────────────────────────────────────────────────────────
  */
-export default function Banner() {
+export default function Banner({ forceHidden = false }) {
     const { visible } = useBannerVisibility();
 
     if (!BANNER_ENABLED) return null;
@@ -75,6 +78,8 @@ export default function Banner() {
         "--banner-transition": BANNER_TRANSITION_DURATION,
     };
 
+    const hidden = !visible || forceHidden;
+
     return (
         <>
             <BannerPanel
@@ -82,14 +87,14 @@ export default function Banner() {
                 text={BANNER_TEXT_LEFT}
                 fontFamily={BANNER_FONT_FAMILY_LEFT}
                 panelCssVars={panelCssVars}
-                hidden={!visible}
+                hidden={hidden}
             />
             <BannerPanel
                 side="right"
                 text={BANNER_TEXT_RIGHT}
                 fontFamily={BANNER_FONT_FAMILY_RIGHT}
                 panelCssVars={panelCssVars}
-                hidden={!visible}
+                hidden={hidden}
             />
         </>
     );
