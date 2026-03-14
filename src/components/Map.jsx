@@ -88,6 +88,7 @@ export default function Map() {
     }
 
     const showOverlay = ready && dataReady;
+    const storiesOpen = activeStories.length > 0;
 
     return (
         <div className="map-root">
@@ -123,9 +124,9 @@ export default function Map() {
                     />
                 ))}
 
-            <Banner />
+            <Banner overlayActive={storiesOpen} />
 
-            {activeStories.length > 0 && (
+            {storiesOpen && (
                 <StoriesOverlay
                     stories={activeStories}
                     onClose={() => setActiveStories([])}
