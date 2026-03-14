@@ -235,7 +235,8 @@ export const FORM_ENABLED = true;
 
 // Size of the trigger button — same logic as QR_SIZE.
 // Any valid CSS length: px, vw, vh, min(), clamp(), etc.
-export const FORM_BUTTON_SIZE = "min(25vw, 25vh)";
+const FORM_SIDE_SIZE = 17;
+export const FORM_BUTTON_SIZE = `min(${FORM_SIDE_SIZE}vw, ${FORM_SIDE_SIZE}vh)`;
 
 // ── Story Form field constraints ──────────────────────────────
 export const FORM_STORIA_MAX_LENGTH = 1000;

@@ -57,10 +57,12 @@
 }
 
 .leaflet-control-attribution {
-    background: rgba(10, 15, 26, 0.7) !important;
-    color: #3a5a7a !important;
-    font-size: 10px !important;
-    backdrop-filter: blur(4px);
+    position: fixed !important;
+    top: 8px !important;
+    right: 8px !important;
+    bottom: auto !important;
+    left: auto !important;
+    font-size: 5px !important;
 }
 
 .leaflet-control-attribution a {
