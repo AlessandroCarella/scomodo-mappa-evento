@@ -20,6 +20,7 @@ export const TILE_URL =
     // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}"
     // "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png"
     // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+    // "https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}"
 
     // "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //base
     // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
