@@ -12,23 +12,23 @@ export const DATA_PATHS = {
 };
 
 // ── Map tile layer ─────────────────────────────────────────────
-export const TILE_URL = 
+export const TILE_URL =
     // satellite carino
-    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}" 
-    // // scuro ma con i nomi delle regioni
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}" 
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}"
-    // "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png"
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
-    // "https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}"
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}";
+// // scuro ma con i nomi delle regioni
+// "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+// "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}"
+// "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png"
+// "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+// "https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}"
 
-    // "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //base
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
-    // "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
-    // "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
-    // "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png"
-    // "https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png"
-    // "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"; //bianco nera
+// "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //base
+// "https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
+// "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
+// "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
+// "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png"
+// "https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png"
+// "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"; //bianco nera
 
 export const TILE_ATTRIBUTION =
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors ' +
@@ -36,7 +36,7 @@ export const TILE_ATTRIBUTION =
 
 // ── Zoom ──────────────────────────────────────────────────────
 export const MAP_MIN_ZOOM = 5;
-export const MAP_MAX_ZOOM = 10;
+export const MAP_MAX_ZOOM = 8.25;
 export const MAP_ZOOM_SNAP = 0.25;
 
 // Italy bounding box: [[south, west], [north, east]]
@@ -177,40 +177,53 @@ export const ROUTE_PCOLORS = [
 export const ROUTE_HIT_RADIUS = 22;
 
 // Ghost route
-export const ROUTE_GHOST_COLOR      = "rgba(150, 150, 150, 0.22)";
-export const ROUTE_GHOST_WIDTH      = 1.5;   // px
+export const ROUTE_GHOST_COLOR = "rgba(150, 150, 150, 0.22)";
+export const ROUTE_GHOST_WIDTH = 1.5; // px
 
 // Colour-fade grey target (0–255) — used in routeColor() when t → 0
-export const ROUTE_COLOR_GREY       = 150;
+export const ROUTE_COLOR_GREY = 150;
 
 // Progress line
-export const ROUTE_PROGRESS_WIDTH   = 2;     // px
-export const ROUTE_PROGRESS_ALPHA   = 0.82;
+export const ROUTE_PROGRESS_WIDTH = 2; // px
+export const ROUTE_PROGRESS_ALPHA = 0.82;
 
 // Dash pattern
-export const ROUTE_DASH_ON          = 6;     // px
-export const ROUTE_DASH_OFF         = 5;     // px
+export const ROUTE_DASH_ON = 6; // px
+export const ROUTE_DASH_OFF = 5; // px
 
 // Trail
-export const ROUTE_TRAIL_WIDTH_MAX  = 5;     // px — scaled by frac
-export const ROUTE_TRAIL_ALPHA_MAX  = 0.7;   // scaled by frac
+export const ROUTE_TRAIL_WIDTH_MAX = 5; // px — scaled by frac
+export const ROUTE_TRAIL_ALPHA_MAX = 0.7; // scaled by frac
 
 // Active dot
-export const ROUTE_DOT_RADIUS       = 6;     // px base radius
-export const ROUTE_DOT_PULSE_AMP    = 0.1;   // fraction of radius
-export const ROUTE_DOT_PULSE_SPEED  = 400;   // ms per cycle
-export const ROUTE_DOT_STROKE       = "#111";
-export const ROUTE_DOT_STROKE_WIDTH = 1.5;   // px
+export const ROUTE_DOT_RADIUS = 6; // px base radius
+export const ROUTE_DOT_PULSE_AMP = 0.1; // fraction of radius
+export const ROUTE_DOT_PULSE_SPEED = 400; // ms per cycle
+export const ROUTE_DOT_STROKE = "#111";
+export const ROUTE_DOT_STROKE_WIDTH = 1.5; // px
 
 // Paused dot
-export const ROUTE_DOT_PAUSED_RADIUS = 8;    // px
-export const ROUTE_DOT_PAUSED_FILL   = "#fff";
+export const ROUTE_DOT_PAUSED_RADIUS = 8; // px
+export const ROUTE_DOT_PAUSED_FILL = "#fff";
 export const ROUTE_DOT_PAUSED_STROKE = "#111";
-export const ROUTE_DOT_PAUSED_WIDTH  = 2;    // px
+export const ROUTE_DOT_PAUSED_WIDTH = 2; // px
 
 // Pause icon bars (offsets from dot centre, px)
-export const ROUTE_PAUSE_BAR_X1     = -3.5;
-export const ROUTE_PAUSE_BAR_X2     =  1;
-export const ROUTE_PAUSE_BAR_Y      = -3.5;
-export const ROUTE_PAUSE_BAR_W      =  2.5;
-export const ROUTE_PAUSE_BAR_H      =  7;
+export const ROUTE_PAUSE_BAR_X1 = -3.5;
+export const ROUTE_PAUSE_BAR_X2 = 1;
+export const ROUTE_PAUSE_BAR_Y = -3.5;
+export const ROUTE_PAUSE_BAR_W = 2.5;
+export const ROUTE_PAUSE_BAR_H = 7;
+
+// ── QR Code ───────────────────────────────────────────────────
+
+export const QR_ENABLED = true;
+
+// URL encoded into the QR code
+export const QR_LINK = "https://scomodo-mappa-evento.pages.dev/";
+
+// Size of the QR card.
+// Any valid CSS length works: px, vw, vh, min(), clamp(), etc.
+// Default: 1/16 of a 16:9 screen — one cell of a 4×4 grid.
+const QR_SIDE_SIZE = 17
+export const QR_SIZE = `min(${QR_SIDE_SIZE}vw, ${QR_SIDE_SIZE}vh)`;
