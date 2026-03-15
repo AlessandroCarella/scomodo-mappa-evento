@@ -8,7 +8,7 @@
 ├── src/
 │   ├── components/
 │   │   ├── BannerHelpers/
-│   │   │   ├── useBannerVisibility.js (3.3 KB)
+│   │   │   ├── useBannerVisibility.js (3.5 KB)
 │   │   │   └── useDynamicFontSize.js (2.5 KB)
 │   │   ├── ConnectionHelpers/
 │   │   │   ├── connectionUtils.js (1.3 KB)
@@ -19,17 +19,26 @@
 │   │   │   ├── buildItalyMask.js (1.5 KB)
 │   │   │   ├── useGamepad.js (5.5 KB)
 │   │   │   ├── useMapInit.js (2.5 KB)
-│   │   │   └── useMapSync.js (1.9 KB)
+│   │   │   ├── useMapSync.js (1.9 KB)
+│   │   │   └── useWasdNavigation.js (4.2 KB)
 │   │   ├── QRcodeHelpers/
 │   │   │   └── generateQRUrl.js (1.4 KB)
+│   │   ├── StoryFormHelpers/
+│   │   │   ├── FormFeedback.jsx (2.4 KB)
+│   │   │   ├── FormField.jsx (1.8 KB)
+│   │   │   ├── formUtils.js (2.6 KB)
+│   │   │   └── useStoryForm.js (7.3 KB)
 │   │   ├── styles/
 │   │   │   ├── Banner.css (3.5 KB)
 │   │   │   ├── global.css (0.4 KB)
-│   │   │   ├── Map.css (1.8 KB)
+│   │   │   ├── Map.css (1.9 KB)
 │   │   │   ├── Pin.css (0.7 KB)
+│   │   │   ├── popUpAlert.css (6.6 KB)
 │   │   │   ├── QRcode.css (5.3 KB)
 │   │   │   ├── RouteConnections.css (0.8 KB)
-│   │   │   └── StoriesOverlay.css (4.3 KB)
+│   │   │   ├── StoriesOverlay.css (4.3 KB)
+│   │   │   ├── StoryForm.css (11.4 KB)
+│   │   │   └── StoryFormButton.css (4.1 KB)
 │   │   ├── Topic/
 │   │   │   ├── styles/
 │   │   │   │   ├── AnswersContainer.module.css (1.3 KB)
@@ -48,12 +57,15 @@
 │   │   │   ├── TopicContainer.jsx (1.6 KB)
 │   │   │   ├── TopicSlider.jsx (0.8 KB)
 │   │   │   └── TreeMap.jsx (8.6 KB)
-│   │   ├── Banner.jsx (3.2 KB)
-│   │   ├── Map.jsx (4.9 KB)
+│   │   ├── Banner.jsx (3.6 KB)
+│   │   ├── Map.jsx (7.9 KB)
 │   │   ├── Pin.jsx (1.8 KB)
+│   │   ├── PopUpAlert.jsx (8.3 KB)
 │   │   ├── QRcode.jsx (3.1 KB)
 │   │   ├── RouteConnections.jsx (5.1 KB)
-│   │   └── StoriesOverlay.jsx (3.5 KB)
+│   │   ├── StoriesOverlay.jsx (3.5 KB)
+│   │   ├── StoryForm.jsx (7.4 KB)
+│   │   └── StoryFormButton.jsx (1.9 KB)
 │   ├── pages/
 │   │   ├── styles/
 │   │   │   └── Topic.module.css (3.1 KB)
@@ -70,7 +82,7 @@
 │   ├── styles/
 │   │   └── App.css (3.9 KB)
 │   ├── App.jsx (0.5 KB)
-│   ├── config.js (9.9 KB)
+│   ├── config.js (16.1 KB)
 │   └── main.jsx (0.2 KB)
 ├── versione particelle/
 │   └── src/
@@ -107,8 +119,8 @@
 ├── index.html (0.3 KB)
 ├── jsconfig.json (0.1 KB)
 ├── LICENSE (1.1 KB)
-├── package-lock.json (131.0 KB)
-├── package.json (1.0 KB)
-├── project-structure.txt (4.8 KB)
+├── package-lock.json (131.5 KB)
+├── package.json (1.1 KB)
+├── project-structure.txt (5.2 KB)
 ├── readme.md (1.0 KB)
 └── vite.config.js (0.3 KB)

@@ -14,7 +14,7 @@ import {
 import { useStoryForm } from "./StoryFormHelpers/useStoryForm.js";
 import FormField from "./StoryFormHelpers/FormField.jsx";
 import FormFeedback from "./StoryFormHelpers/FormFeedback.jsx";
-import { PopUpAlert } from "./popUpAlert.jsx";
+import { PopUpAlert } from "./PopUpAlert.jsx";
 
 /**
  * StoryForm
