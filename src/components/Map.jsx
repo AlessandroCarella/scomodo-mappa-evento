@@ -4,10 +4,12 @@ import Pin from "./Pin";
 import RouteConnections from "./RouteConnections";
 import StoriesOverlay from "./StoriesOverlay";
 import Banner from "./Banner";
+import QRcode from "./QRcode";
 import { useMapInit } from "./MapHelpers/useMapInit";
 import { useWasdNavigation } from "./MapHelpers/useWasdNavigation";
 import { useGamepad } from "./MapHelpers/useGamepad";
 import { processConnections } from "./ConnectionHelpers/connectionUtils";
+import { QR_ENABLED, QR_LINK, QR_SIZE } from "../config";
 
 // Vite's BASE_URL respects the `base` option in vite.config.js.
 // Without this prefix, fetches return index.html (→ JSON parse error)
@@ -204,11 +206,12 @@ export default function Map() {
 
             <Banner overlayActive={storiesOpen} />
 
-            {storiesOpen && (
-                <StoriesOverlay
-                    stories={activeStories}
-                    onClose={closeStories}
-                />
+            {QR_ENABLED && <QRcode link={QR_LINK} size={QR_SIZE} />}
+
+            <StoriesOverlay
+                stories={activeStories}
+                onClose={closeStories}
+            />
             )}
         </div>
     );
