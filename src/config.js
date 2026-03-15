@@ -351,3 +351,37 @@ export const EMAILJS_TEMPLATE_ID_BACKUP = "template_jf16j3q"; // e.g. "template_
 export const EMAILJS_PUBLIC_KEY_BACKUP = "8511CbabyiQ7_Pid7"; // e.g. "xxxxxxxxxxxxxxxxxxxx"
 export const EMAILJS_TO_EMAIL_BACKUP = "scomodobarimappe2@gmail.com"; // destination address
 
+// ── PopUpAlert ────────────────────────────────────────────────
+
+// Colors for each alert status — used both in PopUpAlert.jsx (inline style)
+// and mirrored in popUpAlert.css (CSS classes). Change here and update the
+// CSS counterpart to keep them in sync.
+export const POPUP_COLORS = {
+    info: {
+        accent: "#5b9bd5", // border + icon colour
+        bg: "rgba(14, 26, 46, 0.97)", // card background
+        text: "#c0d4e8", // body text
+    },
+    warning: {
+        accent: "#f0c040",
+        bg: "rgba(28, 22, 8, 0.97)",
+        text: "#e8d898",
+    },
+    error: {
+        accent: "#e63030",
+        bg: "rgba(32, 10, 10, 0.97)",
+        text: "#e8c0b8",
+    },
+};
+
+// Overlay backdrop colour (shared across all statuses)
+export const POPUP_OVERLAY_BG = "rgba(4, 6, 14, 0.72)";
+
+// UI strings
+export const POPUP_COPY_LABEL = "Copia il testo per l'email";
+export const POPUP_COPIED_LABEL = "Copiato ✓";
+export const POPUP_CLOSE_LABEL = "Chiudi";
+
+// Message shown when both primary and backup EmailJS sends fail
+export const POPUP_EMAIL_FATAL_MESSAGE =
+    "Non siamo stati in grado di ricevere la tua storia, per favore mandaci una mail con ciò che avevi scritto all'indirizzo email scomodobarimappe@gmail.com";

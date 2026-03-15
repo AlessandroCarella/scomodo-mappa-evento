@@ -7,6 +7,7 @@ import {
     EMAILJS_SERVICE_ID_BACKUP,
     EMAILJS_TEMPLATE_ID_BACKUP,
     EMAILJS_PUBLIC_KEY_BACKUP,
+    POPUP_EMAIL_FATAL_MESSAGE,
     EMPTY_FORM,
 } from "@/config";
 import { validate, buildTemplateParams } from "./formUtils.js";
@@ -19,7 +20,8 @@ import { validate, buildTemplateParams } from "./formUtils.js";
  *   - Submission status machine: idle → sending → success | error
  *   - First-field auto-focus on mount
  *   - Escape-key listener to call onClose
- *   - EmailJS submission
+ *   - EmailJS submission with automatic backup-account fallback on 429
+ *   - popup state for the fatal-failure PopUpAlert
  *
  * @param {{ onClose: function }} options
  * @returns {object} See return shape below.
@@ -28,6 +30,17 @@ export function useStoryForm({ onClose }) {
     const [values, setValues] = useState(EMPTY_FORM);
     const [errors, setErrors] = useState({});
     const [status, setStatus] = useState("idle"); // "idle" | "sending" | "success" | "error"
+
+    /**
+     * popup — drives the <PopUpAlert> rendered by the parent form.
+     * null  → alert hidden
+     * { status, message, json } → alert visible
+     *   status  — "info" | "warning" | "error"
+     *   message — string shown to the user
+     *   json    — pre-formatted string for the clipboard copy button (optional)
+     */
+    const [popup, setPopup] = useState(null);
+
     const firstFieldRef = useRef(null);
 
     // ── Side-effects ─────────────────────────────────────────
@@ -46,14 +59,7 @@ export function useStoryForm({ onClose }) {
         return () => window.removeEventListener("keydown", handler);
     }, [onClose]);
 
-    // ── Handlers ─────────────────────────────────────────────
-
-    /** Update a single field value and clear its error on change. */
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setValues((v) => ({ ...v, [name]: value }));
-        if (errors[name]) setErrors((er) => ({ ...er, [name]: undefined }));
-    }
+    // ── Helpers ───────────────────────────────────────────────
 
     /** Returns true if the EmailJS error looks like a rate-limit (429). */
     function isRateLimitError(err) {
@@ -64,6 +70,36 @@ export function useStoryForm({ onClose }) {
         );
     }
 
+    /**
+     * Builds the JSON string a user can paste into a manual email when
+     * both EmailJS sends have failed. Mirrors the template field order:
+     *   { nome, eta (number), cittaPartenza, cittaArrivo, data, storia }
+     */
+    function buildClipboardJson(vals) {
+        return JSON.stringify(
+            {
+                nome: vals.nome,
+                eta: vals.eta === "" ? null : Number(vals.eta),
+                cittaPartenza: vals.cittaPartenza,
+                cittaArrivo: vals.cittaArrivo,
+                data: vals.data,
+                storia: vals.storia,
+            },
+            null,
+            2,
+        );
+    }
+
+    // ── Handlers ─────────────────────────────────────────────
+
+    /** Update a single field value and clear its error on change. */
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setValues((v) => ({ ...v, [name]: value }));
+        if (errors[name]) setErrors((er) => ({ ...er, [name]: undefined }));
+    }
+
+    /** Validate and submit via EmailJS, falling back to the backup account on 429. */
     async function handleSubmit(e) {
         e.preventDefault();
 
@@ -75,6 +111,23 @@ export function useStoryForm({ onClose }) {
 
         setStatus("sending");
         const params = buildTemplateParams(values);
+
+        // ── TEST CODE: simulate both sends failing with 429 ──────────
+        const fakeRateLimit = { status: 429, text: "Too Many Requests" };
+        const primaryErr = fakeRateLimit;
+        console.warn("Primary EmailJS failed:", primaryErr);
+        if (isRateLimitError(primaryErr)) {
+            const backupErr = new Error("Backup also failed");
+            console.error("Backup EmailJS also failed:", backupErr);
+        }
+        setPopup({
+            status: "error",
+            message: POPUP_EMAIL_FATAL_MESSAGE,
+            json: buildClipboardJson(values),
+        });
+        setStatus("error");
+        return;
+        // ── END TEST CODE ────────────────────────────────────────────
 
         try {
             await emailjs.send(
@@ -88,6 +141,7 @@ export function useStoryForm({ onClose }) {
             console.warn("Primary EmailJS failed:", primaryErr);
 
             if (isRateLimitError(primaryErr)) {
+                console.info("Rate limit hit — retrying with backup account…");
                 try {
                     await emailjs.send(
                         EMAILJS_SERVICE_ID_BACKUP,
@@ -97,9 +151,18 @@ export function useStoryForm({ onClose }) {
                     );
                     setStatus("success");
                     return;
-                } catch (backupErr) {}
+                } catch (backupErr) {
+                    console.error("Backup EmailJS also failed:", backupErr);
+                }
             }
 
+            // Both sends failed (or primary failed for a non-rate-limit reason):
+            // surface the fatal popup so the user can copy their story manually.
+            setPopup({
+                status: "error",
+                message: POPUP_EMAIL_FATAL_MESSAGE,
+                json: buildClipboardJson(values),
+            });
             setStatus("error");
         }
     }
@@ -116,6 +179,11 @@ export function useStoryForm({ onClose }) {
         setStatus("idle");
     }
 
+    /** Dismiss the fatal-failure popup without resetting the form values. */
+    function handleClosePopup() {
+        setPopup(null);
+    }
+
     // ── Derived state ─────────────────────────────────────────
 
     return {
@@ -127,6 +195,9 @@ export function useStoryForm({ onClose }) {
         isSending: status === "sending",
         isSuccess: status === "success",
         isError: status === "error",
+        // Popup
+        popup,
+        handleClosePopup,
         // Handlers
         handleChange,
         handleSubmit,

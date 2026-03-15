@@ -1,0 +1,242 @@
+/* ─────────────────────────────────────────────────────────────
+   popUpAlert.css
+   Styles for the <PopUpAlert> modal component.
+
+   Status colours are injected as CSS custom properties by the
+   component itself (--popup-accent, --popup-bg, --popup-text),
+   driven by POPUP_COLORS in config.js.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Overlay ─────────────────────────────────────────────────── */
+
+.popup-alert-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(4, 6, 14, 0.72); /* POPUP_OVERLAY_BG */
+    backdrop-filter: blur(4px);
+    animation: popup-overlay-in 0.18s ease both;
+}
+
+@keyframes popup-overlay-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ── Card ────────────────────────────────────────────────────── */
+
+.popup-alert {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 10px;
+    border-left: 4px solid var(--popup-accent);
+    background: var(--popup-bg);
+    color: var(--popup-text);
+    padding: 1.25rem 1.5rem 1.25rem 1.25rem;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+    animation: popup-card-in 0.22s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+}
+
+@keyframes popup-card-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ── Header (icon + close button) ───────────────────────────── */
+
+.popup-alert__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.popup-alert__icon {
+    display: flex;
+    align-items: center;
+    color: var(--popup-accent);
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+.popup-alert__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.popup-alert__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    margin: -4px -4px 0 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--popup-text);
+    opacity: 0.55;
+    cursor: pointer;
+    transition:
+        opacity 0.15s,
+        background 0.15s;
+    flex-shrink: 0;
+}
+
+.popup-alert__close svg {
+    width: 14px;
+    height: 14px;
+}
+
+.popup-alert__close:hover,
+.popup-alert__close:focus-visible {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+}
+
+/* ── Message ─────────────────────────────────────────────────── */
+
+.popup-alert__message {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--popup-text);
+}
+
+/* ── Mailto link ─────────────────────────────────────────────── */
+
+.popup-alert__mailto {
+    color: #5b9bd5;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    word-break: break-all;
+    transition: color 0.15s;
+}
+
+.popup-alert__mailto:hover,
+.popup-alert__mailto:focus-visible {
+    color: #82b8e8;
+    outline: none;
+}
+
+/* ── JSON copy block ─────────────────────────────────────────── */
+
+.popup-alert__copy-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.popup-alert__json {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.75rem;
+    line-height: 1.55;
+    color: var(--popup-text);
+    white-space: pre;
+    overflow-x: auto;
+    max-height: 180px;
+    overflow-y: auto;
+
+    /* thin custom scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.popup-alert__json::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+.popup-alert__json::-webkit-scrollbar-track {
+    background: transparent;
+}
+.popup-alert__json::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 99px;
+}
+
+.popup-alert__copy-btn {
+    align-self: flex-start;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    border: 1px solid var(--popup-accent);
+    background: transparent;
+    color: var(--popup-accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition:
+        background 0.15s,
+        color 0.15s;
+}
+
+.popup-alert__copy-btn:hover,
+.popup-alert__copy-btn:focus-visible {
+    background: var(--popup-accent);
+    color: #0a0c14;
+    outline: none;
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+
+.popup-alert__footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.popup-alert__dismiss-btn {
+    padding: 0.45rem 1.2rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--popup-text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition:
+        background 0.15s,
+        border-color 0.15s;
+}
+
+.popup-alert__dismiss-btn:hover,
+.popup-alert__dismiss-btn:focus-visible {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.28);
+    outline: none;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .popup-alert-overlay,
+    .popup-alert {
+        animation: none;
+    }
+}

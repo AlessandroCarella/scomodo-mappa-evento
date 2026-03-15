@@ -14,6 +14,7 @@ import {
 import { useStoryForm } from "./StoryFormHelpers/useStoryForm.js";
 import FormField from "./StoryFormHelpers/FormField.jsx";
 import FormFeedback from "./StoryFormHelpers/FormFeedback.jsx";
+import { PopUpAlert } from "./popUpAlert.jsx";
 
 /**
  * StoryForm
@@ -36,6 +37,8 @@ export default function StoryForm({ onClose }) {
         handleReset,
         handleRetry,
         firstFieldRef,
+        popup,
+        handleClosePopup,
     } = useStoryForm({ onClose });
 
     const storiaHint = FORM_STORIA_HINT.replace(
@@ -171,6 +174,17 @@ export default function StoryForm({ onClose }) {
                     </form>
                 )}
             </div>
+
+            {/* ── Fatal-failure popup — rendered inside the overlay so it
+                 sits above the form panel but within the same stacking context ── */}
+            {popup && (
+                <PopUpAlert
+                    status={popup.status}
+                    message={popup.message}
+                    json={popup.json}
+                    onClose={handleClosePopup}
+                />
+            )}
         </div>
     );
 }
