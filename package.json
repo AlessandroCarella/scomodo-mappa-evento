@@ -9,6 +9,7 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@emailjs/browser": "^4.4.1",
         "@gsap/react": "^2.1.2",
         "bootstrap": "^5.3.8",
         "class-variance-authority": "^0.7.1",

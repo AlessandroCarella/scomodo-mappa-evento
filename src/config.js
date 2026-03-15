@@ -225,5 +225,163 @@ export const QR_LINK = "https://scomodo-mappa-evento.pages.dev/";
 // Size of the QR card.
 // Any valid CSS length works: px, vw, vh, min(), clamp(), etc.
 // Default: 1/16 of a 16:9 screen — one cell of a 4×4 grid.
-const QR_SIDE_SIZE = 17
+const QR_SIDE_SIZE = 17;
 export const QR_SIZE = `min(${QR_SIDE_SIZE}vw, ${QR_SIDE_SIZE}vh)`;
+
+// ── Story Form ────────────────────────────────────────────────
+
+// Set to false to hide the form button entirely
+export const FORM_ENABLED = true;
+
+// Size of the trigger button — same logic as QR_SIZE.
+// Any valid CSS length: px, vw, vh, min(), clamp(), etc.
+const FORM_SIDE_SIZE = 17;
+export const FORM_BUTTON_SIZE = `min(${FORM_SIDE_SIZE}vw, ${FORM_SIDE_SIZE}vh)`;
+
+// ── Story Form field constraints ──────────────────────────────
+export const FORM_STORIA_MAX_LENGTH = 1000;
+export const FORM_ETA_MIN = 1;
+export const FORM_ETA_MAX = 120;
+
+// ── Story Form UI strings ─────────────────────────────────────
+// Change these to localise or rebrand the form without touching JSX.
+export const FORM_EYEBROW = "Scomodo · Mappa dei viaggi";
+export const FORM_TITLE = "La tua storia";
+export const FORM_DESC =
+    "Hai viaggiato in Italia? Condividi la tua esperienza — apparirà sulla mappa insieme alle altre storie.";
+export const FORM_SUBMIT_LABEL = "Manda la tua storia →";
+export const FORM_SENDING_LABEL = "Invio in corso…";
+
+export const FORM_SUCCESS_TITLE = "Storia inviata!";
+export const FORM_SUCCESS_BODY = "Grazie per aver condiviso il tuo viaggio.";
+export const FORM_SUCCESS_RESET = "Invia un'altra storia";
+export const FORM_SUCCESS_CLOSE = "Chiudi";
+
+export const FORM_ERROR_TITLE = "Invio fallito";
+export const FORM_ERROR_BODY =
+    "Qualcosa è andato storto. Riprova tra qualche istante.";
+export const FORM_ERROR_RETRY = "Riprova";
+
+export const FORM_STORIA_LABEL = "Racconta la tua storia";
+export const FORM_STORIA_HINT =
+    "Cosa ti è rimasto di quel viaggio? Max {max} caratteri.";
+export const FORM_STORIA_PLACEHOLDER = "Scrivi qui la tua storia…";
+
+/**
+ * FIELDS
+ *
+ * Ordered list of field descriptors for the story submission form.
+ * Each entry drives both the rendered <input> and the validation logic —
+ * add, remove, or reorder entries here and the form updates automatically.
+ *
+ * Shape:
+ *   id           — matches the key in the form values object and storie.json
+ *   label        — visible label text
+ *   hint         — secondary helper text shown below the label
+ *   type         — HTML input type
+ *   placeholder  — input placeholder
+ *   autoComplete — HTML autocomplete attribute (omit to default to "off")
+ *   min / max    — numeric bounds (only meaningful when type === "number")
+ */
+export const FIELDS = [
+    {
+        id: "nome",
+        label: "Nome",
+        hint: "Come ti chiami?",
+        type: "text",
+        placeholder: "Es. Matteo",
+        autoComplete: "given-name",
+    },
+    {
+        id: "eta",
+        label: "Età",
+        hint: "Quanti anni hai?",
+        type: "number",
+        placeholder: "Es. 28",
+        min: FORM_ETA_MIN,
+        max: FORM_ETA_MAX,
+    },
+    {
+        id: "cittaPartenza",
+        label: "Città di partenza",
+        hint: "Da dove sei partito/a?",
+        type: "text",
+        placeholder: "Es. Milano",
+    },
+    {
+        id: "cittaArrivo",
+        label: "Città di arrivo",
+        hint: "Dove sei arrivato/a?",
+        type: "text",
+        placeholder: "Es. Torino",
+    },
+    {
+        id: "data",
+        label: "Data del viaggio",
+        hint: "Quando è avvenuto il viaggio?",
+        type: "date",
+        placeholder: "",
+    },
+];
+
+/**
+ * EMPTY_FORM
+ *
+ * Initial / reset state for the form values object.
+ * Derived automatically from FIELDS so it stays in sync if fields change.
+ * The `storia` textarea is not in FIELDS (it's rendered separately) so it
+ * is added explicitly.
+ */
+export const EMPTY_FORM = {
+    ...Object.fromEntries(FIELDS.map(({ id }) => [id, ""])),
+    storia: "",
+};
+
+// ── EmailJS ───────────────────────────────────────────────────
+// Fill these in after running: npm install @emailjs/browser
+// Get them from https://dashboard.emailjs.com
+export const EMAILJS_SERVICE_ID = "mappa_evento_arriv_parti"; // e.g. "service_xxxxxxx"
+export const EMAILJS_TEMPLATE_ID = "template_zv8c2s4"; // e.g. "template_xxxxxxx"
+export const EMAILJS_PUBLIC_KEY = "E5ISTDoY7oB1S-uC-"; // e.g. "xxxxxxxxxxxxxxxxxxxx"
+export const EMAILJS_TO_EMAIL = "scomodobarimappe@gmail.com"; // destination address
+
+//BACKUP
+export const EMAILJS_SERVICE_ID_BACKUP = "2mappa_evento_arriv_part"; // e.g. "service_xxxxxxx"
+export const EMAILJS_TEMPLATE_ID_BACKUP = "template_jf16j3q"; // e.g. "template_xxxxxxx"
+export const EMAILJS_PUBLIC_KEY_BACKUP = "8511CbabyiQ7_Pid7"; // e.g. "xxxxxxxxxxxxxxxxxxxx"
+export const EMAILJS_TO_EMAIL_BACKUP = "scomodobarimappe2@gmail.com"; // destination address
+
+// ── PopUpAlert ────────────────────────────────────────────────
+
+// Colors for each alert status — used both in PopUpAlert.jsx (inline style)
+// and mirrored in popUpAlert.css (CSS classes). Change here and update the
+// CSS counterpart to keep them in sync.
+export const POPUP_COLORS = {
+    info: {
+        accent: "#5b9bd5", // border + icon colour
+        bg: "rgba(14, 26, 46, 0.97)", // card background
+        text: "#c0d4e8", // body text
+    },
+    warning: {
+        accent: "#f0c040",
+        bg: "rgba(28, 22, 8, 0.97)",
+        text: "#e8d898",
+    },
+    error: {
+        accent: "#e63030",
+        bg: "rgba(32, 10, 10, 0.97)",
+        text: "#e8c0b8",
+    },
+};
+
+// Overlay backdrop colour (shared across all statuses)
+export const POPUP_OVERLAY_BG = "rgba(4, 6, 14, 0.72)";
+
+// UI strings
+export const POPUP_COPY_LABEL = "Copia il testo per l'email";
+export const POPUP_COPIED_LABEL = "Copiato ✓";
+export const POPUP_CLOSE_LABEL = "Chiudi";
+
+// Message shown when both primary and backup EmailJS sends fail
+export const POPUP_EMAIL_FATAL_MESSAGE =
+    "Non siamo stati in grado di ricevere la tua storia, per favore mandaci una mail con ciò che avevi scritto all'indirizzo email scomodobarimappe@gmail.com";

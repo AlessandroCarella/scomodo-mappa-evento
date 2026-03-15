@@ -65,6 +65,7 @@ function BannerPanel({ side, text, fontFamily, panelCssVars, hidden }) {
  *   __banner.status()  log current state
  * ─────────────────────────────────────────────────────────────
  */
+
 export default function Banner({ overlayActive = false }) {
     const { visible } = useBannerVisibility();
 
