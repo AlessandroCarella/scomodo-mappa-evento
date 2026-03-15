@@ -1,8 +1,8 @@
 [
     {
         "name": "Marsiglia",
-        "lat": 44.4637211,
-        "lng": 9.0645451
+        "lat": 43.2965,
+        "lng": 5.3811
     },
     {
         "name": "Torino",
@@ -61,7 +61,7 @@
     },
     {
         "name": "Londra",
-        "lat": 51.51143535674791, 
+        "lat": 51.51143535674791,
         "lng": -0.12426757868749967
     },
     {
@@ -106,8 +106,8 @@
     },
     {
         "name": "Stoccolma",
-        "lat": 44.2964315,
-        "lng": 11.1819221
+        "lat": 59.3293,
+        "lng": 18.0686
     },
     {
         "name": "Rotterdam",
@@ -136,8 +136,8 @@
     },
     {
         "name": "Amburgo",
-        "lat": 49.4543662,
-        "lng": 11.8474021
+        "lat": 53.5511,
+        "lng": 9.9937
     },
     {
         "name": "Palermo",
@@ -151,8 +151,8 @@
     },
     {
         "name": "Siviglia",
-        "lat": 37.587794,
-        "lng": 14.155048
+        "lat": 37.3886,
+        "lng": -5.9823
     },
     {
         "name": "Dublino",
@@ -173,5 +173,235 @@
         "name": "Zurigo",
         "lat": 47.3744489,
         "lng": 8.5410422
+    },
+    {
+        "name": "Altamura",
+        "lat": 40.8274,
+        "lng": 16.5543
+    },
+    {
+        "name": "Molfetta",
+        "lat": 41.2005,
+        "lng": 16.5974
+    },
+    {
+        "name": "Bitonto",
+        "lat": 41.1089,
+        "lng": 16.6922
+    },
+    {
+        "name": "Monopoli",
+        "lat": 40.9537,
+        "lng": 17.3011
+    },
+    {
+        "name": "Corato",
+        "lat": 41.1524,
+        "lng": 16.4078
+    },
+    {
+        "name": "Gravina in Puglia",
+        "lat": 40.8194,
+        "lng": 16.4197
+    },
+    {
+        "name": "Modugno",
+        "lat": 41.0868,
+        "lng": 16.7777
+    },
+    {
+        "name": "Gioia del Colle",
+        "lat": 40.801,
+        "lng": 16.9212
+    },
+    {
+        "name": "Terlizzi",
+        "lat": 41.1296,
+        "lng": 16.5464
+    },
+    {
+        "name": "Conversano",
+        "lat": 40.9648,
+        "lng": 17.1157
+    },
+    {
+        "name": "Noicattaro",
+        "lat": 41.0356,
+        "lng": 16.9912
+    },
+    {
+        "name": "Triggiano",
+        "lat": 41.0641,
+        "lng": 16.9266
+    },
+    {
+        "name": "Putignano",
+        "lat": 40.8581,
+        "lng": 17.1222
+    },
+    {
+        "name": "Santeramo in Colle",
+        "lat": 40.7929,
+        "lng": 16.7572
+    },
+    {
+        "name": "Ruvo di Puglia",
+        "lat": 41.1164,
+        "lng": 16.4889
+    },
+    {
+        "name": "Mola di Bari",
+        "lat": 41.062,
+        "lng": 17.0847
+    },
+    {
+        "name": "Palo del Colle",
+        "lat": 41.0554,
+        "lng": 16.7049
+    },
+    {
+        "name": "Acquaviva delle Fonti",
+        "lat": 40.8974,
+        "lng": 16.8432
+    },
+    {
+        "name": "Castellana Grotte",
+        "lat": 40.8826,
+        "lng": 17.1687
+    },
+    {
+        "name": "Casamassima",
+        "lat": 40.9556,
+        "lng": 16.9175
+    },
+    {
+        "name": "Giovinazzo",
+        "lat": 41.1868,
+        "lng": 16.67
+    },
+    {
+        "name": "Rutigliano",
+        "lat": 40.9996,
+        "lng": 17.0058
+    },
+    {
+        "name": "Noci",
+        "lat": 40.7942,
+        "lng": 17.1278
+    },
+    {
+        "name": "Polignano a Mare",
+        "lat": 40.9959,
+        "lng": 17.2232
+    },
+    {
+        "name": "Valenzano",
+        "lat": 41.0449,
+        "lng": 16.8805
+    },
+    {
+        "name": "Adelfia",
+        "lat": 41.004,
+        "lng": 16.8643
+    },
+    {
+        "name": "Cassano delle Murge",
+        "lat": 40.8939,
+        "lng": 16.7691
+    },
+    {
+        "name": "Capurso",
+        "lat": 41.044,
+        "lng": 16.9237
+    },
+    {
+        "name": "Locorotondo",
+        "lat": 40.7537,
+        "lng": 17.3266
+    },
+    {
+        "name": "Turi",
+        "lat": 40.9161,
+        "lng": 17.0225
+    },
+    {
+        "name": "Grumo Appula",
+        "lat": 41.0085,
+        "lng": 16.7096
+    },
+    {
+        "name": "Bitetto",
+        "lat": 41.0414,
+        "lng": 16.7484
+    },
+    {
+        "name": "Bitritto",
+        "lat": 41.0283,
+        "lng": 16.8491
+    },
+    {
+        "name": "Alberobello",
+        "lat": 40.7849,
+        "lng": 17.2369
+    },
+    {
+        "name": "Sannicandro di Bari",
+        "lat": 41.0001,
+        "lng": 16.7942
+    },
+    {
+        "name": "Toritto",
+        "lat": 40.9768,
+        "lng": 16.6775
+    },
+    {
+        "name": "Sammichele di Bari",
+        "lat": 40.8882,
+        "lng": 16.9598
+    },
+    {
+        "name": "Cellamare",
+        "lat": 41.027,
+        "lng": 16.9525
+    },
+    {
+        "name": "Binetto",
+        "lat": 41.0148,
+        "lng": 16.7177
+    },
+    {
+        "name": "Poggiorsini",
+        "lat": 40.9171,
+        "lng": 16.2701
+    },
+    {
+        "name": "Matera",
+        "lat": 40.6663,
+        "lng": 16.6043
+    },
+    {
+        "name": "Fasano",
+        "lat": 40.8388,
+        "lng": 17.3594
+    },
+    {
+        "name": "Martina Franca",
+        "lat": 40.701,
+        "lng": 17.3348
+    },
+    {
+        "name": "Taranto",
+        "lat": 40.4644,
+        "lng": 17.247
+    },
+    {
+        "name": "Brindisi",
+        "lat": 40.6326,
+        "lng": 17.9419
+    },
+    {
+        "name": "Lecce",
+        "lat": 40.3516,
+        "lng": 18.175
     }
 ]
