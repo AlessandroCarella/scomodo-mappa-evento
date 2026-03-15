@@ -170,6 +170,7 @@ export default function Map() {
     });
 
     const showOverlay = ready && dataReady;
+    const storiesOpen = activeStories.length > 0;
 
     return (
         <div className="map-root">
@@ -205,9 +206,6 @@ export default function Map() {
                     />
                 ))}
 
-            {/* Banner is hidden while the form is open */}
-            <Banner forceHidden={formOpen} />
-
             {QR_ENABLED && <QRcode link={QR_LINK} size={QR_SIZE} />}
 
             {/* Story submission button — bottom-right */}
@@ -217,6 +215,9 @@ export default function Map() {
 
             {/* Stories reading overlay */}
             {activeStories.length > 0 && (
+            <Banner overlayActive={storiesOpen} />
+
+            {storiesOpen && (
                 <StoriesOverlay
                     stories={activeStories}
                     onClose={closeStories}

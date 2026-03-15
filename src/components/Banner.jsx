@@ -54,8 +54,9 @@ function BannerPanel({ side, text, fontFamily, panelCssVars, hidden }) {
 /**
  * Banner — two frosted-glass side panels that frame the map.
  *
- * @param {boolean} forceHidden  When true the panels are hidden regardless
- *   of mouse activity (used while the story form is open).
+ * Props:
+ *   overlayActive  boolean  — when true the banner is force-hidden
+ *                             (e.g. while the StoriesOverlay is open)
  *
  * ── Console API ───────────────────────────────────────────────
  *   __banner.hide()    hide the banner permanently
@@ -64,7 +65,8 @@ function BannerPanel({ side, text, fontFamily, panelCssVars, hidden }) {
  *   __banner.status()  log current state
  * ─────────────────────────────────────────────────────────────
  */
-export default function Banner({ forceHidden = false }) {
+
+export default function Banner({ overlayActive = false }) {
     const { visible } = useBannerVisibility();
 
     if (!BANNER_ENABLED) return null;
@@ -78,7 +80,9 @@ export default function Banner({ forceHidden = false }) {
         "--banner-transition": BANNER_TRANSITION_DURATION,
     };
 
-    const hidden = !visible || forceHidden;
+    // Hide when the user is active (mouseVisible=false) OR when an
+    // overlay (e.g. StoriesOverlay) is covering the map.
+    const hidden = !visible || overlayActive;
 
     return (
         <>

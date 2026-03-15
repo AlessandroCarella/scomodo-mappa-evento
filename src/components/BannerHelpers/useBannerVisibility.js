@@ -6,7 +6,7 @@ import { BANNER_REAPPEAR_DELAY } from "@/config";
  *
  * Manages two independent visibility axes:
  *
- *   mouseVisible  — toggled by mousemove / inactivity timer
+ *   mouseVisible   — toggled by mousemove / keydown / inactivity timer
  *   consoleVisible — toggled by the window.__banner console API
  *
  * The banner is shown only when BOTH are true.
@@ -29,7 +29,7 @@ export function useBannerVisibility() {
 
     const timerRef = useRef(null);
 
-    // ── Mouse inactivity timer ──────────────────────────────
+    // ── Shared "user is active" handler ────────────────────
     const scheduleReappear = useCallback(() => {
         if (timerRef.current) clearTimeout(timerRef.current);
         timerRef.current = setTimeout(
@@ -38,20 +38,24 @@ export function useBannerVisibility() {
         );
     }, []);
 
-    const handleMouseMove = useCallback(() => {
+    const handleActivity = useCallback(() => {
         setMouseVisible(false);
         scheduleReappear();
     }, [scheduleReappear]);
 
     useEffect(() => {
-        window.addEventListener("mousemove", handleMouseMove, {
-            passive: true,
-        });
+        // mousemove on window is fine; keydown must be on document because
+        // the Leaflet map container captures focus and can swallow window-level
+        // keyboard events before they reach window.
+        window.addEventListener("mousemove", handleActivity, { passive: true });
+        document.addEventListener("keydown", handleActivity, { passive: true });
+
         return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mousemove", handleActivity);
+            document.removeEventListener("keydown", handleActivity);
             if (timerRef.current) clearTimeout(timerRef.current);
         };
-    }, [handleMouseMove]);
+    }, [handleActivity]);
 
     // ── Console API ─────────────────────────────────────────
     useEffect(() => {
@@ -71,7 +75,6 @@ export function useBannerVisibility() {
                 });
             },
             status() {
-                // reads current state from closure snapshot — call .status() to refresh
                 console.info(
                     `[Banner] consoleVisible=${consoleVisible}  mouseVisible=${mouseVisible}`,
                 );
