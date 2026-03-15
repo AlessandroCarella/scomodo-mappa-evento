@@ -216,11 +216,12 @@ export default function Map() {
             {/* Stories reading overlay */}
             <Banner overlayActive={storiesOpen} />
 
-            {storiesOpen && (
-                <StoriesOverlay
-                    stories={activeStories}
-                    onClose={closeStories}
-                />
+            {QR_ENABLED && <QRcode link={QR_LINK} size={QR_SIZE} />}
+
+            <StoriesOverlay
+                stories={activeStories}
+                onClose={closeStories}
+            />
             )}
 
             {/* Story submission form overlay */}
