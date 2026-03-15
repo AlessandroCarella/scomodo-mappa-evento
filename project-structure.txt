@@ -19,8 +19,7 @@
 │   │   │   ├── buildItalyMask.js (1.5 KB)
 │   │   │   ├── useGamepad.js (5.5 KB)
 │   │   │   ├── useMapInit.js (2.5 KB)
-│   │   │   ├── useMapSync.js (1.9 KB)
-│   │   │   └── useWasdNavigation.js (4.2 KB)
+│   │   │   └── useMapSync.js (1.9 KB)
 │   │   ├── styles/
 │   │   │   ├── Banner.css (3.5 KB)
 │   │   │   ├── global.css (0.4 KB)
@@ -106,6 +105,6 @@
 ├── LICENSE (1.1 KB)
 ├── package-lock.json (131.0 KB)
 ├── package.json (1.0 KB)
-├── project-structure.txt (4.9 KB)
+├── project-structure.txt (3.4 KB)
 ├── readme.md (1.0 KB)
 └── vite.config.js (0.3 KB)
