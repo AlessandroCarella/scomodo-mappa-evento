@@ -344,3 +344,10 @@ export const EMAILJS_SERVICE_ID = "mappa_evento_arriv_parti"; // e.g. "service_x
 export const EMAILJS_TEMPLATE_ID = "template_zv8c2s4"; // e.g. "template_xxxxxxx"
 export const EMAILJS_PUBLIC_KEY = "E5ISTDoY7oB1S-uC-"; // e.g. "xxxxxxxxxxxxxxxxxxxx"
 export const EMAILJS_TO_EMAIL = "scomodobarimappe@gmail.com"; // destination address
+
+//BACKUP
+export const EMAILJS_SERVICE_ID_BACKUP = "2mappa_evento_arriv_part"; // e.g. "service_xxxxxxx"
+export const EMAILJS_TEMPLATE_ID_BACKUP = "template_jf16j3q"; // e.g. "template_xxxxxxx"
+export const EMAILJS_PUBLIC_KEY_BACKUP = "8511CbabyiQ7_Pid7"; // e.g. "xxxxxxxxxxxxxxxxxxxx"
+export const EMAILJS_TO_EMAIL_BACKUP = "scomodobarimappe2@gmail.com"; // destination address
+

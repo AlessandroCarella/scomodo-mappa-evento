@@ -4,6 +4,9 @@ import {
     EMAILJS_SERVICE_ID,
     EMAILJS_TEMPLATE_ID,
     EMAILJS_PUBLIC_KEY,
+    EMAILJS_SERVICE_ID_BACKUP,
+    EMAILJS_TEMPLATE_ID_BACKUP,
+    EMAILJS_PUBLIC_KEY_BACKUP,
     EMPTY_FORM,
 } from "@/config";
 import { validate, buildTemplateParams } from "./formUtils.js";
@@ -52,7 +55,15 @@ export function useStoryForm({ onClose }) {
         if (errors[name]) setErrors((er) => ({ ...er, [name]: undefined }));
     }
 
-    /** Validate and submit via EmailJS. */
+    /** Returns true if the EmailJS error looks like a rate-limit (429). */
+    function isRateLimitError(err) {
+        return (
+            err?.status === 429 ||
+            err?.text?.includes("429") ||
+            String(err).includes("429")
+        );
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
 
@@ -63,17 +74,32 @@ export function useStoryForm({ onClose }) {
         }
 
         setStatus("sending");
+        const params = buildTemplateParams(values);
 
         try {
             await emailjs.send(
                 EMAILJS_SERVICE_ID,
                 EMAILJS_TEMPLATE_ID,
-                buildTemplateParams(values),
+                params,
                 EMAILJS_PUBLIC_KEY,
             );
             setStatus("success");
-        } catch (err) {
-            console.error("EmailJS error:", err);
+        } catch (primaryErr) {
+            console.warn("Primary EmailJS failed:", primaryErr);
+
+            if (isRateLimitError(primaryErr)) {
+                try {
+                    await emailjs.send(
+                        EMAILJS_SERVICE_ID_BACKUP,
+                        EMAILJS_TEMPLATE_ID_BACKUP,
+                        params,
+                        EMAILJS_PUBLIC_KEY_BACKUP,
+                    );
+                    setStatus("success");
+                    return;
+                } catch (backupErr) {}
+            }
+
             setStatus("error");
         }
     }
