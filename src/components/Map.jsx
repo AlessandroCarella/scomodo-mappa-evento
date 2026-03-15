@@ -214,7 +214,6 @@ export default function Map() {
             )}
 
             {/* Stories reading overlay */}
-            {activeStories.length > 0 && (
             <Banner overlayActive={storiesOpen} />
 
             {storiesOpen && (
