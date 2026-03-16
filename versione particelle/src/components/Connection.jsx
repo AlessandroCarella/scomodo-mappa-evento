@@ -16,6 +16,7 @@ import { CONNECTION_WIDTH_MIN, CONNECTION_WIDTH_MAX } from "../config";
  *   maxCount : dataset maximum (drives colour + width normalisation)
  *   shape    : "arc" | "line"
  *   index    : render order (used for animation stagger)
+ *   onClick  : optional click handler (used to open stories)
  */
 export default function Connection({
     from,
@@ -24,6 +25,7 @@ export default function Connection({
     maxCount,
     shape = "arc",
     index = 0,
+    onClick,
 }) {
     const color = colorForCount(count, maxCount);
 
@@ -36,7 +38,10 @@ export default function Connection({
     const pathRef = useConnectionAnim(arcLen, index);
 
     return (
-        <g>
+        <g
+            style={{ cursor: "pointer", pointerEvents: "auto" }}
+            onClick={onClick}
+        >
             {/* glow halo */}
             <path
                 d={d}

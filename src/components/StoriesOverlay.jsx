@@ -29,29 +29,41 @@ export function SplitFlapText({ text = "" }) {
 export function StoryPostIt({ story }) {
     if (!story) return null;
 
-    const tratta = `${abbrCity(story.cittaProvenienza)}-${abbrCity(
-        story.cittaDestinazione,
+    // Map real JSON shape → display-safe fields
+    const passenger =
+        (story.nome && String(story.nome).trim()) ||
+        (story.eta != null ? `Anon (${story.eta})` : "Anonimo");
+
+    const tratta = `${abbrCity(story.cittaPartenza)}-${abbrCity(
+        story.cittaArrivo,
     )}`;
+
+    const dataText =
+        (story.data && String(story.data).trim()) ||
+        (story.anno && String(story.anno).trim()) ||
+        "—";
+
+    const body = truncate(story.storia || story.testo || "", 500);
 
     return (
         <article className="story-postit">
             <div className="story-postit__meta">
                 <div className="story-postit__row">
                     <div className="story-postit__label">Passeggero</div>
-                    <SplitFlapText text={story.nome || "—"} />
+                    <SplitFlapText text={passenger} />
                 </div>
                 <div className="story-postit__row">
                     <div className="story-postit__label">Tratta</div>
                     <SplitFlapText text={tratta} />
                 </div>
                 <div className="story-postit__row">
-                    <div className="story-postit__label">Periodo</div>
-                    <SplitFlapText text={story.periodoViaggio || "—"} />
+                    <div className="story-postit__label">Data</div>
+                    <SplitFlapText text={dataText} />
                 </div>
             </div>
 
             <div className="story-postit__text">
-                {truncate(story.testo || "", 500)}
+                {body}
             </div>
         </article>
     );
@@ -72,14 +84,7 @@ export default function StoriesOverlay({ stories = [], onClose }) {
     if (!isOpen) return null;
 
     return (
-        <div
-            className="stories-overlay"
-            role="dialog"
-            aria-modal="true"
-            onMouseDown={(e) => {
-                if (e.target === e.currentTarget) onClose?.();
-            }}
-        >
+        <div className="stories-overlay" role="dialog" aria-modal="true">
             <div className="stories-overlay__panel">
                 <button
                     type="button"

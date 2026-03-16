@@ -1,5 +1,6 @@
 import "./styles/Map.css";
 import { useState, useRef, useEffect, useCallback } from "react";
+import L from "leaflet";
 import Pin from "./Pin";
 import RouteConnections from "./RouteConnections";
 import StoriesOverlay from "./StoriesOverlay";
@@ -19,6 +20,25 @@ import { QR_ENABLED, QR_LINK, QR_SIZE, FORM_ENABLED } from "../config";
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 const LOCATIONS_URL = `${BASE}/data/Locations.json`;
 const STORIES_URL = `${BASE}/data/storie.json`;
+
+function flyToOffset(map, latlng, isMobile) {
+    if (!map || !latlng) return;
+    const zoom = map.getZoom();
+    const size = map.getSize();
+    const targetPt = map.project(latlng, zoom);
+
+    let newPoint;
+    if (isMobile) {
+        // Target in centre of top half (Y = 25%) → shift DOWN by 25% of height
+        newPoint = L.point(targetPt.x, targetPt.y + size.y * 0.25);
+    } else {
+        // Target in centre of right half (X = 75%) → shift LEFT by 25% of width
+        newPoint = L.point(targetPt.x - size.x * 0.25, targetPt.y);
+    }
+
+    const newCenter = map.unproject(newPoint, zoom);
+    map.flyTo(newCenter, zoom, { duration: 1.2 });
+}
 
 export default function Map() {
     const containerRef = useRef(null);
@@ -79,7 +99,20 @@ export default function Map() {
     }, []);
 
     function handleConnectionClick(fromName, toName) {
-        const matches = allStories.filter(
+        const map = mapRef.current;
+        if (!map) return;
+
+        const fromLoc = locations.find((l) => l.name === fromName);
+        const toLoc = locations.find((l) => l.name === toName);
+        if (fromLoc && toLoc) {
+            const midLat = (fromLoc.lat + toLoc.lat) / 2;
+            const midLng = (fromLoc.lng + toLoc.lng) / 2;
+            const isMobile =
+                typeof window !== "undefined" && window.innerWidth < 768;
+            flyToOffset(map, [midLat, midLng], isMobile);
+        }
+
+        const matches = allStoriesRef.current.filter(
             (s) =>
                 (s.cittaPartenza === fromName && s.cittaArrivo === toName) ||
                 (s.cittaPartenza === toName && s.cittaArrivo === fromName),
@@ -89,10 +122,18 @@ export default function Map() {
 
     function handlePinClick(locationName) {
         if (!locationName) return;
+        const map = mapRef.current;
+        if (map) {
+            const loc = locations.find((l) => l.name === locationName);
+            if (loc) {
+                const isMobile =
+                    typeof window !== "undefined" && window.innerWidth < 768;
+                flyToOffset(map, [loc.lat, loc.lng], isMobile);
+            }
+        }
+
         const matches = allStoriesRef.current.filter(
-            (s) =>
-                s.cittaArrivo === locationName ||
-                s.cittaPartenza === locationName,
+            (s) => s.cittaArrivo === locationName,
         );
         openStories(matches);
     }
@@ -218,11 +259,7 @@ export default function Map() {
 
             {QR_ENABLED && <QRcode link={QR_LINK} size={QR_SIZE} />}
 
-            <StoriesOverlay
-                stories={activeStories}
-                onClose={closeStories}
-            />
-            )}
+            <StoriesOverlay stories={activeStories} onClose={closeStories} />
 
             {/* Story submission form overlay */}
             {formOpen && <StoryForm onClose={() => setFormOpen(false)} />}
