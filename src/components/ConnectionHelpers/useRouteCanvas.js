@@ -22,14 +22,16 @@ import {
  * RouteConnections component; this hook just receives them as params.
  *
  * @param {object} params
- * @param {L.Map}              params.map                Leaflet map instance
- * @param {Array}              params.paths              [{ from, to }, ...]
- * @param {string}             params.locationsUrl       URL to Locations.json
- * @param {boolean}            params.loop               Restart routes on completion
- * @param {React.RefObject}    params.canvasRef          Ref to the <canvas> element
- * @param {React.RefObject}    params.stateRef           Shared mutable animation state
- * @param {function}           params.getHit             (clientX, clientY) → particle | null
- * @param {React.RefObject}    params.onParticleClickRef Stable ref to the click callback
+ * @param {L.Map}              params.map                 Leaflet map instance
+ * @param {Array}              params.paths               [{ from, to }, ...]
+ * @param {string}             params.locationsUrl        URL to Locations.json
+ * @param {boolean}            params.loop                Restart routes on completion
+ * @param {React.RefObject}    params.canvasRef           Ref to the <canvas> element
+ * @param {React.RefObject}    params.stateRef            Shared mutable animation state
+ * @param {function}           params.getHit              (clientX, clientY) → particle | null
+ * @param {React.RefObject}    params.onParticleClickRef  Stable ref to the click callback
+ * @param {React.RefObject}    params.trackedRouteRef     {from,to} for camera follow (optional)
+ * @param {React.RefObject}    params.onTrackedPositionRef Stable ref to camera-follow callback
  */
 export function useRouteCanvas({
     map,
@@ -40,6 +42,8 @@ export function useRouteCanvas({
     stateRef,
     getHit,
     onParticleClickRef,
+    trackedRouteRef,
+    onTrackedPositionRef,
 }) {
     useEffect(() => {
         if (!map || !locationsUrl) return;
@@ -177,6 +181,21 @@ export function useRouteCanvas({
             }
             S.particles = alive;
 
+            // Camera-follow callback: report the tracked route's current lat/lng
+            if (trackedRouteRef?.current && onTrackedPositionRef?.current) {
+                const { from, to } = trackedRouteRef.current;
+                const tracked = S.particles.find(
+                    (p) => p.from.name === from && p.to.name === to,
+                );
+                if (tracked) {
+                    onTrackedPositionRef.current({
+                        lat: tracked._curLat,
+                        lng: tracked._curLng,
+                        isPlaying: !tracked.paused && tracked.t < 1,
+                    });
+                }
+            }
+
             // Ghost route + coloured progress line
             ctx.save();
             ctx.setLineDash([6, 5]);
@@ -297,5 +316,7 @@ export function useRouteCanvas({
         stateRef,
         getHit,
         onParticleClickRef,
-    ]); // eslint-disable-line react-hooks/exhaustive-deps
+        trackedRouteRef,
+        onTrackedPositionRef,
+    ]); // eslint-disable-line react-hooks-exhaustive-deps
 }

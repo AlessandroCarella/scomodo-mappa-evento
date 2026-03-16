@@ -53,6 +53,11 @@ export default function Map() {
     const [formOpen, setFormOpen] = useState(false);
     const isStoriesOpenRef = useRef(false);
 
+    // For continuous camera tracking of the moving dot along the active route
+    const [trackedRoute, setTrackedRoute] = useState(null);
+    const [trackedLatLng, setTrackedLatLng] = useState(null);
+    const [routePlaying, setRoutePlaying] = useState(false);
+
     useEffect(() => {
         Promise.all([
             fetch(LOCATIONS_URL).then((r) => {
@@ -184,11 +189,27 @@ export default function Map() {
     const closeStories = () => {
         isStoriesOpenRef.current = false;
         setActiveStories([]);
+        setTrackedRoute(null);
+        setTrackedLatLng(null);
+        setRoutePlaying(false);
     };
     const openStories = (matches) => {
         if (matches.length > 0) {
             isStoriesOpenRef.current = true;
             setActiveStories(matches);
+
+            // Track the first matching route for camera follow
+            const first = matches[0];
+            if (first?.cittaPartenza && first?.cittaArrivo) {
+                setTrackedRoute({
+                    from: first.cittaPartenza,
+                    to: first.cittaArrivo,
+                });
+                setRoutePlaying(true);
+            } else {
+                setTrackedRoute(null);
+                setRoutePlaying(false);
+            }
         }
     };
 
@@ -228,6 +249,11 @@ export default function Map() {
                         onParticleClick={({ from, to }) =>
                             handleConnectionClick(from, to)
                         }
+                        trackedRoute={trackedRoute}
+                        onTrackedPosition={({ lat, lng, isPlaying }) => {
+                            setTrackedLatLng({ lat, lng });
+                            setRoutePlaying(isPlaying);
+                        }}
                     />
                 )}
             </div>
@@ -259,7 +285,13 @@ export default function Map() {
 
             {QR_ENABLED && <QRcode link={QR_LINK} size={QR_SIZE} />}
 
-            <StoriesOverlay stories={activeStories} onClose={closeStories} />
+            <StoriesOverlay
+                stories={activeStories}
+                onClose={closeStories}
+                mapRef={mapRef}
+                currentLatLng={trackedLatLng}
+                isPlaying={routePlaying}
+            />
 
             {/* Story submission form overlay */}
             {formOpen && <StoryForm onClose={() => setFormOpen(false)} />}

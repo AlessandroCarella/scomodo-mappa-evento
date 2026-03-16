@@ -6,12 +6,14 @@
  *
  * Props
  * ─────
- *   map              L.Map     Leaflet map instance  (required)
- *   paths            Array     [{ from: "Roma", to: "Milano" }, ...]  (required)
- *   speedMult        number    Playback speed multiplier  (default: 2)
- *   locationsUrl     string    Full URL to Locations.json, already BASE_URL-prefixed
- *   loop             bool      Restart each route on completion  (default: true)
- *   onParticleClick  function  Called with { from, to } when a moving dot is clicked
+ *   map               L.Map       Leaflet map instance  (required)
+ *   paths             Array       [{ from: "Roma", to: "Milano" }, ...]  (required)
+ *   speedMult         number      Playback speed multiplier  (default: 2)
+ *   locationsUrl      string      Full URL to Locations.json, already BASE_URL-prefixed
+ *   loop              bool        Restart each route on completion  (default: true)
+ *   onParticleClick   function    Called with { from, to } when a moving dot is clicked
+ *   trackedRoute      {from,to}?  Optional route to track for camera follow
+ *   onTrackedPosition function?   Called with {lat,lng,isPlaying} for tracked route
  */
 
 import { useEffect, useRef, useCallback } from "react";
@@ -79,6 +81,8 @@ export default function RouteConnections({
     locationsUrl,
     loop = true,
     onParticleClick,
+    trackedRoute,
+    onTrackedPosition,
 }) {
     const canvasRef = useRef(null);
 
@@ -91,12 +95,22 @@ export default function RouteConnections({
         animFrame: null,
     });
 
-    // Stable ref so event-listener closures always see the latest callback
-    // without needing to re-register on every render.
+    // Stable refs so event-listener / rAF closures always see the latest
+    // callbacks and tracked route without needing to re-register.
     const onParticleClickRef = useRef(onParticleClick);
     useEffect(() => {
         onParticleClickRef.current = onParticleClick;
     }, [onParticleClick]);
+
+    const trackedRouteRef = useRef(trackedRoute);
+    useEffect(() => {
+        trackedRouteRef.current = trackedRoute || null;
+    }, [trackedRoute]);
+
+    const onTrackedPositionRef = useRef(onTrackedPosition);
+    useEffect(() => {
+        onTrackedPositionRef.current = onTrackedPosition || null;
+    }, [onTrackedPosition]);
 
     // Patch speedMult into shared state without restarting the render loop.
     // Reset lastTime on all particles so dt stays accurate after a speed change.
@@ -140,6 +154,8 @@ export default function RouteConnections({
         stateRef,
         getHit,
         onParticleClickRef,
+        trackedRouteRef,
+        onTrackedPositionRef,
     });
 
     // pointer-events: none → all events fall through to Leaflet beneath
