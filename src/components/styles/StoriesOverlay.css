@@ -13,9 +13,9 @@
 .stories-overlay__backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(10, 15, 26, 0.4);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10, 15, 26, 0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 /* Base panel layout */
@@ -32,10 +32,10 @@
     top: 50%;
     left: 4vw;
     transform: translateY(-50%);
-    width: min(32vw, 420px);
-    max-width: 420px;
+    width: min(92vw, 480px);
+    max-width: 480px;
     min-width: min(90vw, 320px);
-    max-height: 60vh;
+    max-height: 80vh;
     padding: 16px 16px 12px;
     border-radius: 20px;
     background: linear-gradient(
@@ -58,8 +58,8 @@
     .stories-overlay__panel--floating {
         left: 50%;
         transform: translate(-50%, -50%);
-        width: min(90vw, 350px);
-        max-height: 60vh;
+        width: min(92vw, 480px);
+        max-height: 80vh;
         padding: 14px 14px 10px;
     }
 }
@@ -239,7 +239,8 @@
     font-size: 14px;
     line-height: 1.5;
     color: rgba(20, 20, 22, 0.9);
-    white-space: pre-wrap;
+    white-space: normal;
+    overflow-wrap: break-word;
 }
 
 /* Split-flap */
