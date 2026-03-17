@@ -1,32 +1,61 @@
-/* src/pages/styles/Form.module.css
- *
- * Page-level layout only.
- * Field / panel / button styles live in StoryForm.css and are
- * imported directly by Form.jsx — nothing is duplicated here.
+/* src/pages/styles/Form.module.css */
+
+/* ── Map backdrop ─────────────────────────────────────────────── */
+/*
+ * Fixed to the viewport, underneath everything.
+ * Lives OUTSIDE .page in the JSX so .page's overflow-y stacking
+ * context never traps it.
  */
+.mapBg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ── Dim overlay ──────────────────────────────────────────────── */
+.mapOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: rgba(8, 12, 22, 0.68);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    pointer-events: none;
+}
 
 /* ── Page shell ───────────────────────────────────────────────── */
-
+/*
+ * position: relative + z-index: 2 lifts the entire scroll container
+ * above the two fixed layers in the root stacking context.
+ * overflow-y: auto creates its own stacking context, but that's fine
+ * now — it only affects children, not the siblings above.
+ */
 .page {
-    height: 100vh;      /* ← was min-height */
-    overflow-y: auto;   /* ← add this */
+    position: relative;
+    z-index: 2;
+    height: 100vh;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    background: var(--bg, #f7f8fa);
+    /* no background — map shows through */
 }
 
 /* ── Top bar ──────────────────────────────────────────────────── */
 .topBar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 1rem 2rem;
-    background: rgba(245, 239, 220, 0.97);
-    border-bottom: 1px solid rgba(20, 20, 22, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.07);
+    background: rgba(6, 10, 20, 0.82);
+    border-bottom: 1px solid rgba(180, 160, 120, 0.15);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    flex-shrink: 0;
 }
 
 .backBtn {
@@ -34,10 +63,10 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.45rem 1rem;
-    border: 1.5px solid rgba(20, 20, 22, 0.2);
+    border: 1.5px solid rgba(180, 160, 120, 0.35);
     border-radius: 8px;
     background: transparent;
-    color: rgba(20, 20, 22, 0.75);
+    color: rgba(224, 208, 176, 0.75);
     font-family: "Syne", system-ui, sans-serif;
     font-size: 0.85rem;
     font-weight: 600;
@@ -51,9 +80,9 @@
     flex-shrink: 0;
 }
 .backBtn:hover {
-    background: rgba(20, 20, 22, 0.05);
-    border-color: rgba(20, 20, 22, 0.45);
-    color: rgba(20, 20, 22, 0.95);
+    background: rgba(180, 160, 120, 0.1);
+    border-color: rgba(224, 208, 176, 0.6);
+    color: rgba(224, 208, 176, 0.98);
 }
 
 .backArrow {
@@ -74,7 +103,7 @@
     font-size: 9px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(20, 20, 22, 0.4);
+    color: rgba(180, 160, 120, 0.5);
     margin: 0;
 }
 
@@ -83,12 +112,11 @@
     font-family: "Syne", system-ui, sans-serif;
     font-size: 1.2rem;
     font-weight: 700;
-    color: rgba(20, 20, 22, 0.9);
+    color: rgba(224, 208, 176, 0.92);
     letter-spacing: -0.01em;
 }
 
 .topBarSpacer {
-    /* mirrors back button so title stays perfectly centred */
     min-width: 90px;
     flex-shrink: 0;
 }
@@ -106,17 +134,17 @@
 .card {
     width: min(680px, 100%);
     border-radius: 20px;
-    background: rgba(245, 239, 220, 0.97);
+    background: rgba(245, 239, 220, 0.95);
     box-shadow:
-        0 8px 40px rgba(0, 0, 0, 0.1),
-        0 0 0 1px rgba(20, 20, 22, 0.08);
-    border: 1px solid rgba(20, 20, 22, 0.08);
+        0 40px 100px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(20, 20, 22, 0.12);
+    border: 1px solid rgba(20, 20, 22, 0.1);
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
-/* ── Description (above the form) ────────────────────────────── */
+/* ── Description ──────────────────────────────────────────────── */
 .desc {
     font-family: "Syne", system-ui, sans-serif;
     font-size: 13.5px;
