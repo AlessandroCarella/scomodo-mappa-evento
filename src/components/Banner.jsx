@@ -18,11 +18,12 @@ import {
     BANNER_TRANSITION_DURATION,
 } from "@/config";
 
+// True when this page is loaded inside an iframe (e.g. MapBackground on /form).
+// Evaluated once at module level — never changes during a session.
+const IS_EMBEDDED = window.self !== window.top;
+
 /**
  * BannerPanel — a single side panel with dynamically sized text.
- *
- * Font size is computed so that the longest word in `text` fills
- * BANNER_FONT_FILL_RATIO of the panel's inner width.
  */
 function BannerPanel({ side, text, fontFamily, panelCssVars, hidden }) {
     const innerRef = useRef(null);
@@ -65,11 +66,12 @@ function BannerPanel({ side, text, fontFamily, panelCssVars, hidden }) {
  *   __banner.status()  log current state
  * ─────────────────────────────────────────────────────────────
  */
-
 export default function Banner({ overlayActive = false }) {
     const { visible } = useBannerVisibility();
 
-    if (!BANNER_ENABLED) return null;
+    // Never show when disabled in config, or when rendered inside an iframe
+    // (e.g. as the decorative background of the /form page).
+    if (!BANNER_ENABLED || IS_EMBEDDED) return null;
 
     const panelCssVars = {
         "--banner-width": `${BANNER_WIDTH_PERCENT}%`,
@@ -80,8 +82,6 @@ export default function Banner({ overlayActive = false }) {
         "--banner-transition": BANNER_TRANSITION_DURATION,
     };
 
-    // Hide when the user is active (mouseVisible=false) OR when an
-    // overlay (e.g. StoriesOverlay) is covering the map.
     const hidden = !visible || overlayActive;
 
     return (
