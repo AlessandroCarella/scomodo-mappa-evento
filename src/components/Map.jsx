@@ -222,7 +222,6 @@ export default function Map() {
                 stories={activeStories}
                 onClose={closeStories}
             />
-            )}
 
             {/* Story submission form overlay */}
             {formOpen && <StoryForm onClose={() => setFormOpen(false)} />}
