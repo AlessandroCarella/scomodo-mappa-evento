@@ -3,6 +3,8 @@ import "./styles/StoryFormButton.css";
 import { FORM_BUTTON_SIZE, FORM_BUTTON_TEXT_H, FORM_QR_LINK } from "../config";
 import { generateQRUrl } from "./QRcodeHelpers/generateQRUrl";
 
+const IS_EMBEDDED = window.self !== window.top;
+
 /**
  * StoryFormButton
  *
@@ -16,6 +18,8 @@ import { generateQRUrl } from "./QRcodeHelpers/generateQRUrl";
  */
 export default function StoryFormButton({ onClick }) {
     const [imgStatus, setImgStatus] = useState("loading"); // "loading" | "ready" | "error"
+
+    if (IS_EMBEDDED) return null;
 
     const qrSrc = generateQRUrl(FORM_QR_LINK);
 

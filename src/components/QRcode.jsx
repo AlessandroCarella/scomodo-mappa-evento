@@ -2,6 +2,8 @@ import { useState } from "react";
 import "./styles/QRcode.css";
 import { generateQRUrl } from "./QRcodeHelpers/generateQRUrl";
 
+const IS_EMBEDDED = window.self !== window.top;
+
 /**
  * QRcode
  *
@@ -21,6 +23,8 @@ export default function QRcode({
     imgSizePx = 512,
 }) {
     const [status, setStatus] = useState("loading"); // "loading" | "ready" | "error"
+
+    if (IS_EMBEDDED) return null;
 
     const src = generateQRUrl(link, imgSizePx);
 
