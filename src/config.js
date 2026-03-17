@@ -238,6 +238,14 @@ export const FORM_ENABLED = true;
 const FORM_SIDE_SIZE = 17;
 export const FORM_BUTTON_SIZE = `min(${FORM_SIDE_SIZE}vw, ${FORM_SIDE_SIZE}vh)`;
 
+// Height of the text-label strip that sits above the QR image inside the
+// form button card.  The total card height = FORM_BUTTON_SIZE + this value.
+export const FORM_BUTTON_TEXT_H = "38px";
+
+// URL encoded into the QR code inside the form button.
+// Points to the standalone /form page so users can open it on their phone.
+export const FORM_QR_LINK = "https://scomodo-mappa-evento.pages.dev/form";
+
 // ── Story Form field constraints ──────────────────────────────
 export const FORM_STORIA_MAX_LENGTH = 1000;
 export const FORM_ETA_MIN = 1;
