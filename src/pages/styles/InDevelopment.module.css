@@ -1,0 +1,132 @@
+/* src/pages/styles/InDevelopment.module.css */
+
+/* ── Map backdrop ─────────────────────────────────────────────── */
+.mapBg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ── Dim overlay ──────────────────────────────────────────────── */
+.mapOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: rgba(8, 12, 22, 0.68);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    pointer-events: none;
+}
+
+/* ── Page shell ───────────────────────────────────────────────── */
+.page {
+    position: relative;
+    z-index: 2;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Centered content ─────────────────────────────────────────── */
+.main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+/* ── Card ─────────────────────────────────────────────────────── */
+.card {
+    width: min(480px, 100%);
+    border-radius: 20px;
+    background: rgba(245, 239, 220, 0.95);
+    box-shadow:
+        0 40px 100px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(20, 20, 22, 0.12);
+    border: 1px solid rgba(20, 20, 22, 0.1);
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+/* ── Eyebrow ──────────────────────────────────────────────────── */
+.eyebrow {
+    font-family: "Syne Mono", ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(20, 20, 22, 0.4);
+    margin: 0;
+}
+
+/* ── Icon ─────────────────────────────────────────────────────── */
+.iconWrap {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    line-height: 1;
+    margin: 0.25rem 0;
+}
+
+/* ── Title ────────────────────────────────────────────────────── */
+.title {
+    margin: 0;
+    font-family: "Syne", system-ui, sans-serif;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-weight: 700;
+    color: rgba(20, 20, 22, 0.9);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+/* ── Body text ────────────────────────────────────────────────── */
+.body {
+    margin: 0;
+    font-family: "Syne", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(20, 20, 22, 0.58);
+}
+
+/* ── Back button ──────────────────────────────────────────────── */
+.homeBtn {
+    margin-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.65rem 1.5rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    background: rgba(18, 18, 20, 0.9);
+    color: rgba(245, 239, 220, 0.96);
+    font-family: "Syne", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    transition:
+        background 0.22s ease,
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+}
+.homeBtn:hover {
+    background: rgba(30, 38, 55, 0.96);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+}
+.homeBtn:active {
+    transform: translateY(0);
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .card {
+        border-radius: 14px;
+        padding: 2rem 1.5rem;
+    }
+}

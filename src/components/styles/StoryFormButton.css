@@ -10,7 +10,7 @@
     z-index: 600;
 
     animation: form-btn-fadein 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
-    animation-delay: 0.15s; /* slight offset from QR card */
+    animation-delay: 0.15s;
 }
 
 @keyframes form-btn-fadein {
@@ -25,10 +25,19 @@
 }
 
 /* ── Card shell ──────────────────────────────────────────────── */
+/*
+ * Width  = --form-btn-size   (same as QR card)
+ * Height = --form-btn-size + --form-btn-text-h  (text strip sits on top)
+ */
 .form-btn-card {
     position: relative;
-    width: var(--form-btn-size, min(25vw, 25vh));
-    height: var(--form-btn-size, min(25vw, 25vh));
+    width: var(--form-btn-size, min(17vw, 17vh));
+    height: calc(
+        var(--form-btn-size, min(17vw, 17vh)) + var(--form-btn-text-h, 38px)
+    );
+
+    display: flex;
+    flex-direction: column;
 
     border-radius: 10px;
     overflow: hidden;
@@ -64,41 +73,78 @@
     transform: translateY(-2px) scale(1.015);
 }
 
-.form-btn-card:hover .form-btn-plus {
-    transform: rotate(90deg) scale(1.1);
-}
-
-/* ── Inner content ───────────────────────────────────────────── */
-.form-btn-content {
-    position: absolute;
-    inset: 0;
+/* ── Text strip ──────────────────────────────────────────────── */
+.form-btn-label-strip {
+    flex-shrink: 0;
+    height: var(--form-btn-text-h, 38px);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    padding: 12%;
-}
-
-.form-btn-plus {
-    font-family: "Syne", sans-serif;
-    font-size: clamp(22px, 5vmin, 38px);
-    font-weight: 300;
-    line-height: 1;
-    color: rgba(224, 208, 176, 0.85);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    user-select: none;
+    padding: 0 10%;
+    border-bottom: 1px solid rgba(180, 160, 120, 0.18);
 }
 
 .form-btn-label {
     font-family: "Syne Mono", ui-monospace, monospace;
-    font-size: clamp(7px, 1.4vmin, 11px);
-    letter-spacing: 0.12em;
+    font-size: clamp(7px, 1.3vmin, 10px);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(180, 160, 120, 0.7);
+    color: rgba(224, 208, 176, 0.8);
     text-align: center;
-    line-height: 1.4;
+    line-height: 1.35;
     user-select: none;
+}
+
+/* ── QR image area ───────────────────────────────────────────── */
+/*
+ * Fills exactly the square portion below the text strip.
+ * flex: 1 makes it consume all remaining height = --form-btn-size.
+ */
+.form-btn-qr-area {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+}
+
+.form-btn-qr-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8%;
+    image-rendering: pixelated;
+}
+
+/* ── QR loading / error placeholder ─────────────────────────── */
+.form-btn-qr-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-btn-qr-spinner {
+    width: 22px;
+    height: 22px;
+    border: 2px solid rgba(180, 160, 120, 0.18);
+    border-top-color: rgba(224, 208, 176, 0.7);
+    border-radius: 50%;
+    animation: form-btn-spin 0.9s linear infinite;
+}
+
+@keyframes form-btn-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.form-btn-qr-error {
+    font-family: "Syne Mono", ui-monospace, monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: rgba(180, 160, 120, 0.45);
+    text-transform: uppercase;
 }
 
 /* ── Corner accents — identical to QRcode ────────────────────── */
@@ -107,6 +153,7 @@
     width: 10px;
     height: 10px;
     opacity: 0.45;
+    z-index: 1;
 }
 .form-btn-corner--tl {
     top: 5px;
