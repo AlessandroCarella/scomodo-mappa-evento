@@ -3,19 +3,10 @@
     position: fixed;
     inset: 0;
     z-index: 1000;
-    pointer-events: auto;
+    pointer-events: none; /* keep map fully interactive/visible */
     display: flex;
     align-items: stretch;
     justify-content: stretch;
-}
-
-/* Backdrop that blurs the Leaflet map */
-.stories-overlay__backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(10, 15, 26, 0.15);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
 }
 
 /* Base panel layout */
@@ -37,6 +28,7 @@
     min-width: min(90vw, 320px);
     max-height: 80vh;
     padding: 16px 16px 12px;
+    box-sizing: border-box;
     border-radius: 20px;
     background: linear-gradient(
             135deg,
@@ -48,9 +40,8 @@
     box-shadow:
         0 22px 45px rgba(0, 0, 0, 0.55),
         0 0 0 1px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* Mobile: center horizontally but keep vertical centering and 60vh height */
@@ -241,6 +232,7 @@
     color: rgba(20, 20, 22, 0.9);
     white-space: normal;
     overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 /* Split-flap */

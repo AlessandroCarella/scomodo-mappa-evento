@@ -57,6 +57,7 @@ export default function Map() {
     const [trackedRoute, setTrackedRoute] = useState(null);
     const [trackedLatLng, setTrackedLatLng] = useState(null);
     const [routePlaying, setRoutePlaying] = useState(false);
+    const [activeStoryRoute, setActiveStoryRoute] = useState(null);
 
     useEffect(() => {
         Promise.all([
@@ -192,6 +193,7 @@ export default function Map() {
         setTrackedRoute(null);
         setTrackedLatLng(null);
         setRoutePlaying(false);
+        setActiveStoryRoute(null);
     };
     const openStories = (matches) => {
         if (matches.length > 0) {
@@ -206,9 +208,14 @@ export default function Map() {
                     to: first.cittaArrivo,
                 });
                 setRoutePlaying(true);
+                setActiveStoryRoute({
+                    from: first.cittaPartenza,
+                    to: first.cittaArrivo,
+                });
             } else {
                 setTrackedRoute(null);
                 setRoutePlaying(false);
+                setActiveStoryRoute(null);
             }
         }
     };
@@ -270,6 +277,11 @@ export default function Map() {
                                 s.cittaPartenza === loc.name,
                         )}
                         onClick={handlePinClick}
+                        isActive={
+                            !!activeStoryRoute &&
+                            (loc.name === activeStoryRoute.from ||
+                                loc.name === activeStoryRoute.to)
+                        }
                     />
                 ))}
 
@@ -291,6 +303,16 @@ export default function Map() {
                 mapRef={mapRef}
                 currentLatLng={trackedLatLng}
                 isPlaying={routePlaying}
+                onStoryChange={({ story }) => {
+                    if (story?.cittaPartenza && story?.cittaArrivo) {
+                        setActiveStoryRoute({
+                            from: story.cittaPartenza,
+                            to: story.cittaArrivo,
+                        });
+                    } else {
+                        setActiveStoryRoute(null);
+                    }
+                }}
             />
 
             {/* Story submission form overlay */}

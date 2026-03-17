@@ -158,8 +158,6 @@ export default function StoriesOverlay({
             role="dialog"
             aria-modal="true"
         >
-            <div className="stories-overlay__backdrop" />
-
             <div className="stories-overlay__panel stories-overlay__panel--floating">
                 <button
                     type="button"
