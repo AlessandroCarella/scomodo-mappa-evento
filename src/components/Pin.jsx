@@ -68,15 +68,15 @@ export default function Pin({
 
         const baseRadius =
             typeof PIN_STYLE.radius === "number" ? PIN_STYLE.radius : 6;
-        const activeRadius = Math.round(baseRadius * 1.6);
+        const activeRadius = Math.round(baseRadius * 2.5);
 
         if (isActive) {
             marker.setStyle({
                 weight: Math.max((PIN_STYLE.weight || 2) + 2, 4),
                 fillOpacity: 0.95,
                 opacity: 1,
-                fillColor: "#FF3D8D",
-                color: "#111111",
+                fillColor: "#00FFEA",
+                color: "#FFFFFF",
             });
             if (typeof marker.setRadius === "function") {
                 marker.setRadius(activeRadius);
