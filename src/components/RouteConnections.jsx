@@ -109,6 +109,41 @@ export default function RouteConnections({
         });
     }, [speedMult]);
 
+    useEffect(() => {
+        if (!map || !canvasRef.current) return;
+        const canvas = canvasRef.current;
+        const container = map.getContainer();
+
+        // Create a pane inside map-pane at z-index 420:
+        // above tiles (200) + overlay (400), below markers (600) + tooltips (650)
+        const PANE = "routeCanvas";
+        if (!map.getPane(PANE)) map.createPane(PANE);
+        const pane = map.getPane(PANE);
+        pane.style.zIndex = "420";
+        pane.style.pointerEvents = "none";
+        pane.appendChild(canvas);
+
+        // map-pane gets CSS translate during panning.
+        // We counter it so latLngToContainerPoint coordinates draw correctly,
+        // and explicitly size the canvas since the pane has no intrinsic dimensions.
+        const sync = () => {
+            const w = container.offsetWidth;
+            const h = container.offsetHeight;
+            canvas.style.width = `${w}px`;
+            canvas.style.height = `${h}px`;
+            const offset = map.containerPointToLayerPoint([0, 0]);
+            canvas.style.transform = `translate(${offset.x}px, ${offset.y}px)`;
+        };
+        sync();
+        map.on("move zoom viewreset resize", sync);
+        window.addEventListener("resize", sync);
+
+        return () => {
+            map.off("move zoom viewreset resize", sync);
+            window.removeEventListener("resize", sync);
+        };
+    }, [map]);
+
     // Hit-test the nearest particle to a pointer position.
     // Reads canvasRef for the bounding rect; safe to call from any listener.
     const getHit = useCallback((clientX, clientY) => {
