@@ -25,6 +25,8 @@ import {
     FORM_STORIA_PLACEHOLDER,
     FORM_STORIA_MAX_LENGTH,
     FIELDS,
+    NAV_FORM_BACK,
+    NAV_FORM_AFTER_SUBMIT,
 } from "@/config";
 
 // Page-level layout
@@ -38,7 +40,7 @@ export default function FormPage() {
 
     // useStoryForm expects an `onClose` callback; on this page "close" means
     // navigating home once the user explicitly dismisses a success state.
-    const handleClose = () => navigate("/");
+    const handleClose = () => navigate(NAV_FORM_AFTER_SUBMIT);
 
     const {
         values,
@@ -72,7 +74,7 @@ export default function FormPage() {
                 <header className={styles.topBar}>
                     <button
                         className={styles.backBtn}
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate(NAV_FORM_BACK)}
                         aria-label="Torna alla mappa"
                     >
                         <span className={styles.backArrow}>←</span>
@@ -153,20 +155,11 @@ export default function FormPage() {
                                         id="sf-storia"
                                         name="storia"
                                         value={values.storia}
-                                        onChange={(e) => {
-                                            const val = e.target.value;
-                                            // only block if removing spaces would exceed the limit
-                                            if (
-                                                val.replace(/\s/g, "").length <=
-                                                FORM_STORIA_MAX_LENGTH
-                                            ) {
-                                                handleChange(e);
-                                            }
-                                        }}
+                                        onChange={handleChange}
                                         placeholder={FORM_STORIA_PLACEHOLDER}
                                         className="sf-textarea"
-                                        rows={5}
-                                        // no maxLength — the browser counts spaces, we don't want that
+                                        rows={6}
+                                        maxLength={FORM_STORIA_MAX_LENGTH}
                                         aria-invalid={!!errors.storia}
                                         aria-describedby={
                                             errors.storia
@@ -185,11 +178,8 @@ export default function FormPage() {
                                             </span>
                                         )}
                                         <span className="sf-char-count">
-                                            {
-                                                values.storia.replace(/\s/g, "")
-                                                    .length
-                                            }{" "}
-                                            / {FORM_STORIA_MAX_LENGTH}
+                                            {values.storia.length} /{" "}
+                                            {FORM_STORIA_MAX_LENGTH}
                                         </span>
                                     </div>
                                 </div>
