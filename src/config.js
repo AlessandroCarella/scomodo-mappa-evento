@@ -257,7 +257,7 @@ export const NAV_FORM_BACK = "/sviluppo";
 export const NAV_FORM_AFTER_SUBMIT = "/sviluppo";
 
 // ── Story Form field constraints ──────────────────────────────
-export const FORM_STORIA_MAX_LENGTH = 1000;
+export const FORM_STORIA_MAX_LENGTH = 500;
 export const FORM_ETA_MIN = 1;
 export const FORM_ETA_MAX = 120;
 
