@@ -6,6 +6,7 @@
 .form-btn-anchor {
     position: absolute;
     bottom: 18px;
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 8px)); /* ← add this */
     right: 18px;
     z-index: 600;
 

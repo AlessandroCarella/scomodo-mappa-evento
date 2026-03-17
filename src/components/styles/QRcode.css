@@ -23,6 +23,7 @@
 .qr-anchor {
     position: absolute;
     bottom: 18px;
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 8px)); /* ← add this */
     left: 18px;
     z-index: 600;
 
