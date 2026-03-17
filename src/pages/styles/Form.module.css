@@ -1,0 +1,163 @@
+/* src/pages/styles/Form.module.css
+ *
+ * Page-level layout only.
+ * Field / panel / button styles live in StoryForm.css and are
+ * imported directly by Form.jsx — nothing is duplicated here.
+ */
+
+/* ── Page shell ───────────────────────────────────────────────── */
+
+.page {
+    height: 100vh;      /* ← was min-height */
+    overflow-y: auto;   /* ← add this */
+    display: flex;
+    flex-direction: column;
+    background: var(--bg, #f7f8fa);
+}
+
+/* ── Top bar ──────────────────────────────────────────────────── */
+.topBar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background: rgba(245, 239, 220, 0.97);
+    border-bottom: 1px solid rgba(20, 20, 22, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.07);
+}
+
+.backBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 1rem;
+    border: 1.5px solid rgba(20, 20, 22, 0.2);
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(20, 20, 22, 0.75);
+    font-family: "Syne", system-ui, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition:
+        background 0.15s,
+        border-color 0.15s,
+        color 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.backBtn:hover {
+    background: rgba(20, 20, 22, 0.05);
+    border-color: rgba(20, 20, 22, 0.45);
+    color: rgba(20, 20, 22, 0.95);
+}
+
+.backArrow {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.topBarMeta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+}
+
+.eyebrow {
+    font-family: "Syne Mono", ui-monospace, monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(20, 20, 22, 0.4);
+    margin: 0;
+}
+
+.pageTitle {
+    margin: 0;
+    font-family: "Syne", system-ui, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: rgba(20, 20, 22, 0.9);
+    letter-spacing: -0.01em;
+}
+
+.topBarSpacer {
+    /* mirrors back button so title stays perfectly centred */
+    min-width: 90px;
+    flex-shrink: 0;
+}
+
+/* ── Main content area ────────────────────────────────────────── */
+.main {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2.5rem 1rem 4rem;
+}
+
+/* ── Card ─────────────────────────────────────────────────────── */
+.card {
+    width: min(680px, 100%);
+    border-radius: 20px;
+    background: rgba(245, 239, 220, 0.97);
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(20, 20, 22, 0.08);
+    border: 1px solid rgba(20, 20, 22, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Description (above the form) ────────────────────────────── */
+.desc {
+    font-family: "Syne", system-ui, sans-serif;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: rgba(20, 20, 22, 0.62);
+    padding: 1.25rem 1.375rem 0;
+    margin: 0;
+}
+
+.desc strong {
+    color: rgba(20, 20, 22, 0.8);
+    font-weight: 650;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    .topBar {
+        padding: 0.75rem 1rem;
+    }
+
+    .topBarSpacer {
+        display: none;
+    }
+
+    .topBarMeta {
+        align-items: flex-start;
+    }
+
+    .pageTitle {
+        font-size: 1rem;
+    }
+
+    .main {
+        padding: 1.25rem 0.5rem 3rem;
+    }
+
+    .card {
+        border-radius: 14px;
+    }
+
+    .desc {
+        padding: 1rem 1rem 0;
+    }
+}

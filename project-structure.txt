@@ -2,9 +2,9 @@
 │   └── data/
 │       ├── analisi_storie.json (69.7 KB)
 │       ├── fillCoordinates.ipynb (5.4 KB)
-│       ├── Locations.json (3.4 KB)
-│       ├── storie_backup.json (26.0 KB)
-│       └── storie.json (24.2 KB)
+│       ├── Locations.json (7.6 KB)
+│       ├── storie_backup.json (100.5 KB)
+│       └── storie.json (100.5 KB)
 ├── src/
 │   ├── components/
 │   │   ├── BannerHelpers/
@@ -121,6 +121,6 @@
 ├── LICENSE (1.1 KB)
 ├── package-lock.json (131.5 KB)
 ├── package.json (1.1 KB)
-├── project-structure.txt (5.2 KB)
+├── project-structure.txt (5.8 KB)
 ├── readme.md (1.0 KB)
 └── vite.config.js (0.3 KB)
