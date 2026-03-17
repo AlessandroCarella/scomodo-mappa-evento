@@ -5,7 +5,7 @@
  */
 .form-btn-anchor {
     position: absolute;
-    bottom: 18px;
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 8px)); /* ← add this */
     right: 18px;
     z-index: 600;
 
@@ -180,17 +180,43 @@
     border-right: 1.5px solid #b4a080;
 }
 
-/* ── Mobile ──────────────────────────────────────────────────── */
+/* ── Mobile: text-only button, no QR ────────────────────────── */
 @media (max-width: 600px) {
     .form-btn-anchor {
-        bottom: 12px;
+        bottom: max(
+            18px,
+            calc(env(safe-area-inset-bottom) + 8px)
+        ); /* ← add this */
         right: 12px;
     }
+
     .form-btn-card {
+        /* Fixed compact size — no longer depends on --form-btn-size */
+        width: auto;
+        height: auto;
         border-radius: 8px;
+    }
+
+    /* Label strip expands to fill the whole card */
+    .form-btn-label-strip {
+        height: auto;
+        padding: 14px 20px;
+        border-bottom: none;
+    }
+
+    .form-btn-label {
+        /* Slightly larger and more readable on touch screens */
+        font-size: clamp(10px, 3vw, 13px);
+        line-height: 1.55;
+    }
+
+    /* Hide QR entirely on mobile */
+    .form-btn-qr-area {
+        display: none;
     }
 }
 
+/* ── Landscape phone — nudge up from bottom nav bars ─────────── */
 @media (max-width: 900px) and (orientation: landscape) {
     .form-btn-anchor {
         bottom: 10px;

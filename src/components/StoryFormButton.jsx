@@ -13,6 +13,9 @@ const IS_EMBEDDED = window.self !== window.top;
  * a QR code pointing to the standalone /form page below — mirroring the
  * QRcode card on the bottom-left both in visual style and in size.
  *
+ * On mobile (≤ 600 px) the QR area is hidden and the card shrinks to a
+ * plain text button showing the label on two lines.
+ *
  * Width  = --form-btn-size  (same as QR card, from FORM_BUTTON_SIZE)
  * Height = --form-btn-size + --form-btn-text-h  (text strip on top)
  */
@@ -53,14 +56,16 @@ export default function StoryFormButton({ onClick }) {
                     aria-hidden
                 />
 
-                {/* ── Text strip ── */}
+                {/* ── Text strip (desktop) / full label (mobile) ── */}
                 <div className="form-btn-label-strip">
                     <span className="form-btn-label">
-                        aggiungi la tua storia
+                        aggiungi la
+                        <br />
+                        tua storia
                     </span>
                 </div>
 
-                {/* ── QR image area ── */}
+                {/* ── QR image area — hidden on mobile via CSS ── */}
                 <div className="form-btn-qr-area">
                     {imgStatus !== "ready" && (
                         <div className="form-btn-qr-placeholder" aria-hidden>

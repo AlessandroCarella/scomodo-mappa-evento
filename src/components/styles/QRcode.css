@@ -156,19 +156,10 @@
     border-right: 1.5px solid #b4a080;
 }
 
-/* ── Mobile: shrink & keep visible ──────────────────────────── */
+/* ── Mobile: hide entirely — QR codes are useless on the same device ── */
 @media (max-width: 600px) {
     .qr-anchor {
-        bottom: 12px;
-        left: 12px;
-    }
-
-    .qr-card {
-        border-radius: 8px;
-    }
-
-    .qr-img {
-        padding: 6%;
+        display: none;
     }
 }
 

@@ -2,8 +2,8 @@
 .map-root {
     position: relative;
     width: 100vw;
-    height: 100vh;
-    /* flex column so .map-wrapper's flex:1 actually works */
+    height: 100vh; /* fallback for old browsers */
+    height: 100dvh; /* ← actual fix */
     display: flex;
     flex-direction: column;
 }
