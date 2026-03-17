@@ -247,7 +247,7 @@ export const FORM_BUTTON_TEXT_H = "38px";
 export const FORM_QR_LINK = "https://scomodo-mappa-evento.pages.dev/form";
 
 // ── Story Form field constraints ──────────────────────────────
-export const FORM_STORIA_MAX_LENGTH = 1000;
+export const FORM_STORIA_MAX_LENGTH = 500;
 export const FORM_ETA_MIN = 1;
 export const FORM_ETA_MAX = 120;
 

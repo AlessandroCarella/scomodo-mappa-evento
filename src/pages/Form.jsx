@@ -153,11 +153,20 @@ export default function FormPage() {
                                         id="sf-storia"
                                         name="storia"
                                         value={values.storia}
-                                        onChange={handleChange}
+                                        onChange={(e) => {
+                                            const val = e.target.value;
+                                            // only block if removing spaces would exceed the limit
+                                            if (
+                                                val.replace(/\s/g, "").length <=
+                                                FORM_STORIA_MAX_LENGTH
+                                            ) {
+                                                handleChange(e);
+                                            }
+                                        }}
                                         placeholder={FORM_STORIA_PLACEHOLDER}
                                         className="sf-textarea"
-                                        rows={6}
-                                        maxLength={FORM_STORIA_MAX_LENGTH}
+                                        rows={5}
+                                        // no maxLength — the browser counts spaces, we don't want that
                                         aria-invalid={!!errors.storia}
                                         aria-describedby={
                                             errors.storia
@@ -176,8 +185,11 @@ export default function FormPage() {
                                             </span>
                                         )}
                                         <span className="sf-char-count">
-                                            {values.storia.length} /{" "}
-                                            {FORM_STORIA_MAX_LENGTH}
+                                            {
+                                                values.storia.replace(/\s/g, "")
+                                                    .length
+                                            }{" "}
+                                            / {FORM_STORIA_MAX_LENGTH}
                                         </span>
                                     </div>
                                 </div>
