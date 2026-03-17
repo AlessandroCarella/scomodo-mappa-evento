@@ -112,22 +112,22 @@ export function useStoryForm({ onClose }) {
         setStatus("sending");
         const params = buildTemplateParams(values);
 
-        // ── TEST CODE: simulate both sends failing with 429 ──────────
-        const fakeRateLimit = { status: 429, text: "Too Many Requests" };
-        const primaryErr = fakeRateLimit;
-        console.warn("Primary EmailJS failed:", primaryErr);
-        if (isRateLimitError(primaryErr)) {
-            const backupErr = new Error("Backup also failed");
-            console.error("Backup EmailJS also failed:", backupErr);
-        }
-        setPopup({
-            status: "error",
-            message: POPUP_EMAIL_FATAL_MESSAGE,
-            json: buildClipboardJson(values),
-        });
-        setStatus("error");
-        return;
-        // ── END TEST CODE ────────────────────────────────────────────
+        // // ── TEST CODE: simulate both sends failing with 429 ──────────
+        // const fakeRateLimit = { status: 429, text: "Too Many Requests" };
+        // const primaryErr = fakeRateLimit;
+        // console.warn("Primary EmailJS failed:", primaryErr);
+        // if (isRateLimitError(primaryErr)) {
+        //     const backupErr = new Error("Backup also failed");
+        //     console.error("Backup EmailJS also failed:", backupErr);
+        // }
+        // setPopup({
+        //     status: "error",
+        //     message: POPUP_EMAIL_FATAL_MESSAGE,
+        //     json: buildClipboardJson(values),
+        // });
+        // setStatus("error");
+        // return;
+        // // ── END TEST CODE ────────────────────────────────────────────
 
         try {
             await emailjs.send(
