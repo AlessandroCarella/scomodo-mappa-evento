@@ -4,38 +4,33 @@ import L from "leaflet";
 import { PIN_STYLE } from "../config";
 
 /**
- * Pin — renders a single Leaflet circleMarker with a hover tooltip.
+ * Pin - renders a single Leaflet circleMarker with a hover tooltip.
  *
  * Props:
- *   map      : Leaflet map instance
- *   location : { name, lat, lng }
- *   onClick  : function called when pin is clicked (only if hasStories)
- *   hasStories : boolean, enables click interaction
- *   isActive : boolean, highlights the pin when true
+ *   map           : Leaflet map instance
+ *   location      : { name, lat, lng }
+ *   onClick       : function called when pin is clicked
+ *   hasStories    : whether the city has stories in the full dataset
+ *   isInteractive : whether the city is clickable under the current filters
+ *   isDimmed      : whether the city should appear de-emphasized
  */
 export default function Pin({
     map,
     location,
     onClick,
     hasStories = false,
-    isActive = false,
+    isInteractive = false,
+    isDimmed = false,
 }) {
     const markerRef = useRef(null);
 
     useEffect(() => {
         if (!map || !location) return;
 
-        const markerOptions = hasStories
-            ? PIN_STYLE
-            : {
-                  ...PIN_STYLE,
-                  interactive: false,
-              };
-
-        const marker = L.circleMarker(
-            [location.lat, location.lng],
-            markerOptions,
-        ).addTo(map);
+        const marker = L.circleMarker([location.lat, location.lng], {
+            ...PIN_STYLE,
+            interactive: hasStories && isInteractive,
+        }).addTo(map);
 
         marker.bindTooltip(
             `<span class="pin-tooltip-name">${location.name}</span>`,
@@ -48,11 +43,9 @@ export default function Pin({
         );
 
         let handleMarkerClick;
-        if (hasStories && typeof onClick === "function") {
+        if (hasStories && isInteractive && typeof onClick === "function") {
             handleMarkerClick = () => onClick(location.name);
             marker.on("click", handleMarkerClick);
-            const el = marker.getElement?.();
-            if (el) el.style.cursor = "pointer";
         }
 
         markerRef.current = marker;
@@ -60,38 +53,27 @@ export default function Pin({
             if (handleMarkerClick) marker.off("click", handleMarkerClick);
             marker.remove();
         };
-    }, [map, location, onClick, hasStories]);
+    }, [map, location, onClick, hasStories, isInteractive]);
 
     useEffect(() => {
         const marker = markerRef.current;
         if (!marker) return;
 
-        const baseRadius =
-            typeof PIN_STYLE.radius === "number" ? PIN_STYLE.radius : 6;
-        const activeRadius = Math.round(baseRadius * 2.5);
+        const markerElement = marker.getElement?.();
 
-        if (isActive) {
-            marker.setStyle({
-                weight: Math.max((PIN_STYLE.weight || 2) + 2, 4),
-                fillOpacity: 0.95,
-                opacity: 1,
-                fillColor: "#00FFEA",
-                color: "#FFFFFF",
-            });
-            if (typeof marker.setRadius === "function") {
-                marker.setRadius(activeRadius);
-            }
-        } else {
-            // restore base style
-            marker.setStyle({
-                ...PIN_STYLE,
-                interactive: hasStories ? PIN_STYLE.interactive : false,
-            });
-            if (typeof marker.setRadius === "function") {
-                marker.setRadius(baseRadius);
-            }
+        marker.setStyle({
+            ...PIN_STYLE,
+            interactive: hasStories && isInteractive,
+            fillOpacity: isDimmed ? 0.18 : 0.95,
+            opacity: isDimmed ? 0.28 : 0.9,
+            color: isDimmed ? "rgba(176,160,128,0.52)" : PIN_STYLE.color,
+        });
+
+        if (markerElement) {
+            markerElement.style.cursor =
+                hasStories && isInteractive ? "pointer" : "";
         }
-    }, [isActive, hasStories]);
+    }, [hasStories, isDimmed, isInteractive]);
 
     return null;
 }

@@ -7,10 +7,13 @@ import {
 import {
     lerp,
     ease,
+    hexToRgba,
+    mixHex,
     routeColor,
     durationForKm,
     haversineKm,
 } from "./routeUtils";
+import { pairKey } from "./connectionUtils";
 
 /**
  * useRouteCanvas
@@ -20,18 +23,6 @@ import {
  *
  * All React state (refs, speedMult sync, hit detection) lives in the
  * RouteConnections component; this hook just receives them as params.
- *
- * @param {object} params
- * @param {L.Map}              params.map                 Leaflet map instance
- * @param {Array}              params.paths               [{ from, to }, ...]
- * @param {string}             params.locationsUrl        URL to Locations.json
- * @param {boolean}            params.loop                Restart routes on completion
- * @param {React.RefObject}    params.canvasRef           Ref to the <canvas> element
- * @param {React.RefObject}    params.stateRef            Shared mutable animation state
- * @param {function}           params.getHit              (clientX, clientY) → particle | null
- * @param {React.RefObject}    params.onParticleClickRef  Stable ref to the click callback
- * @param {React.RefObject}    params.trackedRouteRef     {from,to} for camera follow (optional)
- * @param {React.RefObject}    params.onTrackedPositionRef Stable ref to camera-follow callback
  */
 export function useRouteCanvas({
     map,
@@ -42,7 +33,9 @@ export function useRouteCanvas({
     stateRef,
     getHit,
     onParticleClickRef,
-    trackedRouteRef,
+    activeRouteKeyRef,
+    visibleRouteKeysRef,
+    hasActiveFiltersRef,
     onTrackedPositionRef,
 }) {
     useEffect(() => {
@@ -53,7 +46,6 @@ export function useRouteCanvas({
 
         const container = map.getContainer();
 
-        // ── Canvas resize sync ────────────────────────────────────────────────
         const syncSize = () => {
             canvas.width = container.offsetWidth;
             canvas.height = container.offsetHeight;
@@ -62,8 +54,6 @@ export function useRouteCanvas({
         window.addEventListener("resize", syncSize);
         map.on("resize", syncSize);
 
-        // ── Native pointer listeners on the map container ─────────────────────
-        // Attached here (not in the component) so they share the same cleanup.
         const onMouseMove = (e) => {
             container.style.cursor = getHit(e.clientX, e.clientY)
                 ? "pointer"
@@ -76,6 +66,7 @@ export function useRouteCanvas({
                 onParticleClickRef.current({
                     from: hit.from.name,
                     to: hit.to.name,
+                    routeKey: hit.routeKey,
                 });
             }
         };
@@ -88,6 +79,7 @@ export function useRouteCanvas({
                 onParticleClickRef.current({
                     from: hit.from.name,
                     to: hit.to.name,
+                    routeKey: hit.routeKey,
                 });
             }
         };
@@ -96,32 +88,33 @@ export function useRouteCanvas({
         container.addEventListener("click", onClick);
         container.addEventListener("touchend", onTouchEnd);
 
-        // ── Geo → canvas pixel ────────────────────────────────────────────────
         const cpt = (lat, lng) =>
             map.latLngToContainerPoint(L.latLng(lat, lng));
 
-        // ── Build particles ───────────────────────────────────────────────────
         const buildParticles = (locations) => {
             S.particles = [];
             const byName = Object.fromEntries(
-                locations.map((l) => [l.name, l]),
+                locations.map((location) => [location.name, location]),
             );
+
             paths.forEach(({ from, to }) => {
                 const a = byName[from];
                 const b = byName[to];
                 if (!a || !b) {
                     console.warn(
-                        `RouteConnections: city not found — "${from}", "${to}"`,
+                        `RouteConnections: city not found - "${from}", "${to}"`,
                     );
                     return;
                 }
+
                 const km = Math.round(haversineKm(a, b));
-                const col = PCOLORS[S.colorIdx++ % PCOLORS.length];
+                const color = PCOLORS[S.colorIdx++ % PCOLORS.length];
                 S.particles.push({
                     from: a,
                     to: b,
+                    routeKey: pairKey(a.name, b.name),
                     km,
-                    color: col,
+                    color,
                     t: 0,
                     baseDur: durationForKm(km),
                     elapsed: 0,
@@ -137,7 +130,6 @@ export function useRouteCanvas({
             });
         };
 
-        // ── rAF render loop ───────────────────────────────────────────────────
         const render = (now) => {
             const ctx = canvas.getContext("2d");
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -147,7 +139,6 @@ export function useRouteCanvas({
                 return;
             }
 
-            // Advance particles
             const alive = [];
             for (const p of S.particles) {
                 const dt = now - p.lastTime;
@@ -181,11 +172,9 @@ export function useRouteCanvas({
             }
             S.particles = alive;
 
-            // Camera-follow callback: report the tracked route's current lat/lng
-            if (trackedRouteRef?.current && onTrackedPositionRef?.current) {
-                const { from, to } = trackedRouteRef.current;
+            if (activeRouteKeyRef?.current && onTrackedPositionRef?.current) {
                 const tracked = S.particles.find(
-                    (p) => p.from.name === from && p.to.name === to,
+                    (p) => p.routeKey === activeRouteKeyRef.current,
                 );
                 if (tracked) {
                     onTrackedPositionRef.current({
@@ -196,23 +185,45 @@ export function useRouteCanvas({
                 }
             }
 
-            // Ghost route + coloured progress line
+            const visibleRouteKeys = visibleRouteKeysRef?.current;
+            const filtersActive = hasActiveFiltersRef?.current;
+            const activeRouteKey = activeRouteKeyRef?.current;
+
             ctx.save();
             ctx.setLineDash([6, 5]);
             for (const p of S.particles) {
                 const fp = cpt(p.from.lat, p.from.lng);
                 const tp = cpt(p.to.lat, p.to.lng);
                 const cur = cpt(p._curLat, p._curLng);
+                const isVisible =
+                    !filtersActive ||
+                    !visibleRouteKeys ||
+                    visibleRouteKeys.has(p.routeKey);
+                const isSelected = activeRouteKey === p.routeKey;
+                const ghostAlpha = isSelected
+                    ? 0.42
+                    : isVisible
+                      ? 0.22
+                      : 0.05;
+                const progressAlpha = isSelected
+                    ? 0.95
+                    : isVisible
+                      ? 0.82
+                      : 0.08;
+                const lineWidth = isSelected ? 2.8 : 2;
+                const routeTone = isSelected
+                    ? mixHex(p.color, "#09131c", 0.26)
+                    : p.color;
 
-                ctx.strokeStyle = "rgba(150,150,150,0.22)";
+                ctx.strokeStyle = `rgba(150,150,150,${ghostAlpha})`;
                 ctx.lineWidth = 1.5;
                 ctx.beginPath();
                 ctx.moveTo(fp.x, fp.y);
                 ctx.lineTo(tp.x, tp.y);
                 ctx.stroke();
 
-                ctx.strokeStyle = routeColor(p.color, p._et, 0.82);
-                ctx.lineWidth = 2;
+                ctx.strokeStyle = routeColor(routeTone, p._et, progressAlpha);
+                ctx.lineWidth = lineWidth;
                 ctx.beginPath();
                 ctx.moveTo(fp.x, fp.y);
                 ctx.lineTo(cur.x, cur.y);
@@ -220,11 +231,18 @@ export function useRouteCanvas({
             }
             ctx.restore();
 
-            // Trail + dot
             for (let i = 0; i < S.particles.length; i++) {
                 const p = S.particles[i];
                 const px = p._hx;
                 const py = p._hy;
+                const isVisible =
+                    !filtersActive ||
+                    !visibleRouteKeys ||
+                    visibleRouteKeys.has(p.routeKey);
+                const isSelected = activeRouteKey === p.routeKey;
+                const routeTone = isSelected
+                    ? mixHex(p.color, "#09131c", 0.45)
+                    : p.color;
 
                 if (p.trail.length > 1) {
                     ctx.save();
@@ -237,9 +255,10 @@ export function useRouteCanvas({
                         ctx.beginPath();
                         ctx.moveTo(pa.x, pa.y);
                         ctx.lineTo(pb.x, pb.y);
-                        ctx.strokeStyle = p.color;
-                        ctx.lineWidth = frac * 5;
-                        ctx.globalAlpha = frac * 0.7;
+                        ctx.strokeStyle = routeTone;
+                        ctx.lineWidth = frac * (isSelected ? 6.5 : 5);
+                        ctx.globalAlpha =
+                            frac * (isSelected ? 0.9 : isVisible ? 0.7 : 0.08);
                         ctx.stroke();
                     }
                     ctx.restore();
@@ -248,40 +267,47 @@ export function useRouteCanvas({
                 ctx.globalAlpha = 1;
                 if (p.paused) {
                     ctx.beginPath();
-                    ctx.arc(px, py, 8, 0, Math.PI * 2);
+                    ctx.arc(px, py, isSelected ? 9 : 8, 0, Math.PI * 2);
                     ctx.fillStyle = "#fff";
-                    ctx.strokeStyle = "#111";
+                    ctx.strokeStyle = isSelected ? "#f2f6fb" : "#111";
                     ctx.lineWidth = 2;
+                    ctx.globalAlpha = isVisible ? 1 : 0.14;
                     ctx.fill();
                     ctx.stroke();
                     ctx.fillStyle = "#111";
                     ctx.fillRect(px - 3.5, py - 3.5, 2.5, 7);
                     ctx.fillRect(px + 1, py - 3.5, 2.5, 7);
                 } else {
-                    const pulse = 1 + 0.1 * Math.sin(now / 400 + i * 1.3);
-                    const r = 6 * pulse;
+                    const pulse = 1 + 0.1 * Math.sin(now / 400 + i * 2.5);
+                    const radius = (isSelected ? 8.5 : 6) * pulse;
                     ctx.beginPath();
-                    ctx.arc(px, py, r, 0, Math.PI * 2);
-                    ctx.fillStyle = p.color;
+                    ctx.arc(px, py, radius, 0, Math.PI * 2);
+                    ctx.fillStyle = hexToRgba(
+                        routeTone,
+                        isVisible ? 1 : 0.14,
+                    );
                     ctx.fill();
                     ctx.beginPath();
-                    ctx.arc(px, py, r, 0, Math.PI * 2);
-                    ctx.strokeStyle = "#111";
-                    ctx.lineWidth = 1.5;
+                    ctx.arc(px, py, radius, 0, Math.PI * 2);
+                    ctx.strokeStyle = isSelected
+                        ? "rgb(0, 0, 0)"
+                        : `rgba(17,17,17,${isVisible ? 1 : 0.18})`;
+                    ctx.lineWidth = isSelected ? 1.8 : 1.5;
                     ctx.stroke();
                 }
+                ctx.globalAlpha = 1;
             }
 
             S.animFrame = requestAnimationFrame(render);
         };
 
-        // ── Fetch locations → build particles → start loop ────────────────────
         fetch(locationsUrl)
             .then((r) => {
-                if (!r.ok)
+                if (!r.ok) {
                     throw new Error(
                         `Locations fetch failed: ${r.status} ${r.url}`,
                     );
+                }
                 return r.json();
             })
             .then((locations) => {
@@ -290,10 +316,7 @@ export function useRouteCanvas({
                 S.animFrame = requestAnimationFrame(render);
             })
             .catch((err) =>
-                console.error(
-                    "RouteConnections: failed to load locations —",
-                    err,
-                ),
+                console.error("RouteConnections: failed to load locations -", err),
             );
 
         return () => {
@@ -316,7 +339,9 @@ export function useRouteCanvas({
         stateRef,
         getHit,
         onParticleClickRef,
-        trackedRouteRef,
+        activeRouteKeyRef,
+        visibleRouteKeysRef,
+        hasActiveFiltersRef,
         onTrackedPositionRef,
-    ]); // eslint-disable-line react-hooks-exhaustive-deps
+    ]); // eslint-disable-line react-hooks/exhaustive-deps
 }

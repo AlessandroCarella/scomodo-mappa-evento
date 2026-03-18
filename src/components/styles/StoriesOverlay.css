@@ -3,7 +3,7 @@
     position: fixed;
     inset: 0;
     z-index: 1000;
-    pointer-events: none; /* keep map fully interactive/visible */
+    pointer-events: auto;
     display: flex;
     align-items: stretch;
     justify-content: stretch;
@@ -47,11 +47,20 @@
 /* Mobile: center horizontally but keep vertical centering and 60vh height */
 @media (max-width: 767px) {
     .stories-overlay__panel--floating {
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: min(92vw, 480px);
-        max-height: 80vh;
-        padding: 14px 14px 10px;
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        max-height: min(58vh, 520px);
+        padding: 14px 16px calc(10px + env(safe-area-inset-bottom));
+        border-radius: 24px 24px 0 0;
+        box-shadow:
+            0 -16px 36px rgba(0, 0, 0, 0.42),
+            0 0 0 1px rgba(0, 0, 0, 0.16);
     }
 }
 

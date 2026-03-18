@@ -2,6 +2,8 @@ import "./styles/StoriesOverlay.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, X } from "lucide-react";
 
+const FOLLOW_INTERVAL_MS = 350;
+
 function truncate(text, maxLen) {
     if (!text) return "";
     if (text.length <= maxLen) return text;
@@ -71,9 +73,9 @@ export function StoryPostIt({ story }) {
 /**
  * Floating stories panel with glassmorphism backdrop and story navigation.
  *
- * Extra optional props for map tracking:
- * - mapRef: React ref to Leaflet map instance
+ * Extra optional props:
  * - currentLatLng: { lat, lng } of moving dot
+ * - focusTrackedLatLng: callback that keeps the tracked route in view
  * - isPlaying: whether the route animation is active
  * - initialIndex: starting story index
  * - onStoryChange: callback when current story changes
@@ -81,8 +83,8 @@ export function StoryPostIt({ story }) {
 export default function StoriesOverlay({
     stories = [],
     onClose,
-    mapRef,
     currentLatLng,
+    focusTrackedLatLng,
     isPlaying = false,
     initialIndex = 0,
     onStoryChange,
@@ -106,13 +108,13 @@ export default function StoriesOverlay({
         return () => window.removeEventListener("keydown", onKeyDown);
     }, [isOpen, onClose]);
 
-    // clamp index when stories change
+    // reset index when a new story list opens
     useEffect(() => {
         if (!isOpen) return;
-        setCurrentStoryIndex((prev) =>
-            Math.min(prev, Math.max(stories.length - 1, 0)),
-        );
-    }, [isOpen, stories.length]);
+        const lastIndex = Math.max(stories.length - 1, 0);
+        const nextIndex = Math.min(Math.max(initialIndex, 0), lastIndex);
+        setCurrentStoryIndex((prev) => (prev === nextIndex ? prev : nextIndex));
+    }, [initialIndex, isOpen, stories]);
 
     // notify parent when story changes (optional)
     useEffect(() => {
@@ -123,24 +125,19 @@ export default function StoriesOverlay({
         }
     }, [currentStoryIndex, isOpen, onStoryChange, stories]);
 
-    // continuous map tracking: panTo every second while animation is playing
+    // Keep following the moving dot while the route animation is active.
     useEffect(() => {
-        if (!isOpen || !isPlaying) return;
-        if (!mapRef?.current) return;
+        if (!isOpen || !isPlaying || !focusTrackedLatLng) return;
 
-        const map = mapRef.current;
         const intervalId = setInterval(() => {
             const coords = currentLatLngRef.current;
             if (!coords || coords.lat == null || coords.lng == null) return;
 
-            map.panTo([coords.lat, coords.lng], {
-                animate: true,
-                duration: 1,
-            });
-        }, 1000);
+            focusTrackedLatLng(coords);
+        }, FOLLOW_INTERVAL_MS);
 
         return () => clearInterval(intervalId);
-    }, [isOpen, isPlaying, mapRef]);
+    }, [focusTrackedLatLng, isOpen, isPlaying]);
 
     if (!isOpen) return null;
 
@@ -157,8 +154,14 @@ export default function StoriesOverlay({
             className="stories-overlay"
             role="dialog"
             aria-modal="true"
+            onPointerDown={(e) => {
+                if (e.target === e.currentTarget) onClose?.();
+            }}
         >
-            <div className="stories-overlay__panel stories-overlay__panel--floating">
+            <div
+                className="stories-overlay__panel stories-overlay__panel--floating"
+                onPointerDown={(e) => e.stopPropagation()}
+            >
                 <button
                     type="button"
                     className="stories-overlay__close"

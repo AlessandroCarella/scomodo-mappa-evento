@@ -1,5 +1,5 @@
 import "./styles/Map.css";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import L from "leaflet";
 import Pin from "./Pin";
 import RouteConnections from "./RouteConnections";
@@ -8,36 +8,74 @@ import Banner from "./Banner";
 import QRcode from "./QRcode";
 import StoryFormButton from "./StoryFormButton";
 import StoryForm from "./StoryForm";
+import StoryFilters from "./StoryFilters";
 import { useMapInit } from "./MapHelpers/useMapInit";
 import { useWasdNavigation } from "./MapHelpers/useWasdNavigation";
 import { useGamepad } from "./MapHelpers/useGamepad";
-import { processConnections } from "./ConnectionHelpers/connectionUtils";
+import {
+    pairKey,
+    processConnections,
+} from "./ConnectionHelpers/connectionUtils";
 import { QR_ENABLED, QR_LINK, QR_SIZE, FORM_ENABLED } from "../config";
 
-// Vite's BASE_URL respects the `base` option in vite.config.js.
-// Without this prefix, fetches return index.html (→ JSON parse error)
-// when the app is served from a non-root path.
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 const LOCATIONS_URL = `${BASE}/data/Locations.json`;
 const STORIES_URL = `${BASE}/data/storie.json`;
 
-function flyToOffset(map, latlng, isMobile) {
+function isMobileViewport() {
+    return typeof window !== "undefined" && window.innerWidth < 768;
+}
+
+function getOffsetCenter(map, latlng, isMobile) {
     if (!map || !latlng) return;
     const zoom = map.getZoom();
     const size = map.getSize();
-    const targetPt = map.project(latlng, zoom);
+    const targetPt = map.project(L.latLng(latlng), zoom);
 
     let newPoint;
     if (isMobile) {
-        // Target in centre of top half (Y = 25%) → shift DOWN by 25% of height
         newPoint = L.point(targetPt.x, targetPt.y + size.y * 0.25);
     } else {
-        // Target in centre of right half (X = 75%) → shift LEFT by 25% of width
         newPoint = L.point(targetPt.x - size.x * 0.25, targetPt.y);
     }
 
-    const newCenter = map.unproject(newPoint, zoom);
-    map.flyTo(newCenter, zoom, { duration: 1.2 });
+    return map.unproject(newPoint, zoom);
+}
+
+function moveMapToOffset(map, latlng, { isMobile, mode = "fly" } = {}) {
+    const nextCenter = getOffsetCenter(map, latlng, isMobile);
+    if (!nextCenter) return;
+
+    const zoom = map.getZoom();
+    if (mode === "pan") {
+        map.panTo(nextCenter, {
+            animate: true,
+            duration: 0.35,
+        });
+        return;
+    }
+
+    map.flyTo(nextCenter, zoom, { duration: 1.2 });
+}
+
+function getStoryRouteKey(story) {
+    if (!story?.cittaPartenza || !story?.cittaArrivo) return null;
+    return pairKey(story.cittaPartenza, story.cittaArrivo);
+}
+
+function storyMatchesFilters(story, departureCity, arrivalCity) {
+    if (departureCity && story.cittaPartenza !== departureCity) return false;
+    if (arrivalCity && story.cittaArrivo !== arrivalCity) return false;
+    return true;
+}
+
+function collectStoryLocations(stories) {
+    const names = new Set();
+    stories.forEach((story) => {
+        if (story.cittaPartenza) names.add(story.cittaPartenza);
+        if (story.cittaArrivo) names.add(story.cittaArrivo);
+    });
+    return names;
 }
 
 export default function Map() {
@@ -45,104 +83,219 @@ export default function Map() {
     const { mapRef, ready } = useMapInit(containerRef);
 
     const [allStories, setAllStories] = useState([]);
-    const allStoriesRef = useRef([]);
     const [locations, setLocations] = useState([]);
     const [paths, setPaths] = useState([]);
     const [dataReady, setDataReady] = useState(false);
     const [activeStories, setActiveStories] = useState([]);
     const [formOpen, setFormOpen] = useState(false);
-    const isStoriesOpenRef = useRef(false);
-
-    // For continuous camera tracking of the moving dot along the active route
-    const [trackedRoute, setTrackedRoute] = useState(null);
+    const [filtersOpen, setFiltersOpen] = useState(false);
+    const [departureFilter, setDepartureFilter] = useState("");
+    const [arrivalFilter, setArrivalFilter] = useState("");
     const [trackedLatLng, setTrackedLatLng] = useState(null);
     const [routePlaying, setRoutePlaying] = useState(false);
-    const [activeStoryRoute, setActiveStoryRoute] = useState(null);
+    const [activeRouteKey, setActiveRouteKey] = useState(null);
+
+    const isStoriesOpenRef = useRef(false);
+    const filteredStoriesRef = useRef([]);
 
     useEffect(() => {
         Promise.all([
             fetch(LOCATIONS_URL).then((r) => {
-                if (!r.ok)
+                if (!r.ok) {
                     throw new Error(
                         `Locations fetch failed: ${r.status} ${r.url}`,
                     );
+                }
                 return r.json();
             }),
             fetch(STORIES_URL).then((r) => {
-                if (!r.ok)
+                if (!r.ok) {
                     throw new Error(
                         `Stories fetch failed: ${r.status} ${r.url}`,
                     );
+                }
                 return r.json();
             }),
         ])
             .then(([rawLocations, rawStories]) => {
                 const locByName = {};
-                rawLocations.forEach((l) => {
-                    locByName[l.name] = l;
+                rawLocations.forEach((location) => {
+                    locByName[location.name] = location;
                 });
 
-                // Map storie.json fields → { from, to } for processConnections
-                const rawConnections = rawStories.map((s) => ({
-                    from: s.cittaPartenza,
-                    to: s.cittaArrivo,
+                const rawConnections = rawStories.map((story) => ({
+                    from: story.cittaPartenza,
+                    to: story.cittaArrivo,
                 }));
 
-                const { connections: conns } = processConnections(
+                const { connections } = processConnections(
                     rawConnections,
                     locByName,
                 );
 
                 setLocations(rawLocations);
-                allStoriesRef.current = rawStories;
                 setAllStories(rawStories);
                 setPaths(
-                    conns.map((c) => ({ from: c.from.name, to: c.to.name })),
+                    connections.map((connection) => ({
+                        from: connection.from.name,
+                        to: connection.to.name,
+                    })),
                 );
                 setDataReady(true);
             })
             .catch((err) => console.error("Failed to load data:", err));
     }, []);
 
-    function handleConnectionClick(fromName, toName) {
-        const map = mapRef.current;
-        if (!map) return;
+    const hasActiveFilters = departureFilter !== "" || arrivalFilter !== "";
 
-        const fromLoc = locations.find((l) => l.name === fromName);
-        const toLoc = locations.find((l) => l.name === toName);
-        if (fromLoc && toLoc) {
-            const midLat = (fromLoc.lat + toLoc.lat) / 2;
-            const midLng = (fromLoc.lng + toLoc.lng) / 2;
-            const isMobile =
-                typeof window !== "undefined" && window.innerWidth < 768;
-            flyToOffset(map, [midLat, midLng], isMobile);
-        }
+    const filteredStories = useMemo(
+        () =>
+            allStories.filter((story) =>
+                storyMatchesFilters(story, departureFilter, arrivalFilter),
+            ),
+        [allStories, departureFilter, arrivalFilter],
+    );
 
-        const matches = allStoriesRef.current.filter(
-            (s) =>
-                (s.cittaPartenza === fromName && s.cittaArrivo === toName) ||
-                (s.cittaPartenza === toName && s.cittaArrivo === fromName),
+    useEffect(() => {
+        filteredStoriesRef.current = filteredStories;
+    }, [filteredStories]);
+
+    const allStoryLocations = useMemo(
+        () => collectStoryLocations(allStories),
+        [allStories],
+    );
+
+    const visibleStoryLocations = useMemo(
+        () => collectStoryLocations(filteredStories),
+        [filteredStories],
+    );
+
+    const filteredRouteKeys = useMemo(() => {
+        const keys = new Set();
+        filteredStories.forEach((story) => {
+            const routeKey = getStoryRouteKey(story);
+            if (routeKey) keys.add(routeKey);
+        });
+        return keys;
+    }, [filteredStories]);
+
+    const cityOptions = useMemo(
+        () =>
+            locations
+                .map((location) => location.name)
+                .sort((a, b) => a.localeCompare(b, "it")),
+        [locations],
+    );
+
+    const syncStoryRoute = useCallback((story, preferredRouteKey = null) => {
+        const nextRouteKey = preferredRouteKey ?? getStoryRouteKey(story);
+        setActiveRouteKey((prev) =>
+            prev === nextRouteKey ? prev : nextRouteKey,
         );
-        openStories(matches);
-    }
+        setTrackedLatLng(null);
+        setRoutePlaying(!!nextRouteKey);
+    }, []);
 
-    function handlePinClick(locationName) {
-        if (!locationName) return;
-        const map = mapRef.current;
-        if (map) {
-            const loc = locations.find((l) => l.name === locationName);
-            if (loc) {
-                const isMobile =
-                    typeof window !== "undefined" && window.innerWidth < 768;
-                flyToOffset(map, [loc.lat, loc.lng], isMobile);
+    const openStories = useCallback(
+        (matches, preferredRouteKey = null) => {
+            if (matches.length === 0) return;
+
+            isStoriesOpenRef.current = true;
+            setActiveStories(matches);
+            syncStoryRoute(matches[0], preferredRouteKey);
+        },
+        [syncStoryRoute],
+    );
+
+    const closeStories = useCallback(() => {
+        isStoriesOpenRef.current = false;
+        setActiveStories([]);
+        setTrackedLatLng(null);
+        setRoutePlaying(false);
+        setActiveRouteKey(null);
+    }, []);
+
+    const focusTrackedLatLng = useCallback(
+        (latlng) => {
+            const map = mapRef.current;
+            if (!map || !latlng) return;
+
+            moveMapToOffset(map, [latlng.lat, latlng.lng], {
+                isMobile: isMobileViewport(),
+                mode: "pan",
+            });
+        },
+        [mapRef],
+    );
+
+    const handleTrackedPosition = useCallback(({ lat, lng, isPlaying }) => {
+        setTrackedLatLng({ lat, lng });
+        setRoutePlaying(isPlaying);
+    }, []);
+
+    const handleStoryChange = useCallback(
+        ({ story }) => {
+            syncStoryRoute(story);
+        },
+        [syncStoryRoute],
+    );
+
+    const handleConnectionClick = useCallback(
+        (fromName, toName, preferredRouteKey = null) => {
+            const map = mapRef.current;
+            if (!map) return;
+
+            const fromLoc = locations.find((location) => location.name === fromName);
+            const toLoc = locations.find((location) => location.name === toName);
+            if (fromLoc && toLoc) {
+                const midLat = (fromLoc.lat + toLoc.lat) / 2;
+                const midLng = (fromLoc.lng + toLoc.lng) / 2;
+                moveMapToOffset(map, [midLat, midLng], {
+                    isMobile: isMobileViewport(),
+                });
             }
-        }
 
-        const matches = allStoriesRef.current.filter(
-            (s) => s.cittaArrivo === locationName,
-        );
-        openStories(matches);
-    }
+            const matches = filteredStoriesRef.current.filter(
+                (story) =>
+                    (story.cittaPartenza === fromName &&
+                        story.cittaArrivo === toName) ||
+                    (story.cittaPartenza === toName &&
+                        story.cittaArrivo === fromName),
+            );
+
+            openStories(matches, preferredRouteKey ?? pairKey(fromName, toName));
+        },
+        [locations, mapRef, openStories],
+    );
+
+    const handlePinClick = useCallback(
+        (locationName) => {
+            if (!locationName) return;
+
+            const map = mapRef.current;
+            if (map) {
+                const location = locations.find((loc) => loc.name === locationName);
+                if (location) {
+                    moveMapToOffset(map, [location.lat, location.lng], {
+                        isMobile: isMobileViewport(),
+                    });
+                }
+            }
+
+            const matches = filteredStoriesRef.current.filter(
+                (story) =>
+                    story.cittaArrivo === locationName ||
+                    story.cittaPartenza === locationName,
+            );
+            openStories(matches);
+        },
+        [locations, mapRef, openStories],
+    );
+
+    const handleResetFilters = useCallback(() => {
+        setDepartureFilter("");
+        setArrivalFilter("");
+    }, []);
 
     const wasdTooltipRef = useRef(null);
     const handleCityReached = useCallback(
@@ -150,35 +303,33 @@ export default function Map() {
             const map = mapRef.current;
             if (!map) return;
 
-            // Remove previous tooltip if any
             if (wasdTooltipRef.current) {
                 wasdTooltipRef.current.remove();
                 wasdTooltipRef.current = null;
             }
 
-            const city = locations.find((l) => l.name === cityName);
+            const city = locations.find((location) => location.name === cityName);
             if (!city) return;
-            import("leaflet").then(({ default: L }) => {
-                const t = L.tooltip({
-                    permanent: true,
-                    direction: "top",
-                    offset: [0, -14],
-                    className: "pin-tooltip pin-tooltip--wasd",
-                })
+
+            import("leaflet").then(({ default: leaflet }) => {
+                const tooltip = leaflet
+                    .tooltip({
+                        permanent: true,
+                        direction: "top",
+                        offset: [0, -14],
+                        className: "pin-tooltip pin-tooltip--wasd",
+                    })
                     .setLatLng([city.lat, city.lng])
                     .setContent(
-                        '<span class="pin-tooltip-name">' +
-                            city.name +
-                            "</span>",
+                        `<span class="pin-tooltip-name">${city.name}</span>`,
                     )
                     .addTo(map);
 
-                wasdTooltipRef.current = t;
+                wasdTooltipRef.current = tooltip;
 
-                // Auto-dismiss after 2.5 s
                 setTimeout(() => {
-                    if (wasdTooltipRef.current === t) {
-                        t.remove();
+                    if (wasdTooltipRef.current === tooltip) {
+                        tooltip.remove();
                         wasdTooltipRef.current = null;
                     }
                 }, 2500);
@@ -186,39 +337,6 @@ export default function Map() {
         },
         [mapRef, locations],
     );
-
-    const closeStories = () => {
-        isStoriesOpenRef.current = false;
-        setActiveStories([]);
-        setTrackedRoute(null);
-        setTrackedLatLng(null);
-        setRoutePlaying(false);
-        setActiveStoryRoute(null);
-    };
-    const openStories = (matches) => {
-        if (matches.length > 0) {
-            isStoriesOpenRef.current = true;
-            setActiveStories(matches);
-
-            // Track the first matching route for camera follow
-            const first = matches[0];
-            if (first?.cittaPartenza && first?.cittaArrivo) {
-                setTrackedRoute({
-                    from: first.cittaPartenza,
-                    to: first.cittaArrivo,
-                });
-                setRoutePlaying(true);
-                setActiveStoryRoute({
-                    from: first.cittaPartenza,
-                    to: first.cittaArrivo,
-                });
-            } else {
-                setTrackedRoute(null);
-                setRoutePlaying(false);
-                setActiveStoryRoute(null);
-            }
-        }
-    };
 
     const { isAnimatingRef, currentCityRef, navigateToRef } = useWasdNavigation(
         mapRef,
@@ -240,6 +358,8 @@ export default function Map() {
 
     const showOverlay = ready && dataReady;
     const storiesOpen = activeStories.length > 0;
+    const overlayActive = storiesOpen || formOpen;
+    const showMapControls = !overlayActive;
 
     return (
         <div className="map-root">
@@ -253,69 +373,64 @@ export default function Map() {
                         locationsUrl={LOCATIONS_URL}
                         speedMult={2}
                         loop={true}
-                        onParticleClick={({ from, to }) =>
-                            handleConnectionClick(from, to)
+                        onParticleClick={({ from, to, routeKey }) =>
+                            handleConnectionClick(from, to, routeKey)
                         }
-                        trackedRoute={trackedRoute}
-                        onTrackedPosition={({ lat, lng, isPlaying }) => {
-                            setTrackedLatLng({ lat, lng });
-                            setRoutePlaying(isPlaying);
-                        }}
+                        activeRouteKey={activeRouteKey}
+                        visibleRouteKeys={filteredRouteKeys}
+                        hasActiveFilters={hasActiveFilters}
+                        onTrackedPosition={handleTrackedPosition}
                     />
                 )}
             </div>
 
             {showOverlay &&
-                locations.map((loc) => (
+                locations.map((location) => (
                     <Pin
-                        key={loc.name}
+                        key={location.name}
                         map={mapRef.current}
-                        location={loc}
-                        hasStories={allStories.some(
-                            (s) =>
-                                s.cittaArrivo === loc.name ||
-                                s.cittaPartenza === loc.name,
-                        )}
+                        location={location}
+                        hasStories={allStoryLocations.has(location.name)}
+                        isInteractive={visibleStoryLocations.has(location.name)}
+                        isDimmed={!visibleStoryLocations.has(location.name)}
                         onClick={handlePinClick}
-                        isActive={
-                            !!activeStoryRoute &&
-                            (loc.name === activeStoryRoute.from ||
-                                loc.name === activeStoryRoute.to)
-                        }
                     />
                 ))}
 
-            {QR_ENABLED && <QRcode link={QR_LINK} size={QR_SIZE} />}
+            {showMapControls && (
+                <StoryFilters
+                    isOpen={filtersOpen}
+                    onToggle={() => setFiltersOpen((prev) => !prev)}
+                    departureValue={departureFilter}
+                    arrivalValue={arrivalFilter}
+                    cities={cityOptions}
+                    onDepartureChange={setDepartureFilter}
+                    onArrivalChange={setArrivalFilter}
+                    onReset={handleResetFilters}
+                    storyCount={filteredStories.length}
+                    routeCount={filteredRouteKeys.size}
+                />
+            )}
 
-            {/* Story submission button — bottom-right */}
-            {FORM_ENABLED && (
+            {showMapControls && QR_ENABLED && (
+                <QRcode link={QR_LINK} size={QR_SIZE} />
+            )}
+
+            {showMapControls && FORM_ENABLED && (
                 <StoryFormButton onClick={() => setFormOpen(true)} />
             )}
 
-            {/* Stories reading overlay */}
-            <Banner overlayActive={storiesOpen} />
-
-            {QR_ENABLED && <QRcode link={QR_LINK} size={QR_SIZE} />}
+            <Banner overlayActive={overlayActive} />
 
             <StoriesOverlay
                 stories={activeStories}
                 onClose={closeStories}
-                mapRef={mapRef}
                 currentLatLng={trackedLatLng}
                 isPlaying={routePlaying}
-                onStoryChange={({ story }) => {
-                    if (story?.cittaPartenza && story?.cittaArrivo) {
-                        setActiveStoryRoute({
-                            from: story.cittaPartenza,
-                            to: story.cittaArrivo,
-                        });
-                    } else {
-                        setActiveStoryRoute(null);
-                    }
-                }}
+                onStoryChange={handleStoryChange}
+                focusTrackedLatLng={focusTrackedLatLng}
             />
 
-            {/* Story submission form overlay */}
             {formOpen && <StoryForm onClose={() => setFormOpen(false)} />}
         </div>
     );

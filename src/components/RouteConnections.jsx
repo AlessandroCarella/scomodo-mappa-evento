@@ -5,15 +5,17 @@
  * City coordinates are read from `locationsUrl` (Locations.json).
  *
  * Props
- * ─────
- *   map               L.Map       Leaflet map instance  (required)
- *   paths             Array       [{ from: "Roma", to: "Milano" }, ...]  (required)
- *   speedMult         number      Playback speed multiplier  (default: 2)
+ * -----
+ *   map               L.Map       Leaflet map instance (required)
+ *   paths             Array       [{ from: "Roma", to: "Milano" }, ...] (required)
+ *   speedMult         number      Playback speed multiplier (default: 2)
  *   locationsUrl      string      Full URL to Locations.json, already BASE_URL-prefixed
- *   loop              bool        Restart each route on completion  (default: true)
- *   onParticleClick   function    Called with { from, to } when a moving dot is clicked
- *   trackedRoute      {from,to}?  Optional route to track for camera follow
- *   onTrackedPosition function?   Called with {lat,lng,isPlaying} for tracked route
+ *   loop              bool        Restart each route on completion (default: true)
+ *   onParticleClick   function    Called with { from, to, routeKey } on route click
+ *   activeRouteKey    string?     Selected/tracked route key
+ *   visibleRouteKeys  Set<string> Route keys that should stay fully visible
+ *   hasActiveFilters  boolean     Whether non-matching routes should be dimmed
+ *   onTrackedPosition function?   Called with {lat,lng,isPlaying} for the tracked route
  */
 
 import { useEffect, useRef, useCallback } from "react";
@@ -46,8 +48,6 @@ import {
 import { useRouteCanvas } from "./ConnectionHelpers/useRouteCanvas";
 import "./styles/RouteConnections.css";
 
-// CSS custom properties populated from config — consumed by useRouteCanvas
-// via getComputedStyle, keeping all visual values in one place.
 const CANVAS_STYLE = {
     "--route-ghost-color": ROUTE_GHOST_COLOR,
     "--route-ghost-width": ROUTE_GHOST_WIDTH,
@@ -81,12 +81,13 @@ export default function RouteConnections({
     locationsUrl,
     loop = true,
     onParticleClick,
-    trackedRoute,
+    activeRouteKey,
+    visibleRouteKeys,
+    hasActiveFilters = false,
     onTrackedPosition,
 }) {
     const canvasRef = useRef(null);
 
-    // Mutable animation state — never triggers re-renders
     const stateRef = useRef({
         particles: [],
         colorIdx: 0,
@@ -95,25 +96,31 @@ export default function RouteConnections({
         animFrame: null,
     });
 
-    // Stable refs so event-listener / rAF closures always see the latest
-    // callbacks and tracked route without needing to re-register.
     const onParticleClickRef = useRef(onParticleClick);
     useEffect(() => {
         onParticleClickRef.current = onParticleClick;
     }, [onParticleClick]);
 
-    const trackedRouteRef = useRef(trackedRoute);
+    const activeRouteKeyRef = useRef(activeRouteKey);
     useEffect(() => {
-        trackedRouteRef.current = trackedRoute || null;
-    }, [trackedRoute]);
+        activeRouteKeyRef.current = activeRouteKey || null;
+    }, [activeRouteKey]);
+
+    const visibleRouteKeysRef = useRef(visibleRouteKeys);
+    useEffect(() => {
+        visibleRouteKeysRef.current = visibleRouteKeys;
+    }, [visibleRouteKeys]);
+
+    const hasActiveFiltersRef = useRef(hasActiveFilters);
+    useEffect(() => {
+        hasActiveFiltersRef.current = hasActiveFilters;
+    }, [hasActiveFilters]);
 
     const onTrackedPositionRef = useRef(onTrackedPosition);
     useEffect(() => {
         onTrackedPositionRef.current = onTrackedPosition || null;
     }, [onTrackedPosition]);
 
-    // Patch speedMult into shared state without restarting the render loop.
-    // Reset lastTime on all particles so dt stays accurate after a speed change.
     useEffect(() => {
         const S = stateRef.current;
         const now = performance.now();
@@ -123,17 +130,21 @@ export default function RouteConnections({
         });
     }, [speedMult]);
 
-    // Hit-test the nearest particle to a pointer position.
-    // Reads canvasRef for the bounding rect; safe to call from any listener.
     const getHit = useCallback((clientX, clientY) => {
         const canvas = canvasRef.current;
         if (!canvas) return null;
         const rect = canvas.getBoundingClientRect();
         const mx = clientX - rect.left;
         const my = clientY - rect.top;
-        let hit = null,
-            best = HIT_RADIUS;
+        let hit = null;
+        let best = HIT_RADIUS;
+        const filtersActive = hasActiveFiltersRef.current;
+        const routeKeys = visibleRouteKeysRef.current;
+
         for (const p of stateRef.current.particles) {
+            if (filtersActive && routeKeys && !routeKeys.has(p.routeKey)) {
+                continue;
+            }
             if (p._hx == null) continue;
             const d = Math.hypot(p._hx - mx, p._hy - my);
             if (d < best) {
@@ -144,7 +155,6 @@ export default function RouteConnections({
         return hit;
     }, []);
 
-    // Attach the canvas lifecycle: resize sync, pointer events, fetch, rAF loop.
     useRouteCanvas({
         map,
         paths,
@@ -154,11 +164,12 @@ export default function RouteConnections({
         stateRef,
         getHit,
         onParticleClickRef,
-        trackedRouteRef,
+        activeRouteKeyRef,
+        visibleRouteKeysRef,
+        hasActiveFiltersRef,
         onTrackedPositionRef,
     });
 
-    // pointer-events: none → all events fall through to Leaflet beneath
     return (
         <canvas
             ref={canvasRef}

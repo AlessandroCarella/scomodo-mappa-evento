@@ -1,7 +1,16 @@
-// ── Pure helpers ──────────────────────────────────────────────────────────────
+// Pure helpers
 
-/** Linear interpolation between a and b by t ∈ [0, 1]. */
+/** Linear interpolation between a and b by t in [0, 1]. */
 export const lerp = (a, b, t) => a + (b - a) * t;
+
+function parseHex(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return {
+        r: (n >> 16) & 255,
+        g: (n >> 8) & 255,
+        b: n & 255,
+    };
+}
 
 /** Cubic ease-in-out. */
 export const ease = (t) =>
@@ -12,11 +21,27 @@ export const ease = (t) =>
  * then applies the given alpha.
  */
 export function routeColor(hex, t, alpha, grey = 150) {
-    const n = parseInt(hex.slice(1), 16);
-    const r = (n >> 16) & 255,
-        g = (n >> 8) & 255,
-        b = n & 255;
+    const { r, g, b } = parseHex(hex);
     return `rgba(${Math.round(lerp(grey, r, t))},${Math.round(lerp(grey, g, t))},${Math.round(lerp(grey, b, t))},${alpha})`;
+}
+
+export function hexToRgba(hex, alpha = 1) {
+    const { r, g, b } = parseHex(hex);
+    return `rgba(${r},${g},${b},${alpha})`;
+}
+
+export function mixHex(hex, targetHex, amount = 0.5) {
+    const from = parseHex(hex);
+    const to = parseHex(targetHex);
+    const t = Math.max(0, Math.min(1, amount));
+
+    const r = Math.round(lerp(from.r, to.r, t));
+    const g = Math.round(lerp(from.g, to.g, t));
+    const b = Math.round(lerp(from.b, to.b, t));
+
+    return `#${[r, g, b]
+        .map((value) => value.toString(16).padStart(2, "0"))
+        .join("")}`;
 }
 
 /**
