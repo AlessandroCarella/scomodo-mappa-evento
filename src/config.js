@@ -404,3 +404,17 @@ export const POPUP_CLOSE_LABEL = "Chiudi";
 // Message shown when both primary and backup EmailJS sends fail
 export const POPUP_EMAIL_FATAL_MESSAGE =
     "Non siamo stati in grado di ricevere la tua storia, per favore mandaci una mail con ciò che avevi scritto all'indirizzo email scomodobarimappe@gmail.com";
+
+// ── GDPR ──────────────────────────────────────────────────────
+// Informativa sintetica ex art. 13 Reg. UE 2016/679 mostrata
+// in calce al form prima del tasto di invio.
+export const FORM_GDPR_NOTICE =
+    "Ai sensi dell'art.\u00a013 del Regolamento UE 2016/679 (GDPR), i dati " +
+    "forniti (nome, età, città di partenza e di arrivo, data del viaggio, storia) " +
+    "saranno trattati da Scomodo Bari esclusivamente per finalità editoriali e di " +
+    "ricerca sociale nell'ambito del progetto \u201cBari\u2009\u2013\u2009Città del " +
+    "Viaggio\u201d." +
+    "I dati potranno essere pubblicati sulla mappa interattiva e/o nella rivista " +
+    "collettiva in forma anonimizzata o con il solo nome di battesimo. " +
+    "Per esercitare i diritti di accesso, rettifica o cancellazione scrivi a\u00a0" +
+    "scomodobarimappe@gmail.com.";

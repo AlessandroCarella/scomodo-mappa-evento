@@ -31,6 +31,7 @@ export {
     FORM_STORIA_MAX_LENGTH,
     FORM_ETA_MIN,
     FORM_ETA_MAX,
+    FORM_GDPR_NOTICE, 
 } from "@/config";
 
 // ── Page-specific constants ────────────────────────────────────────

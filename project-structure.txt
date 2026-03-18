@@ -90,7 +90,7 @@
 │   ├── styles/
 │   │   └── App.css (3.9 KB)
 │   ├── App.jsx (0.8 KB)
-│   ├── config.js (17.0 KB)
+│   ├── config.js (17.1 KB)
 │   └── main.jsx (0.2 KB)
 ├── versione particelle/
 │   └── src/
@@ -129,6 +129,7 @@
 ├── LICENSE (1.1 KB)
 ├── package-lock.json (131.5 KB)
 ├── package.json (1.1 KB)
-├── project-structure.txt (6.0 KB)
+├── project-structure.txt (6.2 KB)
 ├── readme.md (1.0 KB)
+├── trovaCitta.ipynb (25.4 KB)
 └── vite.config.js (0.3 KB)

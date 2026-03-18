@@ -12,6 +12,7 @@ import { useStoryForm } from "../components/StoryFormHelpers/useStoryForm";
 import FormField from "../components/StoryFormHelpers/FormField";
 import FormFeedback from "../components/StoryFormHelpers/FormFeedback";
 import { PopUpAlert } from "../components/PopUpAlert";
+import GdprNotice from "../components/StoryFormHelpers/GdprNotice.jsx";
 import MapBackground from "./Form/MapBackground";
 
 import {
@@ -96,7 +97,9 @@ export default function FormPage() {
                         {/* description — hidden on mobile to save space */}
                         <p className={styles.desc}>
                             {FORM_DESC}
-                            <strong> Tutti i campi sono obbligatori.</strong>
+                            {/* <strong> Tutti i campi sono obbligatori.</strong> */}
+                            {/* GDPR notice — art. 13 Reg. UE 2016/679 */}
+                            <GdprNotice />
                         </p>
 
                         {/* ── feedback states ── */}
