@@ -15,6 +15,7 @@ import { useStoryForm } from "./StoryFormHelpers/useStoryForm.js";
 import FormField from "./StoryFormHelpers/FormField.jsx";
 import FormFeedback from "./StoryFormHelpers/FormFeedback.jsx";
 import { PopUpAlert } from "./PopUpAlert.jsx";
+import GdprNotice from "./StoryFormHelpers/GdprNotice.jsx";
 
 /**
  * StoryForm
@@ -64,8 +65,10 @@ export default function StoryForm({ onClose }) {
                         <h2 className="sf-title">{FORM_TITLE}</h2>
                         <p className="sf-desc">
                             {FORM_DESC}
-                            <strong> Tutti i campi sono obbligatori.</strong>
+                            {/* <strong> Tutti i campi sono obbligatori.</strong> */}
                         </p>
+                        {/* GDPR notice — art. 13 Reg. UE 2016/679 */}
+                        <GdprNotice />
                     </div>
                     <button
                         type="button"

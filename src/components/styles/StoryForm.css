@@ -429,3 +429,42 @@
         justify-content: center;
     }
 }
+
+.sf-gdpr {
+    margin-top: 1rem;
+}
+
+.sf-gdpr-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: inherit;
+    opacity: 0.55;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.sf-gdpr-toggle:hover {
+    opacity: 0.85;
+}
+
+.sf-gdpr-chevron {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    font-size: 1rem;
+    line-height: 1;
+}
+.sf-gdpr-chevron--open {
+    transform: rotate(90deg);
+}
+
+.sf-gdpr-body {
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
+    line-height: 1.55;
+    opacity: 0.6;
+}
