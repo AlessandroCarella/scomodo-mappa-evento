@@ -57,7 +57,7 @@
 
 /* ── Eyebrow ──────────────────────────────────────────────────── */
 .eyebrow {
-    font-family: "Syne Mono", ui-monospace, monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -75,7 +75,7 @@
 /* ── Title ────────────────────────────────────────────────────── */
 .title {
     margin: 0;
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(1.6rem, 5vw, 2.4rem);
     font-weight: 700;
     color: rgba(20, 20, 22, 0.9);
@@ -86,7 +86,7 @@
 /* ── Body text ────────────────────────────────────────────────── */
 .body {
     margin: 0;
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.65;
     color: rgba(20, 20, 22, 0.58);
@@ -104,7 +104,7 @@
     cursor: pointer;
     background: rgba(18, 18, 20, 0.9);
     color: rgba(245, 239, 220, 0.96);
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 13px;
     letter-spacing: 0.04em;

@@ -45,7 +45,7 @@
     background: rgba(10, 15, 26, 0.92) !important;
     color: #a0b4c8 !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
-    font-family: "Syne", sans-serif !important;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
     transition:
         background 0.2s,
         color 0.2s;

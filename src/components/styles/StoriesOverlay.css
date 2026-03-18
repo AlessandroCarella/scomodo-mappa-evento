@@ -48,7 +48,7 @@
 }
 
 .stories-overlay__title {
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 22px;
     letter-spacing: 0.02em;
@@ -57,8 +57,7 @@
 
 .stories-overlay__subtitle {
     margin-top: 6px;
-    font-family: "Syne Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
-        Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 12px;
     color: rgba(20, 20, 22, 0.68);
 }
@@ -105,7 +104,7 @@
 }
 
 .story-postit__label {
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 650;
     font-size: 12px;
     letter-spacing: 0.06em;
@@ -114,7 +113,7 @@
 }
 
 .story-postit__text {
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.5;
     color: rgba(20, 20, 22, 0.9);
@@ -126,8 +125,7 @@
     display: inline-flex;
     gap: 4px;
     flex-wrap: wrap;
-    font-family: "Syne Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
-        Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .splitflap__char {

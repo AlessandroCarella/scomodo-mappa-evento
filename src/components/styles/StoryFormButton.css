@@ -85,7 +85,7 @@
 }
 
 .form-btn-label {
-    font-family: "Syne Mono", ui-monospace, monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(7px, 1.3vmin, 10px);
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -140,7 +140,7 @@
 }
 
 .form-btn-qr-error {
-    font-family: "Syne Mono", ui-monospace, monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 9px;
     letter-spacing: 0.12em;
     color: rgba(180, 160, 120, 0.45);

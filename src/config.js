@@ -149,8 +149,8 @@ export const BANNER_TEXT_COLOR = "rgba(224, 208, 176, 0.90)";
 
 // Font families — can differ between left and right panels.
 // Any Google Font or system font is valid; make sure it is loaded in global.css.
-export const BANNER_FONT_FAMILY_LEFT = "'Syne', sans-serif";
-export const BANNER_FONT_FAMILY_RIGHT = "'Syne', sans-serif";
+export const BANNER_FONT_FAMILY_LEFT = "'Helvetica Neue', Helvetica, Arial, sans-serif";
+export const BANNER_FONT_FAMILY_RIGHT = "'Helvetica Neue', Helvetica, Arial, sans-serif";
 
 // Font weight applied when measuring and rendering
 export const BANNER_FONT_WEIGHT = 700;

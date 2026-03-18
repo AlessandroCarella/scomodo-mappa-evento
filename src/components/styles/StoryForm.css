@@ -57,7 +57,7 @@
 }
 
 .sf-eyebrow {
-    font-family: "Syne Mono", ui-monospace, monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -66,7 +66,7 @@
 }
 
 .sf-title {
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: clamp(20px, 3vw, 26px);
     letter-spacing: 0.01em;
@@ -76,7 +76,7 @@
 }
 
 .sf-desc {
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 13px;
     line-height: 1.55;
     color: rgba(20, 20, 22, 0.68);
@@ -146,7 +146,7 @@
 }
 
 .sf-label-text {
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 650;
     font-size: 12px;
     letter-spacing: 0.06em;
@@ -155,7 +155,7 @@
 }
 
 .sf-hint {
-    font-family: "Syne Mono", ui-monospace, monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10.5px;
     color: rgba(20, 20, 22, 0.45);
     letter-spacing: 0.02em;
@@ -171,7 +171,7 @@
     background: rgba(255, 255, 255, 0.72);
     color: rgba(20, 20, 22, 0.92);
 
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.4;
 
@@ -217,7 +217,7 @@
 }
 
 .sf-char-count {
-    font-family: "Syne Mono", ui-monospace, monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10px;
     color: rgba(20, 20, 22, 0.38);
     letter-spacing: 0.06em;
@@ -237,7 +237,7 @@
 }
 
 .sf-error-msg {
-    font-family: "Syne Mono", ui-monospace, monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10.5px;
     color: rgba(200, 60, 40, 0.9);
     letter-spacing: 0.03em;
@@ -263,7 +263,7 @@
     background: rgba(18, 18, 20, 0.92);
     color: rgba(245, 239, 220, 0.96);
 
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 14px;
     letter-spacing: 0.04em;
@@ -345,14 +345,14 @@
 }
 
 .sf-feedback-title {
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 20px;
     color: rgba(20, 20, 22, 0.9);
 }
 
 .sf-feedback-body {
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: rgba(20, 20, 22, 0.6);
     max-width: 320px;
@@ -374,7 +374,7 @@
     cursor: pointer;
     background: rgba(18, 18, 20, 0.9);
     color: rgba(245, 239, 220, 0.96);
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 13px;
     transition:
@@ -393,7 +393,7 @@
     cursor: pointer;
     background: transparent;
     color: rgba(20, 20, 22, 0.75);
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 13px;
     transition:
