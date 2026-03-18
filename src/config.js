@@ -5,11 +5,17 @@
 // ─────────────────────────────────────────────────────────────
 
 // ── Data paths (served from /public, fetched at runtime) ─────
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+export const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 export const DATA_PATHS = {
     locations: `${BASE}/data/Locations.json`,
     connections: `${BASE}/data/Connections.json`,
 };
+
+// Vite's BASE_URL respects the `base` option in vite.config.js.
+// Without this prefix, fetches return index.html (→ JSON parse error)
+// when the app is served from a non-root path.
+export const LOCATIONS_URL = `${BASE}/data/Locations.json`;
+export const STORIES_URL = `${BASE}/data/storie.json`;
 
 // ── Map tile layer ─────────────────────────────────────────────
 export const TILE_URL =

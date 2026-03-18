@@ -17,14 +17,10 @@ import {
     QR_SIZE,
     FORM_ENABLED,
     ITALY_BOUNDS_PADDING,
+    BASE,
+    LOCATIONS_URL,
+    STORIES_URL,
 } from "../config";
-
-// Vite's BASE_URL respects the `base` option in vite.config.js.
-// Without this prefix, fetches return index.html (→ JSON parse error)
-// when the app is served from a non-root path.
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
-const LOCATIONS_URL = `${BASE}/data/Locations.json`;
-const STORIES_URL = `${BASE}/data/storie.json`;
 
 export default function Map() {
     const containerRef = useRef(null);
@@ -73,9 +69,23 @@ export default function Map() {
                     locByName,
                 );
 
-                setLocations(rawLocations);
+                // Build a set of every city name referenced in any story
+                const citiesInStories = new Set(
+                    rawStories
+                        .flatMap((s) => [s.cittaPartenza, s.cittaArrivo])
+                        .filter(Boolean),
+                );
+
+                // Keep only locations that actually appear in a story
+                const filteredLocations = rawLocations.filter((l) =>
+                    citiesInStories.has(l.name),
+                );
+
+                // ↓ was rawLocations
+                setLocations(filteredLocations);
                 allStoriesRef.current = rawStories;
                 setAllStories(rawStories);
+                
                 setPaths(
                     conns.map((c) => ({ from: c.from.name, to: c.to.name })),
                 );
