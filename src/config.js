@@ -267,7 +267,7 @@ export const FORM_ETA_MAX = 120;
 export const FORM_EYEBROW = "Scomodo · Mappa dei viaggi";
 export const FORM_TITLE = "La tua storia";
 export const FORM_DESC =
-    "Hai viaggiato in Italia? Condividi la tua esperienza — apparirà sulla mappa insieme alle altre storie.";
+    "Sei partitə, sei arrivatə, o stai ancora aspettando? Raccontaci il tuo movimento — apparirà sulla mappa insieme alle traiettorie di chi attraversa questa città.";
 export const FORM_SUBMIT_LABEL = "Manda la tua storia →";
 export const FORM_SENDING_LABEL = "Invio in corso…";
 
@@ -283,8 +283,8 @@ export const FORM_ERROR_RETRY = "Riprova";
 
 export const FORM_STORIA_LABEL = "Racconta la tua storia";
 export const FORM_STORIA_HINT =
-    "Cosa ti è rimasto di quel viaggio? Max {max} caratteri.";
-export const FORM_STORIA_PLACEHOLDER = "Scrivi qui la tua storia…";
+    "Cosa hai lasciato? Cosa hai trovato? Raccontaci la tua partenza in {max} caratteri.";
+export const FORM_STORIA_PLACEHOLDER = "La tua storia entra nella mappa…";
 
 /**
  * FIELDS
@@ -308,7 +308,7 @@ export const FIELDS = [
         label: "Nome",
         hint: "Come ti chiami?",
         type: "text",
-        placeholder: "Es. Matteo",
+        placeholder: "Es. Andrea",
         autoComplete: "given-name",
     },
     {
@@ -323,21 +323,21 @@ export const FIELDS = [
     {
         id: "cittaPartenza",
         label: "Città di partenza",
-        hint: "Da dove sei partito/a?",
+        hint: "Da dove sei partitə?",
         type: "text",
-        placeholder: "Es. Milano",
+        placeholder: "Es. Bari",
     },
     {
         id: "cittaArrivo",
         label: "Città di arrivo",
-        hint: "Dove sei arrivato/a?",
+        hint: "Dove sei arrivatə?",
         type: "text",
         placeholder: "Es. Torino",
     },
     {
         id: "data",
         label: "Data del viaggio",
-        hint: "Quando è avvenuto il viaggio?",
+        hint: "Quando sei paritə?",
         type: "date",
         placeholder: "",
     },
