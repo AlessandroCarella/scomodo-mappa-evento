@@ -1,11 +1,7 @@
 /* ── Positioning ─────────────────────────────────────────────── */
-/*
- * Mirrors .qr-anchor (bottom-left) but placed bottom-right so the
- * two cards frame the map symmetrically.
- */
 .form-btn-anchor {
     position: absolute;
-    bottom: max(18px, calc(env(safe-area-inset-bottom) + 8px)); /* ← add this */
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 8px));
     right: 18px;
     z-index: 600;
 
@@ -25,10 +21,6 @@
 }
 
 /* ── Card shell ──────────────────────────────────────────────── */
-/*
- * Width  = --form-btn-size   (same as QR card)
- * Height = --form-btn-size + --form-btn-text-h  (text strip sits on top)
- */
 .form-btn-card {
     position: relative;
     width: var(--form-btn-size, min(17vw, 17vh));
@@ -39,25 +31,18 @@
     display: flex;
     flex-direction: column;
 
-    border-radius: 10px;
+    border-radius: 0;
     overflow: hidden;
 
-    background: rgba(6, 10, 20, 0.88);
-    border: 1px solid rgba(180, 160, 120, 0.35);
-    box-shadow:
-        0 4px 24px rgba(0, 0, 0, 0.55),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: #FFCB00;
+    border: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
 
     cursor: pointer;
     transition:
-        border-color 0.22s ease,
         box-shadow 0.22s ease,
         transform 0.22s ease;
 
-    /* Reset default button styles */
     padding: 0;
     font: inherit;
     color: inherit;
@@ -66,10 +51,7 @@
 }
 
 .form-btn-card:hover {
-    border-color: rgba(224, 208, 176, 0.6);
-    box-shadow:
-        0 8px 36px rgba(0, 0, 0, 0.65),
-        0 0 0 1px rgba(224, 208, 176, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
     transform: translateY(-2px) scale(1.015);
 }
 
@@ -81,7 +63,8 @@
     align-items: center;
     justify-content: center;
     padding: 0 10%;
-    border-bottom: 1px solid rgba(180, 160, 120, 0.18);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    background: #053C3C;
 }
 
 .form-btn-label {
@@ -89,21 +72,18 @@
     font-size: clamp(7px, 1.3vmin, 10px);
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(224, 208, 176, 0.8);
+    color: #ffffff;
     text-align: center;
     line-height: 1.35;
     user-select: none;
 }
 
 /* ── QR image area ───────────────────────────────────────────── */
-/*
- * Fills exactly the square portion below the text strip.
- * flex: 1 makes it consume all remaining height = --form-btn-size.
- */
 .form-btn-qr-area {
     position: relative;
     flex: 1;
     min-height: 0;
+    background: #FFCB00;
 }
 
 .form-btn-qr-img {
@@ -127,8 +107,8 @@
 .form-btn-qr-spinner {
     width: 22px;
     height: 22px;
-    border: 2px solid rgba(180, 160, 120, 0.18);
-    border-top-color: rgba(224, 208, 176, 0.7);
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    border-top-color: #000000;
     border-radius: 50%;
     animation: form-btn-spin 0.9s linear infinite;
 }
@@ -143,61 +123,56 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 9px;
     letter-spacing: 0.12em;
-    color: rgba(180, 160, 120, 0.45);
+    color: rgba(0, 0, 0, 0.5);
     text-transform: uppercase;
 }
 
-/* ── Corner accents — identical to QRcode ────────────────────── */
+/* ── Corner accents ──────────────────────────────────────────── */
 .form-btn-corner {
     position: absolute;
     width: 10px;
     height: 10px;
-    opacity: 0.45;
+    opacity: 0.6;
     z-index: 1;
 }
 .form-btn-corner--tl {
     top: 5px;
     left: 5px;
-    border-top: 1.5px solid #b4a080;
-    border-left: 1.5px solid #b4a080;
+    border-top: 1.5px solid #000000;
+    border-left: 1.5px solid #000000;
 }
 .form-btn-corner--tr {
     top: 5px;
     right: 5px;
-    border-top: 1.5px solid #b4a080;
-    border-right: 1.5px solid #b4a080;
+    border-top: 1.5px solid #000000;
+    border-right: 1.5px solid #000000;
 }
 .form-btn-corner--bl {
     bottom: 5px;
     left: 5px;
-    border-bottom: 1.5px solid #b4a080;
-    border-left: 1.5px solid #b4a080;
+    border-bottom: 1.5px solid #000000;
+    border-left: 1.5px solid #000000;
 }
 .form-btn-corner--br {
     bottom: 5px;
     right: 5px;
-    border-bottom: 1.5px solid #b4a080;
-    border-right: 1.5px solid #b4a080;
+    border-bottom: 1.5px solid #000000;
+    border-right: 1.5px solid #000000;
 }
 
 /* ── Mobile: text-only button, no QR ────────────────────────── */
 @media (max-width: 600px) {
     .form-btn-anchor {
-        bottom: max(
-            18px,
-            calc(env(safe-area-inset-bottom) + 8px)
-        ); /* ← add this */
+        bottom: max(18px, calc(env(safe-area-inset-bottom) + 8px));
         right: 12px;
     }
 
     .form-btn-card {
-        /* Fixed compact size — no longer depends on --form-btn-size */
         width: auto;
         height: auto;
-        border-radius: 8px;
+        border-radius: 0;
     }
 
-    /* Label strip expands to fill the whole card */
     .form-btn-label-strip {
         height: auto;
         padding: 14px 20px;
@@ -205,18 +180,16 @@
     }
 
     .form-btn-label {
-        /* Slightly larger and more readable on touch screens */
         font-size: clamp(10px, 3vw, 13px);
         line-height: 1.55;
     }
 
-    /* Hide QR entirely on mobile */
     .form-btn-qr-area {
         display: none;
     }
 }
 
-/* ── Landscape phone — nudge up from bottom nav bars ─────────── */
+/* ── Landscape phone ─────────────────────────────────────────── */
 @media (max-width: 900px) and (orientation: landscape) {
     .form-btn-anchor {
         bottom: 10px;

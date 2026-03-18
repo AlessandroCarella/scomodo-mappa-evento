@@ -1,0 +1,75 @@
+Resoconto pacchetto
+
+-----------------------------------------------------------------------------
+Documento: 
+Nome: Scomodo_Sito Arrivi e partenze.ai
+Metodo colore: Colore RGB
+Profilo colore:  Display
+Unitˆ righelli: pixel
+Dimensioni tavola disegno: 1920 px x 1080 px
+Mostra immagini con metodo contorno: NO
+Evidenzia font sostituiti: NO
+Evidenzia glifi sostituiti: NO
+Mantieni testo modificabile
+Simula carta colorata: NO
+
+-----------------------------------------------------------------------------
+Oggetti in tinta piatta: 
+
+-----------------------------------------------------------------------------
+Font mancanti:NESSUNO
+
+-----------------------------------------------------------------------------
+Font protetti non inclusi nel pacchetto:NESSUNO
+
+-----------------------------------------------------------------------------
+Font: 
+Helvetica Neue Thin (TrueType)
+Helvetica Neue (TrueType)
+Helvetica Neue Bold (TrueType)
+
+-----------------------------------------------------------------------------
+Font incorporati:
+NESSUNO
+
+-----------------------------------------------------------------------------
+Collegamenti mancanti:
+NESSUNO
+
+-----------------------------------------------------------------------------
+Immagini collegate: 
+
+/Utenti/nicolascaglione/Libreria/CloudStorage/Dropbox/MY/WORKS/Scomodo/Scomodo_ARRIVI PARTENZE sito/Assets_sito scomodo/mappa bianca.jpg
+Tipo: RGB
+Bit per pixel: 24
+Canali: 3
+Dimensione: 21468K, 3540 per 2070 pixel
+Dimensioni: 1920 per 1122,712 punti 
+Risoluzione: 132,75 per 132,75 pixel per pollice
+
+
+/Utenti/nicolascaglione/Libreria/CloudStorage/Dropbox/MY/WORKS/Scomodo/Scomodo_ARRIVI PARTENZE sito/Assets_sito scomodo/mappa bianca.jpg
+Tipo: RGB
+Bit per pixel: 24
+Canali: 3
+Dimensione: 21468K, 3540 per 2070 pixel
+Dimensioni: 1920 per 1122,712 punti 
+Risoluzione: 132,75 per 132,75 pixel per pollice
+
+
+/Utenti/nicolascaglione/Libreria/CloudStorage/Dropbox/MY/WORKS/Scomodo/Scomodo_ARRIVI PARTENZE sito/Assets_sito scomodo/mappa bianca.jpg
+Tipo: RGB
+Bit per pixel: 24
+Canali: 3
+Dimensione: 21468K, 3540 per 2070 pixel
+Dimensioni: 3036,219 per 1775,416 punti 
+Risoluzione: 83,947 per 83,947 pixel per pollice
+
+
+/Utenti/nicolascaglione/Libreria/CloudStorage/Dropbox/MY/WORKS/Scomodo/Scomodo_ARRIVI PARTENZE sito/Assets_sito scomodo/mappa bianca.jpg
+Tipo: RGB
+Bit per pixel: 24
+Canali: 3
+Dimensione: 21468K, 3540 per 2070 pixel
+Dimensioni: 3036,219 per 1775,416 punti 
+Risoluzione: 83,947 per 83,947 pixel per pollice

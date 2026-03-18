@@ -1,14 +1,9 @@
-/* ── Overlay backdrop ─────────────────────────────────────────
-   Identical z-index and blur strategy to .stories-overlay,
-   but the form panel uses the project's warm parchment palette.
-   ──────────────────────────────────────────────────────────── */
+/* ── Overlay backdrop ─────────────────────────────────────────── */
 .sf-overlay {
     position: fixed;
     inset: 0;
     z-index: 1000;
-    background: rgba(8, 12, 22, 0.72);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.55);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,13 +15,11 @@
     width: min(680px, 96vw);
     max-height: min(90vh, 880px);
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 0;
 
-    background: rgba(245, 239, 220, 0.95);
-    box-shadow:
-        0 40px 100px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(20, 20, 22, 0.12);
-    border: 1px solid rgba(20, 20, 22, 0.1);
+    background: #ffffff;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.35);
+    border: none;
 
     display: flex;
     flex-direction: column;
@@ -52,7 +45,8 @@
     justify-content: space-between;
     gap: 16px;
     padding: 22px 22px 16px;
-    border-bottom: 1px dashed rgba(20, 20, 22, 0.18);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: #007C8B;
     flex-shrink: 0;
 }
 
@@ -61,7 +55,7 @@
     font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(20, 20, 22, 0.45);
+    color: rgba(255, 255, 255, 0.65);
     margin-bottom: 6px;
 }
 
@@ -69,35 +63,38 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: clamp(20px, 3vw, 26px);
-    letter-spacing: 0.01em;
-    color: rgba(20, 20, 22, 0.92);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #ffffff;
     margin-bottom: 8px;
     line-height: 1.15;
 }
 
 .sf-desc {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
     font-size: 13px;
     line-height: 1.55;
-    color: rgba(20, 20, 22, 0.68);
+    color: rgba(255, 255, 255, 0.8);
     max-width: 520px;
 }
 
 .sf-desc strong {
-    color: rgba(20, 20, 22, 0.82);
-    font-weight: 650;
+    color: #ffffff;
+    font-weight: 700;
 }
 
-/* ── Close button ────────────────────────────────────────────── */
+/* ── Close button — red square ────────────────────────────────── */
 .sf-close {
     flex-shrink: 0;
     width: 42px;
     height: 42px;
-    border-radius: 999px;
-    border: 1px solid rgba(20, 20, 22, 0.2);
-    background: rgba(255, 255, 255, 0.65);
-    color: rgba(20, 20, 22, 0.9);
-    font-size: 28px;
+    border-radius: 0;
+    border: none;
+    background: #E62F3F;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
     line-height: 1;
     cursor: pointer;
     transition: background 0.18s ease;
@@ -107,7 +104,7 @@
 }
 
 .sf-close:hover {
-    background: rgba(255, 255, 255, 0.9);
+    background: #c0222f;
 }
 
 /* ── Scrollable form body ────────────────────────────────────── */
@@ -117,6 +114,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    background: #ffffff;
 }
 
 /* ── Two-column grid for the short fields ────────────────────── */
@@ -133,10 +131,6 @@
     gap: 6px;
 }
 
-.sf-field--full {
-    /* stretches across both columns — used for textarea */
-}
-
 /* ── Label ───────────────────────────────────────────────────── */
 .sf-label {
     display: flex;
@@ -147,17 +141,17 @@
 
 .sf-label-text {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 650;
-    font-size: 12px;
-    letter-spacing: 0.06em;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(20, 20, 22, 0.78);
+    color: #000000;
 }
 
 .sf-hint {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10.5px;
-    color: rgba(20, 20, 22, 0.45);
+    color: rgba(0, 0, 0, 0.45);
     letter-spacing: 0.02em;
 }
 
@@ -166,10 +160,10 @@
 .sf-textarea {
     width: 100%;
     padding: 10px 12px;
-    border-radius: 10px;
-    border: 1.5px solid rgba(20, 20, 22, 0.18);
-    background: rgba(255, 255, 255, 0.72);
-    color: rgba(20, 20, 22, 0.92);
+    border-radius: 0;
+    border: 1.5px solid rgba(0, 0, 0, 0.2);
+    background: #ffffff;
+    color: #000000;
 
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
@@ -177,8 +171,7 @@
 
     transition:
         border-color 0.18s ease,
-        box-shadow 0.18s ease,
-        background 0.18s ease;
+        box-shadow 0.18s ease;
 
     outline: none;
     appearance: none;
@@ -187,18 +180,17 @@
 
 .sf-input::placeholder,
 .sf-textarea::placeholder {
-    color: rgba(20, 20, 22, 0.28);
+    color: rgba(0, 0, 0, 0.3);
     font-style: italic;
 }
 
 .sf-input:focus,
 .sf-textarea:focus {
-    border-color: rgba(20, 20, 22, 0.55);
-    background: rgba(255, 255, 255, 0.92);
-    box-shadow: 0 0 0 3px rgba(20, 20, 22, 0.07);
+    border-color: #007C8B;
+    box-shadow: 0 0 0 3px rgba(0, 124, 139, 0.12);
 }
 
-/* Date input — force consistent appearance */
+/* Date input */
 .sf-input[type="date"] {
     color-scheme: light;
 }
@@ -219,7 +211,7 @@
 .sf-char-count {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10px;
-    color: rgba(20, 20, 22, 0.38);
+    color: rgba(0, 0, 0, 0.38);
     letter-spacing: 0.06em;
     margin-left: auto;
 }
@@ -227,19 +219,19 @@
 /* ── Validation error ────────────────────────────────────────── */
 .sf-field--error .sf-input,
 .sf-field--error .sf-textarea {
-    border-color: rgba(200, 60, 40, 0.6);
-    background: rgba(255, 245, 240, 0.85);
+    border-color: #E62F3F;
+    background: rgba(230, 47, 63, 0.04);
 }
 
 .sf-field--error .sf-input:focus,
 .sf-field--error .sf-textarea:focus {
-    box-shadow: 0 0 0 3px rgba(200, 60, 40, 0.1);
+    box-shadow: 0 0 0 3px rgba(230, 47, 63, 0.1);
 }
 
 .sf-error-msg {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10.5px;
-    color: rgba(200, 60, 40, 0.9);
+    color: #E62F3F;
     letter-spacing: 0.03em;
 }
 
@@ -256,29 +248,27 @@
     gap: 10px;
 
     padding: 13px 28px;
-    border-radius: 999px;
+    border-radius: 0;
     border: none;
     cursor: pointer;
 
-    background: rgba(18, 18, 20, 0.92);
-    color: rgba(245, 239, 220, 0.96);
+    background: #007C8B;
+    color: #ffffff;
 
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 0.04em;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 
     transition:
         background 0.22s ease,
-        transform 0.22s ease,
-        box-shadow 0.22s ease;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+        transform 0.22s ease;
 }
 
 .sf-btn-submit:hover:not(:disabled) {
-    background: rgba(30, 38, 55, 0.96);
+    background: #053C3C;
     transform: translateY(-1px);
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
 }
 
 .sf-btn-submit:active:not(:disabled) {
@@ -296,8 +286,8 @@
     display: inline-block;
     width: 14px;
     height: 14px;
-    border: 2px solid rgba(245, 239, 220, 0.25);
-    border-top-color: rgba(245, 239, 220, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
     border-radius: 50%;
     animation: sf-spin 0.8s linear infinite;
 }
@@ -308,7 +298,7 @@
     }
 }
 
-/* ── Feedback states (success / error) ───────────────────────── */
+/* ── Feedback states ─────────────────────────────────────────── */
 .sf-feedback {
     display: flex;
     flex-direction: column;
@@ -318,12 +308,13 @@
     gap: 12px;
     padding: 48px 32px;
     flex: 1;
+    background: #ffffff;
 }
 
 .sf-feedback-icon {
     width: 56px;
     height: 56px;
-    border-radius: 50%;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -333,28 +324,31 @@
 }
 
 .sf-feedback--success .sf-feedback-icon {
-    background: rgba(60, 160, 100, 0.15);
-    color: rgba(40, 130, 80, 0.9);
-    border: 2px solid rgba(60, 160, 100, 0.3);
+    background: #007C8B;
+    color: #ffffff;
+    border: none;
 }
 
 .sf-feedback--error .sf-feedback-icon {
-    background: rgba(200, 60, 40, 0.1);
-    color: rgba(200, 60, 40, 0.9);
-    border: 2px solid rgba(200, 60, 40, 0.25);
+    background: #E62F3F;
+    color: #ffffff;
+    border: none;
 }
 
 .sf-feedback-title {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 20px;
-    color: rgba(20, 20, 22, 0.9);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #000000;
 }
 
 .sf-feedback-body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
     font-size: 14px;
-    color: rgba(20, 20, 22, 0.6);
+    color: rgba(0, 0, 0, 0.6);
     max-width: 320px;
     line-height: 1.5;
 }
@@ -369,48 +363,48 @@
 
 .sf-btn-primary {
     padding: 11px 22px;
-    border-radius: 999px;
+    border-radius: 0;
     border: none;
     cursor: pointer;
-    background: rgba(18, 18, 20, 0.9);
-    color: rgba(245, 239, 220, 0.96);
+    background: #007C8B;
+    color: #ffffff;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     transition:
         background 0.18s ease,
         transform 0.18s ease;
 }
 .sf-btn-primary:hover {
-    background: rgba(30, 38, 55, 0.96);
+    background: #053C3C;
     transform: translateY(-1px);
 }
 
 .sf-btn-secondary {
     padding: 11px 22px;
-    border-radius: 999px;
-    border: 1.5px solid rgba(20, 20, 22, 0.25);
+    border-radius: 0;
+    border: 1.5px solid rgba(0, 0, 0, 0.25);
     cursor: pointer;
     background: transparent;
-    color: rgba(20, 20, 22, 0.75);
+    color: #000000;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     transition:
         border-color 0.18s ease,
-        color 0.18s ease;
+        background 0.18s ease;
 }
 .sf-btn-secondary:hover {
-    border-color: rgba(20, 20, 22, 0.55);
-    color: rgba(20, 20, 22, 0.95);
+    border-color: #000000;
+    background: rgba(0, 0, 0, 0.05);
 }
 
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 560px) {
-    .sf-panel {
-        border-radius: 16px;
-    }
-
     .sf-header {
         padding: 16px 16px 14px;
     }
@@ -419,7 +413,6 @@
         padding: 16px 16px 20px;
     }
 
-    /* Stack to single column on mobile */
     .sf-grid {
         grid-template-columns: 1fr;
     }

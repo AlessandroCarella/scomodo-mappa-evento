@@ -7,7 +7,7 @@
  *
  * Custom properties:
  *   --banner-width          panel width (%)
- *   --banner-blur           backdrop blur (px)
+ *   --banner-blur           (unused — panels are now solid, not glass)
  *   --banner-bg             background tint rgba
  *   --banner-mask-stop      solid stop of the inner-edge mask (%)
  *   --banner-text-color     text color
@@ -27,9 +27,7 @@
     align-items: center;
     justify-content: center;
 
-    backdrop-filter: blur(var(--banner-blur, 6px)) saturate(0.8);
-    -webkit-backdrop-filter: blur(var(--banner-blur, 6px)) saturate(0.8);
-    background: var(--banner-bg, rgba(6, 10, 20, 0.25));
+    background: var(--banner-bg, rgba(0, 124, 139, 0.9));
 
     opacity: 1;
     transition: opacity var(--banner-transition, 0.6s)
@@ -70,10 +68,6 @@
 }
 
 /* ── Inner content wrapper ─────────────────────────────────── */
-/*
- * Width is kept within the opaque region (before the mask fades).
- * text-align: center ensures the text block is horizontally centred.
- */
 .banner-inner {
     width: calc(var(--banner-mask-stop, 55%) * 0.85);
     display: flex;
@@ -93,7 +87,7 @@
     display: block;
     width: 100%;
     text-transform: uppercase;
-    color: var(--banner-text-color, rgba(224, 208, 176, 0.9));
+    color: var(--banner-text-color, #ffffff);
     text-align: center;
     line-height: 1.25;
 

@@ -126,7 +126,7 @@
 /* ── Mailto link ─────────────────────────────────────────────── */
 
 .popup-alert__mailto {
-    color: #5b9bd5;
+    color: #007C8B;
     text-decoration: underline;
     text-underline-offset: 2px;
     word-break: break-all;
@@ -135,7 +135,7 @@
 
 .popup-alert__mailto:hover,
 .popup-alert__mailto:focus-visible {
-    color: #82b8e8;
+    color: #053C3C;
     outline: none;
 }
 
