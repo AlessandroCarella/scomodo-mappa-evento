@@ -267,7 +267,7 @@ export const FORM_ETA_MAX = 120;
 export const FORM_EYEBROW = "Scomodo · Mappa dei viaggi";
 export const FORM_TITLE = "La tua storia";
 export const FORM_DESC =
-    "Sei partitə, sei arrivatə, o stai ancora aspettando? Raccontaci il tuo movimento — apparirà sulla mappa insieme alle traiettorie di chi attraversa questa città.";
+    "Bari è una città di partenze, attese e arrivi. Aggiungi la tua rotta alla mappa — la tua storia diventerà parte di una narrazione collettiva.";
 export const FORM_SUBMIT_LABEL = "Manda la tua storia →";
 export const FORM_SENDING_LABEL = "Invio in corso…";
 
@@ -284,7 +284,7 @@ export const FORM_ERROR_RETRY = "Riprova";
 export const FORM_STORIA_LABEL = "Racconta la tua storia";
 export const FORM_STORIA_HINT =
     "Cosa hai lasciato? Cosa hai trovato? Raccontaci la tua partenza in {max} caratteri.";
-export const FORM_STORIA_PLACEHOLDER = "La tua storia entra nella mappa…";
+export const FORM_STORIA_PLACEHOLDER = "Da dove sei partitə, e cos'hai portato con te?";
 
 /**
  * FIELDS
