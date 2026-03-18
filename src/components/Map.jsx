@@ -11,7 +11,13 @@ import { useMapInit } from "./MapHelpers/useMapInit";
 import { useWasdNavigation } from "./MapHelpers/useWasdNavigation";
 import { useGamepad } from "./MapHelpers/useGamepad";
 import { processConnections } from "./ConnectionHelpers/connectionUtils";
-import { QR_ENABLED, QR_LINK, QR_SIZE, FORM_ENABLED } from "../config";
+import {
+    QR_ENABLED,
+    QR_LINK,
+    QR_SIZE,
+    FORM_ENABLED,
+    ITALY_BOUNDS_PADDING,
+} from "../config";
 
 // Vite's BASE_URL respects the `base` option in vite.config.js.
 // Without this prefix, fetches return index.html (→ JSON parse error)
@@ -77,6 +83,35 @@ export default function Map() {
             })
             .catch((err) => console.error("Failed to load data:", err));
     }, []);
+
+    // ── Fit the map to every city that actually appears in the stories ────────
+    // Runs once after both the map and the JSON data are ready.
+    // useMapInit's ITALY_BOUNDS call acts as the immediate fallback view while
+    // the fetch is in flight, so the map is never blank.
+    useEffect(() => {
+        if (!ready || !dataReady || !mapRef.current) return;
+
+        // Collect every city name referenced in any story
+        const cityNames = new Set();
+        allStories.forEach((s) => {
+            if (s.cittaPartenza) cityNames.add(s.cittaPartenza);
+            if (s.cittaArrivo) cityNames.add(s.cittaArrivo);
+        });
+
+        // Look up coordinates for those cities
+        const points = locations
+            .filter((l) => cityNames.has(l.name))
+            .map((l) => [l.lat, l.lng]);
+
+        if (points.length === 0) return;
+
+        import("leaflet").then(({ default: L }) => {
+            if (!mapRef.current) return;
+            mapRef.current.fitBounds(L.latLngBounds(points), {
+                padding: ITALY_BOUNDS_PADDING,
+            });
+        });
+    }, [ready, dataReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function handleConnectionClick(fromName, toName) {
         const matches = allStories.filter(
@@ -218,10 +253,7 @@ export default function Map() {
 
             {QR_ENABLED && <QRcode link={QR_LINK} size={QR_SIZE} />}
 
-            <StoriesOverlay
-                stories={activeStories}
-                onClose={closeStories}
-            />
+            <StoriesOverlay stories={activeStories} onClose={closeStories} />
 
             {/* Story submission form overlay */}
             {formOpen && <StoryForm onClose={() => setFormOpen(false)} />}
