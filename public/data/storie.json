@@ -32,7 +32,7 @@
         "cittaPartenza": "Conversano",
         "cittaArrivo": "Trieste",
         "data": "06-10-2025",
-        "storia": "Quando ho scelto di trasferirmi non sapevo bene cosa aspettarmi. All’inizio mi sentivo spaesato; non conoscevo nessuno, non ero in grado di orientarmi nella città in cui mi ero trasferito e temevo il confronto con gli altri. Con il tempo, le cose sono positivamente cambiate. Ho capito che non devo cercare in questo posto un senso di appartenenza, quanto un senso di comunità. Tutti abbiamo radici diverse, a cui siamo indissolubilmente legati; la differenza sta nel poter creare qualcosa di nostro",
+        "storia": "Quando ho scelto di trasferirmi non sapevo bene cosa aspettarmi. All'inizio mi sentivo spaesato; non conoscevo nessuno, non ero in grado di orientarmi nella città in cui mi ero trasferito e temevo il confronto con gli altri. Con il tempo, le cose sono positivamente cambiate. Ho capito che non devo cercare in questo posto un senso di appartenenza, quanto un senso di comunità. Tutti abbiamo radici diverse, a cui siamo indissolubilmente legati; la differenza sta nel poter creare qualcosa di nostro",
         "tipo": true
     },
     {
@@ -52,5 +52,401 @@
         "data": "20-10-2021",
         "storia": "A fine ottobre, prima che parta, mi ricordo che piove tutti i giorni. Metto tutte le mie cose negli scatoloni marroni dei traslochi, è la prima volta, da qundo sono piccola ad adesso non abbiamo mai traslocato. Quando dico a mia nonna che sto andando a Torino inizia a piangere in silenzio e mi dice solo, ma a Torino fa freddo, fa freddo. Mi compro un piumino lungo fino ai piedi che non mi piace. Saluto i miei amici, la maggior parte sono già partiti a inizio settembre, in questi giorni di pioggia è rimasto solo chi non se ne vuole andare.",
         "tipo": true
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 22,
+        "cittaPartenza": "Taranto",
+        "cittaArrivo": "Bologna",
+        "data": "15-09-2019",
+        "storia": "La prima notte a Bologna ho dormito su un materasso gonfiabile in un appartamento vuoto. Fuori pioveva. Avevo portato solo due valigie e una pianta grassa che si chiama Mimmo, non so perché. Al mattino sono uscito e ho comprato un cornetto al bar sotto casa. Il barista mi ha chiesto da dove venivo. Gli ho detto Taranto. Ha annuito come se capisse tutto. Forse capiva davvero.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 26,
+        "cittaPartenza": "Lecce",
+        "cittaArrivo": "Milano",
+        "data": "03-09-2020",
+        "storia": "Milano non ti accoglie, ti osserva. Ci ho messo mesi a capirlo. Tutti camminano veloci, tutti hanno qualcosa da fare, qualcuno da essere. Io arrivavo dal ritmo del Salento, dove il tempo si dilata e le serate non finiscono mai. Qui le serate finiscono presto perché domani si lavora. Ho imparato a camminare veloce. Ho perso qualcosa, ho guadagnato qualcos'altro. Non so ancora se il bilancio è positivo.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 24,
+        "cittaPartenza": "Foggia",
+        "cittaArrivo": "Padova",
+        "data": "10-09-2021",
+        "storia": "Padova è una città che si nasconde. Sembra grigia all'inizio, poi scopri i portici, le piazze, i bar con i tavoli fuori anche a novembre. Ho trovato casa in una stradina vicino al Prato della Valle e ci passavo la domenica mattina con il caffè in mano. Era il momento in cui mi sentivo meno straniero. Il nord non è il nemico che mi avevano raccontato, ma non è neanche casa. Casa è ancora là, con la puzza di ragù della domenica.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 21,
+        "cittaPartenza": "Brindisi",
+        "cittaArrivo": "Firenze",
+        "data": "20-09-2022",
+        "storia": "Ho scelto Firenze perché studiavo restauro e Firenze è Firenze. Nei primi mesi giravo i musei come un turista nella mia stessa vita. Poi ho iniziato a conoscere la città vera, quella che non sta nelle guide: i mercati del mattino, i vecchi che giocano a carte, la Biblioteca Nazionale dove si entra e si sparisce per ore. Ho capito che ogni città ha due facce. Quella che mostra e quella che regala, se la sai aspettare.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 29,
+        "cittaPartenza": "Andria",
+        "cittaArrivo": "Genova",
+        "data": "01-11-2018",
+        "storia": "Genova l'ho scelta per caso, seguendo un'offerta di lavoro. Non sapevo niente di lei. Sono arrivato e mi sono trovato davanti al mare, ma un mare diverso dal mio: più scuro, più fermo, circondato dai caruggi. Mi ci sono voluti mesi per smettere di confrontarla con casa. Quando ho smesso, Genova ha cominciato a parlarmi. Ha una voce rauca, un po' burbera, ma è sincera.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 23,
+        "cittaPartenza": "Matera",
+        "cittaArrivo": "Venezia",
+        "data": "05-10-2023",
+        "storia": "Venivo da una città di pietra e sono arrivata in una città d'acqua. Il contrasto era quasi poetico, almeno all'inizio. Poi ho capito cosa significa vivere a Venezia davvero: i vaporetti affollati, i sacchetti della spesa portati a piedi sul ponte, l'alta marea che entra sotto la porta. Ma la mattina presto, quando la città è ancora vuota e l'acqua riflette tutto, mi dimentico ogni fatica.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 27,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Berlino",
+        "data": "14-08-2019",
+        "storia": "Berlino è stata la prima città in cui nessuno mi ha guardato come se fossi fuori posto. Non importava da dove venivo, che lingua parlavo, cosa indossavo. Quella libertà anonima mi ha liberato e spaventato insieme. Mi mancava essere conosciuto, mi mancava il peso gentile degli sguardi familiari. Ho capito che l'identità non è solo ciò che sei, ma anche ciò che gli altri ricordano di te.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 20,
+        "cittaPartenza": "Barletta",
+        "cittaArrivo": "Napoli",
+        "data": "12-09-2020",
+        "storia": "Tutti mi dicevano: ma perché vai a Napoli, potresti andare al nord. Io non volevo andare al nord. Volevo andare in un posto che assomigliasse un po' a casa ma fosse abbastanza diverso da farmi crescere. Napoli è stata esattamente questo: caotica, calda, scomoda, bellissima. Ho mangiato la pizza più buona della mia vita. Ho anche perso il telefono sul bus. Non rimpiango niente.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 31,
+        "cittaPartenza": "Altamura",
+        "cittaArrivo": "Torino",
+        "data": "03-02-2017",
+        "storia": "Sono partito in febbraio, che forse è il mese peggiore per iniziare qualcosa. Torino era deserta, grigia, bellissima nella sua severità. Ho trovato lavoro in fretta, un appartamento in fretta, una routine in fretta. Ma la velocità non faceva sparire la lentezza di dentro. La sera cucinavo le orecchiette e mettevo su musica pugliese. Il vicino bussava alla parete. Abbassavo il volume. Continuavo a cucinare.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 24,
+        "cittaPartenza": "Monopoli",
+        "cittaArrivo": "Lione, Francia",
+        "data": "01-10-2022",
+        "storia": "Ho fatto l'Erasmus a Lione e non sono più tornata, almeno non per restare. La Francia ha qualcosa di seducente: la lingua, il ritmo delle città, i mercati del sabato. Ho imparato che si può amare un posto senza smettere di amare da dove si viene. Sono due cose che non si escludono, anche se all'inizio sembra impossibile tenerle insieme senza spezzarsi.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 22,
+        "cittaPartenza": "Trani",
+        "cittaArrivo": "Pisa",
+        "data": "18-09-2021",
+        "storia": "A Pisa non c'è solo la torre. C'è un fiume che taglia la città in due, ci sono i lungarni dove la gente passeggia la sera, ci sono le osterie dove si mangia per poco e si chiacchiera tanto. Ho trovato amici che vengono da ogni parte d'Italia, ognuno con la sua storia di partenza. Ci siamo riconosciuti subito, noi fuorisede: si capisce dagli occhi, da come guardiamo le finestre illuminate quando chiamiamo casa.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 26,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Amsterdam",
+        "data": "07-07-2018",
+        "storia": "Amsterdam è una città che si vive in bicicletta. Il primo mese sono caduto tre volte. Poi ho capito il ritmo, le corsie, le regole non scritte. È stato un po' la metafora di tutto: ci vogliono cadute prima di riuscire ad andare. La luce del nord è diversa, più piatta, ma certi pomeriggi di autunno i canali diventano specchi e la città smette di sembrare reale.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 19,
+        "cittaPartenza": "Molfetta",
+        "cittaArrivo": "Perugia",
+        "data": "09-09-2023",
+        "storia": "Perugia dall'alto sembra un presepe. Ci sono arrivata di notte, col treno, e non vedevo niente. La mattina dopo ho aperto le persiane e ho capito perché ci ero venuta. Ho studiato, ho faticato, ho pianto qualche volta. Ho anche riso molto. Il primo anno fuori casa è così: tutto amplificato, tutto più vero. Come vivere senza il volume del telecomando.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 28,
+        "cittaPartenza": "Putignano",
+        "cittaArrivo": "Roma",
+        "data": "22-09-2019",
+        "storia": "Roma ti inghiotte. Non te ne accorgi subito, ma dopo qualche mese smetti di chiamarla la capitale e cominci a chiamarla semplicemente qui. I palazzi antichi smettono di stupire, i ritardi dei bus diventano normale, impari a scegliere il bar giusto dal suono della macchina del caffè. Ho perso la meraviglia del turista e trovato qualcosa di più sottile: la confidenza con una città enorme.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 33,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Londra",
+        "data": "15-03-2016",
+        "storia": "Sono andata a Londra con una valigia e la certezza di tornare dopo un anno. Non sono tornata. La città è brutale con il portafoglio e gentile con l'ambizione. Ho lavorato in posti che in Italia non avrei mai trovato. Ho perso il conto delle volte in cui ho pensato di mollare. Non ho mollato. Oggi mi manca il sole meridiano, il pane di Altamura, mia madre. Sto bene, ma manca sempre qualcosa.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 21,
+        "cittaPartenza": "Ruvo di Puglia",
+        "cittaArrivo": "Catania",
+        "data": "29-09-2024",
+        "storia": "Ho scelto Catania perché volevo capire cosa significa il Sud per chi il Sud lo vive dall'altra parte. Ho trovato una città vulcanica anche nel carattere, che brucia e si rigenera. La gente parla forte, come a casa mia. Il mare è diverso, più grezzo. Mi sono sentita meno straniera di quanto pensassi. Ho capito che il Sud non è un posto solo: è un modo di stare al mondo.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 25,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Vienna",
+        "data": "01-09-2021",
+        "storia": "Vienna è ordinata in un modo che mette quasi ansia. I tram arrivano in orario, i parchi sono puliti, le persone si scusano se ti sfioran di passaggio. Venivo da Bari, dove il clacson è un linguaggio e il ritardo un'arte. All'inizio ridevo, poi ho iniziato ad apprezzare, poi ho iniziato a nostalgiare il caos. La verità è che il disordine di casa mi manca e l'ordine di qui mi serve. Non so dove starò tra dieci anni.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 30,
+        "cittaPartenza": "Gioia del Colle",
+        "cittaArrivo": "Milano",
+        "data": "05-01-2020",
+        "storia": "Sono partita a gennaio, quando il paese era già buio alle cinque e non c'era nessun motivo per uscire. Milano mi ha dato il ritmo che cercavo: aperitivi, mostre, lavoro che finisce tardi e ricomincia presto. Ho messo su un appartamento da sola per la prima volta. Ho montato un armadio da sola, con le istruzioni in svedese. Ho pianto, ho ricominciato. L'armadio regge ancora.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 23,
+        "cittaPartenza": "Corato",
+        "cittaArrivo": "Siena",
+        "data": "17-09-2022",
+        "storia": "Siena sembra un film in costume. Ogni vicolo, ogni mattone sembra messo lì da qualcuno che ci teneva. Ho studiato storia dell'arte in mezzo alla storia dell'arte, il che crea una specie di vertigine costante. La gente del posto è riservata, non ti cerca, ma se la cerchi risponde. Ho imparato che non ogni città ti viene incontro. Alcune aspettano che tu faccia il primo passo.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 27,
+        "cittaPartenza": "Taranto",
+        "cittaArrivo": "Barcellona, Spagna",
+        "data": "20-09-2020",
+        "storia": "Barcellona è la città in cui ho smesso di chiedermi se stessi sbagliando a stare fuori dall'Italia. C'è il mare, il caldo, la gente che mangia tardi e dorme poco. Mi sembrava quasi casa, ma senza il peso di essere giudicato da chi ti conosce da sempre. Ho capito che a volte la distanza dalla famiglia è anche una forma di rispetto: per te stesso, per quello che vuoi diventare.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 20,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Trento",
+        "data": "08-09-2023",
+        "storia": "Trento è una città piccola, ordinata, circondata dalle montagne. Venivo dal mare e all'inizio le montagne mi schiacciavano un po'. Poi ho cominciato a camminare, a salire, a guardare la città dall'alto. C'è qualcosa di preciso in una città di montagna: tutto ha un confine visibile. Mi ha insegnato a stare dentro i limiti senza sentirmi chiuso.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 29,
+        "cittaPartenza": "Fasano",
+        "cittaArrivo": "Napoli",
+        "data": "02-10-2017",
+        "storia": "Sono venuto a Napoli per il dottorato e mi ha cambiato la vita più della ricerca. Napoli non si spiega, si abita. Ogni quartiere ha la sua logica, ogni strada il suo carattere. Ho imparato a muovermi a piedi, a capire quando entrare nei vicoli e quando no, a riconoscere i bar buoni dal profumo. Ho scritto la mia tesi con il rumore della città fuori dalla finestra. Non avrei potuto scriverla in silenzio.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 24,
+        "cittaPartenza": "Bitonto",
+        "cittaArrivo": "Bologna",
+        "data": "14-09-2020",
+        "storia": "Bologna è la città più rossa che conosco: i portici, i mattoni, i cieli di ottobre. Ho trovato casa in dieci minuti e amici in dieci giorni, il che è un miracolo per una persona come me che ci mette sempre troppo tempo. Forse è Bologna che aiuta, o forse ero pronta. Di sera camminavo sotto i portici e pensavo che si può essere felici anche lontano da casa. Non lo sapevo prima.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 22,
+        "cittaPartenza": "Lecce",
+        "cittaArrivo": "Utrecht, Olanda",
+        "data": "01-02-2023",
+        "storia": "Utrecht è piatta, silenziosa, piena di canali e biciclette. Niente a che vedere con Lecce. Eppure ci sono rimasta. Forse perché il silenzio, dopo anni di una città che parla ad alta voce, mi serviva. Ho imparato a stare con me stessa in maniera diversa: senza il rumore di fondo del Sud, restava solo ciò che pensavo davvero.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 26,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Torino",
+        "data": "28-09-2019",
+        "storia": "A Torino ho trovato una città che non si vanta mai abbastanza. I Musei Egizio e del Cinema, le colline, il Po che non sembra un fiume del nord. E i torinesi, che sembrano freddi ma ti invitano a cena se li incontri tre volte. Ho lavorato molto, dormito poco, camminato tanto. Torino si capisce camminando. E a camminare, si finisce sempre per tornare.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 31,
+        "cittaPartenza": "Foggia",
+        "cittaArrivo": "Amsterdam",
+        "data": "10-04-2015",
+        "storia": "Sono partito a trentuno anni, tardi secondo alcuni, in tempo secondo me. Amsterdam mi ha insegnato che il coraggio non ha scadenza. Ho ricominciato da zero: nuovo lavoro, nuova lingua, nuova routine. Le prime settimane ero spaesato come un bambino. Poi ho trovato un ritmo. Poi ho trovato persone. Poi ho capito che ricominciare non è fallire, è scegliere.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 23,
+        "cittaPartenza": "Altamura",
+        "cittaArrivo": "Firenze",
+        "data": "22-09-2021",
+        "storia": "Firenze mi ha insegnato la lentezza dell'eccellenza. Tutto qui sembra fatto con cura, anche le cose quotidiane. Il pane senza sale, i ciclisti nei vicoli, i mercati dell'Oltrarno. Mi sono adattata lentamente, come si fa con le cose belle. La mia famiglia mi chiede sempre quando torno. Rispondo sempre: presto. Non so se è una bugia o una promessa.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 19,
+        "cittaPartenza": "Bisceglie",
+        "cittaArrivo": "Milano",
+        "data": "07-09-2024",
+        "storia": "Avevo diciannove anni e una borsa di studio. Milano sembrava impossibile da lontano: cara, veloce, straniera. Invece mi ha sorpresa. Ho trovato gente da ogni parte del mondo, tutti con la stessa faccia da prima settimana. Quella faccia che dice: non so bene dove sono, ma ci sono. Ci sono anch'io, mi sono detta. E sono rimasta.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 27,
+        "cittaPartenza": "Taranto",
+        "cittaArrivo": "Dublino, Irlanda",
+        "data": "03-06-2018",
+        "storia": "Dublino è piovosa, cara e stranamente allegra. I pub sono caldi anche d'inverno, la gente parla con chiunque, le serate finiscono sempre tardi. Ho trovato lavoro in una settimana e un coinquilino nigeriano che cucinava ogni domenica per tutto il palazzo. Non avevo mai vissuto in una casa così internazionale. Non sapevo quanto mi mancasse, finché non l'ho trovata.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 25,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Palermo",
+        "data": "16-09-2022",
+        "storia": "Sono andata al contrario di tutti: dal continente all'isola. Palermo è una città che non si lascia capire in fretta. Ha strati su strati, araba e normanna e spagnola e italiana, tutta insieme. Ho studiato lì per due anni e ogni volta che pensavo di conoscerla, lei mi sorprendeva. Ho imparato che le cose complesse non si semplificano, si abitano.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 22,
+        "cittaPartenza": "Gravina in Puglia",
+        "cittaArrivo": "Bologna",
+        "data": "09-09-2022",
+        "storia": "La prima cosa che ho fatto a Bologna è stata sedermi sotto le Due Torri e guardare la gente. Passavano studenti, anziani, turisti, lavoratori. Nessuno mi guardava. Ero invisibile in modo liberatorio. A casa tutti sanno tutto di te: come ti chiami, chi è tuo padre, cosa ha fatto tuo cugino nel 2009. Qui ero nessuno. Da nessuno ho ricominciato a costruire qualcosa di mio.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 30,
+        "cittaPartenza": "Brindisi",
+        "cittaArrivo": "Lisbona, Portogallo",
+        "data": "01-08-2021",
+        "storia": "Lisbona ha il mare, i tram storici, le salite che tolgono il fiato. Mi ha ricordato il Sud ma con una malinconia diversa, più antica. C'è una parola portoghese, saudade, che non ha traduzione ma che ho capito al primo tramonto sul Tago. È quello che sento quando penso a casa: non solo nostalgia, ma qualcosa di più morbido, più permanente.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 21,
+        "cittaPartenza": "Canosa di Puglia",
+        "cittaArrivo": "Torino",
+        "data": "11-09-2023",
+        "storia": "Non avevo mai visto la neve vera prima di Torino. La prima volta che ha nevicato mi sono fermato in mezzo alla strada a guardare in su. La gente mi girava intorno con un'espressione tra il divertito e il preoccupato. Ho capito che si riconosce sempre il meridionale dalla neve: quello che si ferma, quello che alza gli occhi, quello che per un momento dimentica dove deve andare.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 28,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Parigi, Francia",
+        "data": "04-09-2017",
+        "storia": "Parigi è bellissima e se lo sa. All'inizio mi intimidiva, poi ho smesso di fare la turista e ho cominciato a viverla. Ho trovato un mercato di quartiere dove i venditori mi chiamavano per nome, una libreria usata dove passavo le domeniche, un caffè dove l'espresso era quasi come a casa. Quasi. Non sarà mai uguale. Ma quasi basta.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 24,
+        "cittaPartenza": "Modugno",
+        "cittaArrivo": "Venezia",
+        "data": "03-10-2021",
+        "storia": "Venezia cambia in base all'ora del giorno. La notte è silenziosa e un po' inquietante; la mattina presto è la più bella del mondo. Ho imparato a svegliarmi all'alba per averla tutta per me, prima che arrivassero i turisti. Vivere a Venezia significa abitare un luogo che il resto del mondo vuole solo visitare. A volte ti senti un guardiano, altre volte un intruso.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 26,
+        "cittaPartenza": "Mola di Bari",
+        "cittaArrivo": "Berlino",
+        "data": "15-10-2022",
+        "storia": "Berlino non ha un centro, o ne ha troppi. Ho impiegato mesi a smettere di cercare il cuore della città e capire che non c'è: c'è solo una somma di quartieri, ognuno con la sua identità. Neukölln, Prenzlauer Berg, Mitte: tre città dentro una. Ho smesso di voler capire tutto e ho iniziato semplicemente a stare. È la cosa più difficile e più utile che abbia imparato.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 32,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "New York, USA",
+        "data": "20-08-2014",
+        "storia": "New York ti convince che tutto è possibile e poi ti manda il conto. Ho vissuto in un appartamento minuscolo nel Queens con altre quattro persone. Lavoravo di giorno e studiavo di sera. Ero stanchissimo e vivo come non ero mai stato. L'oceano di mezzo non pesa quando sei occupato. Pesa la notte di Natale, quando le strade sono vuote e il telefono non basta.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 23,
+        "cittaPartenza": "Barletta",
+        "cittaArrivo": "Roma",
+        "data": "25-09-2023",
+        "storia": "Roma è la città in cui ho capito che puoi essere solo in mezzo a tre milioni di persone. Non è una critica: è una libertà. Nessuno sa dove sei, cosa fai, perché esci o perché rientri tardi. Dopo una vita in un paese piccolo dove tutti sanno tutto, questa invisibilità mi ha guarita da qualcosa che non sapevo di avere. Un'ansia di fondo, un bisogno di spiegare.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 20,
+        "cittaPartenza": "Triggiano",
+        "cittaArrivo": "Pavia",
+        "data": "13-09-2022",
+        "storia": "Pavia è una piccola città universitaria con palazzi antichissimi e studenti dappertutto. La prima settimana ho pensato di aver sbagliato tutto. La seconda ho trovato un gruppo di ragazzi con cui passare le serate. La terza settimana mi ero già dimenticato di aver avuto paura. Non sempre i posti devono conquistarti subito: a volte basta resistere i primi giorni.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 27,
+        "cittaPartenza": "Taranto",
+        "cittaArrivo": "Stoccolma, Svezia",
+        "data": "01-09-2019",
+        "storia": "L'inverno svedese ha quasi vinto. Buio alle tre del pomeriggio, silenzio nei trasporti, gente che non parla con gli sconosciuti. Ho tenuto duro con la luce artificiale, la vitamina D e le telefonate lunghe con mia madre. Poi è arrivata l'estate: il sole che non tramontava mai, la gente fuori nei parchi, la città che si trasformava. Ho capito che i posti vanno vissuti per intero, in tutte le stagioni.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 25,
+        "cittaPartenza": "Noicattaro",
+        "cittaArrivo": "Napoli",
+        "data": "18-09-2020",
+        "storia": "Ho scelto Napoli perché volevo studiare architettura dove l'architettura è ancora vissuta, non solo conservata. Ogni giorno uscivo e vedevo il Barocco accanto al cemento, il Liberty accanto al degrado, il bello accanto all'incompiuto. Una contraddizione continua. Ho capito che il progetto perfetto non esiste: esiste quello che si adatta al contesto, che dialoga con ciò che già c'è.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 29,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Zurigo, Svizzera",
+        "data": "06-03-2023",
+        "storia": "Zurigo funziona. Funziona così bene che all'inizio mi metteva ansia: i treni in orario, i supermercati chiusi la domenica, le persone che rispettano le code. Poi ho smesso di meravigliarmi e ho iniziato ad apprezzare. C'è qualcosa di riposante in una città che non ti chiede di arrangiarti. Mi manca l'improvvisazione del Sud, ma non il suo caos necessario. Qua ho imparato a fidarmi dei sistemi.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 24,
+        "cittaPartenza": "Cerignola",
+        "cittaArrivo": "Bologna",
+        "data": "21-09-2021",
+        "storia": "Sono partita con il treno delle sei di mattina, mia madre mi ha salutata al binario senza dire molto. Ci siamo guardate, si capiva tutto senza parole. Sul treno ho dormito fino a Roma e poi guardato fuori dal finestrino fino a Bologna. Quando sono scesa, la città odorava di pioggia e friggitoria. Ho pensato: qui posso stare. Non sapevo ancora quanto avevo ragione.",
+        "tipo": false
+    },
+    {
+        "nome": "Anonimo",
+        "eta": 26,
+        "cittaPartenza": "Ostuni",
+        "cittaArrivo": "Lione, Francia",
+        "data": "30-08-2022",
+        "storia": "Sono partito senza aspettative, che è il modo migliore per partire. Lione mi ha accolto con la pioggia e una burocrazia kafkiana per aprire un conto in banca. Ho imparato il francese per necessità, non per scelta, e forse per questo l'ho imparato meglio. Ogni lingua che impari aggiunge uno sguardo nuovo sul mondo. Adesso ne ho tre e non so più con quale sogno.",
+        "tipo": false
     }
 ]
