@@ -25,6 +25,7 @@ import {
     MAX_TOPICS_FALLBACK,
 } from "./Topic/config";
 
+import MapBackground from "./Topic/MapBackground";
 import styles from "./styles/Topic.module.css";
 
 // ─── inner component (needs SelectionProvider in tree) ───────────────────────
@@ -119,8 +120,12 @@ function TopicAnalysis({ onBack }) {
 
 export default function TopicPage({ onBack }) {
     return (
-        <SelectionProvider>
-            <TopicAnalysis onBack={onBack} />
-        </SelectionProvider>
+        <>
+            <MapBackground className={styles.mapBg} />
+            <div className={styles.mapOverlay} aria-hidden="true" />
+            <SelectionProvider>
+                <TopicAnalysis onBack={onBack} />
+            </SelectionProvider>
+        </>
     );
 }
