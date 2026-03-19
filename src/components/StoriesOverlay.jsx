@@ -300,8 +300,8 @@ export default function StoriesOverlay({
                             <div className="stories-overlay__title">Storie</div>
                             <div className="stories-overlay__subtitle">
                                 {stories.length > 0
-                                    ? `${stories.length} post-it`
-                                    : "0 post-it"}
+                                    ? `${stories.length} storie`
+                                    : "0 storie"}
                             </div>
                         </header>
 

@@ -162,8 +162,8 @@
     padding: 0 14px;
     border-radius: 999px;
     border: 1px solid rgba(20, 20, 22, 0.18);
-    background: rgba(255, 255, 255, 0.58);
-    color: rgba(20, 20, 22, 0.75);
+    background: rgba(20, 20, 22, 0.9);
+    color: rgba(247, 241, 226, 0.96);
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -184,8 +184,8 @@
 }
 
 .stories-overlay__toggle--active {
-    background: rgba(20, 20, 22, 0.9);
-    color: rgba(247, 241, 226, 0.96);
+    background: rgba(255, 255, 255, 0.58);
+    color: rgba(20, 20, 22, 0.75);
     box-shadow:
         0 12px 22px rgba(0, 0, 0, 0.16),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -199,13 +199,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(20, 20, 22, 0.1);
+    background: rgba(255, 255, 255, 0.14);
     font-family: "Syne Mono", ui-monospace, monospace;
     font-size: 11px;
 }
 
 .stories-overlay__toggle--active .stories-overlay__toggle-count {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(20, 20, 22, 0.1);
 }
 
 /* Scrollable content inside card */
@@ -335,7 +335,7 @@
     gap: 0;
 }
 
-/* Remove the post-it rotation effects */
+/* Remove the stories rotation effects */
 .story-postit:nth-child(3n + 1),
 .story-postit:nth-child(3n + 2),
 .story-postit:nth-child(3n) {
