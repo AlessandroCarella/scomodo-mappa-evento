@@ -289,13 +289,15 @@ export default function Map() {
 
             {showMapControls && PARTENZE_ARRIVI === "All" && allCityNames.length > 0 && (
                 <div className="map-city-picker">
+                    <span className="map-city-picker__label">Città</span>
                     <select
+                        className="map-city-picker__select"
                         value={mapCityFilter ?? ""}
                         onChange={(e) =>
                             setMapCityFilter(e.target.value || null)
                         }
                     >
-                        <option value="">Tutte le città</option>
+                        <option value="">Tutte</option>
                         {allCityNames.map((city) => (
                             <option key={city} value={city}>
                                 {city}

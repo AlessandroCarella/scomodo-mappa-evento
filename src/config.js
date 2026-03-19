@@ -160,7 +160,7 @@ export const BANNER_ENABLED = import.meta.env.VITE_BANNER_ENABLED !== "false";
 export const BANNER_WIDTH_PERCENT = 35;
 
 // Text shown in each panel (each word will be measured independently)
-export const BANNER_TEXT_LEFT = "BARI CITTÀ DEL VIAGGIO";
+export const BANNER_TEXT_LEFT = "Bari città del viaggio";
 export const BANNER_TEXT_RIGHT =
     "PERCHÉ PARTIAMO? ESPLORA, LEGGI O RACCONTA UN'ESPERIENZA";
 

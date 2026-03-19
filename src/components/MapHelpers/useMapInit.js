@@ -33,7 +33,7 @@ export function useMapInit(containerRef) {
         if (mapRef.current) return; // StrictMode guard
 
         const map = L.map(containerRef.current, {
-            zoomControl: true,
+            zoomControl: false,
             attributionControl: true,
             zoomSnap: MAP_ZOOM_SNAP,
         });
