@@ -3,6 +3,8 @@ import L from "leaflet";
 import {
     ROUTE_TRAIL_LEN as TRAIL_LEN,
     ROUTE_PCOLORS as PCOLORS,
+    ROUTE_DOT_STROKE as DOT_STROKE,
+    ROUTE_DOT_STROKE_WIDTH as DOT_STROKE_WIDTH,
 } from "../../config";
 import {
     lerp,
@@ -308,9 +310,9 @@ export function useRouteCanvas({
                     ctx.beginPath();
                     ctx.arc(px, py, radius, 0, Math.PI * 2);
                     ctx.strokeStyle = isSelected
-                        ? "rgb(0, 0, 0)"
+                        ? DOT_STROKE
                         : `rgba(17,17,17,${isVisible ? 1 : 0.18})`;
-                    ctx.lineWidth = isSelected ? 1.8 : 1.5;
+                    ctx.lineWidth = isSelected ? DOT_STROKE_WIDTH * 1.2 : DOT_STROKE_WIDTH;
                     ctx.stroke();
                 }
                 ctx.globalAlpha = 1;

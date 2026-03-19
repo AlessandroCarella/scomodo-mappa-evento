@@ -248,7 +248,7 @@ export const ROUTE_TRAIL_ALPHA_MAX = 0.7; // scaled by frac
 export const ROUTE_DOT_RADIUS = 6; // px base radius
 export const ROUTE_DOT_PULSE_AMP = 0.1; // fraction of radius
 export const ROUTE_DOT_PULSE_SPEED = 400; // ms per cycle
-export const ROUTE_DOT_STROKE = "#111";
+export const ROUTE_DOT_STROKE = "#e62f3f";
 export const ROUTE_DOT_STROKE_WIDTH = 1.5; // px
 
 // Paused dot
