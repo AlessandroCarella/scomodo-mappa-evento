@@ -78,7 +78,7 @@ export function StoryPostIt({ story }) {
                     <div className="story-postit__value">{arrivo}</div>
                 </div>
                 <div className="story-postit__row">
-                    <div className="story-postit__label">Storia</div>
+                    <div className="story-postit__label">Data</div>
                     <div className="story-postit__value">{dataText}</div>
                 </div>
             </div>

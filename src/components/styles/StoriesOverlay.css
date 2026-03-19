@@ -47,7 +47,7 @@
 }
 
 /* Mobile: center horizontally but keep vertical centering and 60vh height */
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
     .stories-overlay__panel--floating {
         top: auto;
         right: 0;
@@ -421,6 +421,7 @@
     background: #ffffff;
     padding: 14px 18px;
     white-space: pre-wrap;
+    align-self: stretch;
 }
 
 /* ── Split-flap display ─────────────────────────────────────── */
@@ -463,7 +464,7 @@
 @media (min-width: 820px) {
     .story-postit {
         grid-template-columns: 340px 1fr;
-        align-items: start;
+        align-items: stretch;
     }
 
     .story-postit__meta {
@@ -475,4 +476,37 @@
     .story-postit__row {
         grid-template-columns: 90px 1fr;
     }
+}
+
+/* ── Scrollbar styling ──────────────────────────────────────── */
+.stories-overlay__panel--floating,
+.stories-overlay__list,
+.stories-overlay__content {
+    scrollbar-width: thin;
+    scrollbar-color: #007c8b transparent;
+}
+
+.stories-overlay__panel--floating::-webkit-scrollbar,
+.stories-overlay__list::-webkit-scrollbar,
+.stories-overlay__content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.stories-overlay__panel--floating::-webkit-scrollbar-track,
+.stories-overlay__list::-webkit-scrollbar-track,
+.stories-overlay__content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.stories-overlay__panel--floating::-webkit-scrollbar-thumb,
+.stories-overlay__list::-webkit-scrollbar-thumb,
+.stories-overlay__content::-webkit-scrollbar-thumb {
+    background: #007c8b;
+    border-radius: 999px;
+}
+
+.stories-overlay__panel--floating::-webkit-scrollbar-thumb:hover,
+.stories-overlay__list::-webkit-scrollbar-thumb:hover,
+.stories-overlay__content::-webkit-scrollbar-thumb:hover {
+    background: #009aad;
 }

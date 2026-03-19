@@ -152,7 +152,7 @@
     opacity: 0.45;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
     .story-filters {
         top: 12px;
         left: 12px;
