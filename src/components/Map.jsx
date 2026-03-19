@@ -8,7 +8,6 @@ import Banner from "./Banner";
 import QRcode from "./QRcode";
 import StoryFormButton from "./StoryFormButton";
 import StoryForm from "./StoryForm";
-import StoryFilters from "./StoryFilters";
 import { useMapInit } from "./MapHelpers/useMapInit";
 import { useWasdNavigation } from "./MapHelpers/useWasdNavigation";
 import { useGamepad } from "./MapHelpers/useGamepad";
@@ -25,6 +24,8 @@ import {
     QR_LINK,
     QR_SIZE,
     FORM_ENABLED,
+    STORY_FILTERS_CONFIG,
+    STORY_FILTER_MODES,
 } from "../config";
 
 function isMobileViewport() {
@@ -68,10 +69,51 @@ function getStoryRouteKey(story) {
     return pairKey(story.cittaPartenza, story.cittaArrivo);
 }
 
-function storyMatchesFilters(story, departureCity, arrivalCity) {
-    if (departureCity && story.cittaPartenza !== departureCity) return false;
-    if (arrivalCity && story.cittaArrivo !== arrivalCity) return false;
-    return true;
+function normalizeConfiguredFilter(config) {
+    const allowedModes = new Set(Object.values(STORY_FILTER_MODES));
+    const mode = allowedModes.has(config?.mode)
+        ? config.mode
+        : STORY_FILTER_MODES.city;
+    const city = typeof config?.city === "string" ? config.city.trim() : "";
+
+    return {
+        mode,
+        city,
+        cityOverlay: {
+            showDeparturesByDefault:
+                config?.cityOverlay?.showDeparturesByDefault !== false,
+            showArrivalsByDefault:
+                config?.cityOverlay?.showArrivalsByDefault !== false,
+        },
+    };
+}
+
+const CONFIGURED_STORY_FILTER = normalizeConfiguredFilter(STORY_FILTERS_CONFIG);
+
+function getDefaultCityOverlayFilters() {
+    return {
+        showDepartures:
+            CONFIGURED_STORY_FILTER.cityOverlay.showDeparturesByDefault,
+        showArrivals: CONFIGURED_STORY_FILTER.cityOverlay.showArrivalsByDefault,
+    };
+}
+
+function storyMatchesConfiguredFilter(story, filterConfig) {
+    if (!filterConfig.city) return true;
+
+    switch (filterConfig.mode) {
+        case STORY_FILTER_MODES.departure:
+            return story.cittaPartenza === filterConfig.city;
+        case STORY_FILTER_MODES.arrival:
+            return story.cittaArrivo === filterConfig.city;
+        case STORY_FILTER_MODES.city:
+            return (
+                story.cittaPartenza === filterConfig.city ||
+                story.cittaArrivo === filterConfig.city
+            );
+        default:
+            return true;
+    }
 }
 
 function collectStoryLocations(stories) {
@@ -83,6 +125,17 @@ function collectStoryLocations(stories) {
     return names;
 }
 
+function splitStoriesByCity(stories, cityName) {
+    return {
+        departureStories: stories.filter(
+            (story) => story.cittaPartenza === cityName,
+        ),
+        arrivalStories: stories.filter(
+            (story) => story.cittaArrivo === cityName,
+        ),
+    };
+}
+
 export default function Map() {
     const containerRef = useRef(null);
     const { mapRef, ready } = useMapInit(containerRef);
@@ -91,17 +144,21 @@ export default function Map() {
     const [locations, setLocations] = useState([]);
     const [paths, setPaths] = useState([]);
     const [dataReady, setDataReady] = useState(false);
-    const [activeStories, setActiveStories] = useState([]);
     const [formOpen, setFormOpen] = useState(false);
-    const [filtersOpen, setFiltersOpen] = useState(false);
-    const [departureFilter, setDepartureFilter] = useState("");
-    const [arrivalFilter, setArrivalFilter] = useState("");
+    const [overlayState, setOverlayState] = useState(null);
+    const [cityOverlayFilters, setCityOverlayFilters] = useState(
+        getDefaultCityOverlayFilters,
+    );
     const [trackedLatLng, setTrackedLatLng] = useState(null);
     const [routePlaying, setRoutePlaying] = useState(false);
     const [activeRouteKey, setActiveRouteKey] = useState(null);
 
     const isStoriesOpenRef = useRef(false);
     const filteredStoriesRef = useRef([]);
+
+    useEffect(() => {
+        isStoriesOpenRef.current = overlayState !== null;
+    }, [overlayState]);
 
     useEffect(() => {
         Promise.all([
@@ -194,46 +251,51 @@ export default function Map() {
         });
     }, [ready, dataReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const hasActiveFilters = departureFilter !== "" || arrivalFilter !== "";
-
-    const filteredStories = useMemo(
+    const baseFilteredStories = useMemo(
         () =>
             allStories.filter((story) =>
-                storyMatchesFilters(story, departureFilter, arrivalFilter),
+                storyMatchesConfiguredFilter(story, CONFIGURED_STORY_FILTER),
             ),
-        [allStories, departureFilter, arrivalFilter],
+        [allStories],
     );
 
     useEffect(() => {
-        filteredStoriesRef.current = filteredStories;
-    }, [filteredStories]);
+        filteredStoriesRef.current = baseFilteredStories;
+    }, [baseFilteredStories]);
+
+    const overlayVisibleStories = useMemo(() => {
+        if (overlayState?.type !== "city") return null;
+
+        const nextStories = [];
+        if (cityOverlayFilters.showDepartures) {
+            nextStories.push(...overlayState.departureStories);
+        }
+        if (cityOverlayFilters.showArrivals) {
+            nextStories.push(...overlayState.arrivalStories);
+        }
+
+        return nextStories;
+    }, [overlayState, cityOverlayFilters]);
+
+    const highlightedStories = overlayVisibleStories ?? baseFilteredStories;
+
+    const hasConfiguredStoryFilter = Boolean(CONFIGURED_STORY_FILTER.city);
+    const hasVisualStoryFilter =
+        hasConfiguredStoryFilter || overlayState?.type === "city";
 
     const allStoryLocations = useMemo(
         () => collectStoryLocations(allStories),
         [allStories],
     );
 
-    const visibleStoryLocations = useMemo(
-        () => collectStoryLocations(filteredStories),
-        [filteredStories],
-    );
-
-    const filteredRouteKeys = useMemo(() => {
+    const visibleRouteKeys = useMemo(() => {
         const keys = new Set();
-        filteredStories.forEach((story) => {
+        highlightedStories.forEach((story) => {
             const routeKey = getStoryRouteKey(story);
             if (routeKey) keys.add(routeKey);
         });
         return keys;
-    }, [filteredStories]);
-
-    const cityOptions = useMemo(
-        () =>
-            locations
-                .map((location) => location.name)
-                .sort((a, b) => a.localeCompare(b, "it")),
-        [locations],
-    );
+    }, [highlightedStories]);
 
     const syncStoryRoute = useCallback((story, preferredRouteKey = null) => {
         const nextRouteKey = preferredRouteKey ?? getStoryRouteKey(story);
@@ -244,20 +306,42 @@ export default function Map() {
         setRoutePlaying(!!nextRouteKey);
     }, []);
 
-    const openStories = useCallback(
-        (matches, preferredRouteKey = null) => {
-            if (matches.length === 0) return;
+    const openRouteOverlay = useCallback(
+        (stories, preferredRouteKey = null) => {
+            if (stories.length === 0) return;
 
-            isStoriesOpenRef.current = true;
-            setActiveStories(matches);
-            syncStoryRoute(matches[0], preferredRouteKey);
+            setOverlayState({
+                type: "route",
+                stories,
+            });
+            syncStoryRoute(stories[0], preferredRouteKey);
         },
         [syncStoryRoute],
     );
 
+    const openCityOverlay = useCallback(
+        (cityName, departureStories, arrivalStories) => {
+            if (departureStories.length === 0 && arrivalStories.length === 0) {
+                return;
+            }
+
+            setCityOverlayFilters(getDefaultCityOverlayFilters());
+            setOverlayState({
+                type: "city",
+                cityName,
+                departureStories,
+                arrivalStories,
+            });
+            setTrackedLatLng(null);
+            setRoutePlaying(false);
+            setActiveRouteKey(null);
+        },
+        [],
+    );
+
     const closeStories = useCallback(() => {
-        isStoriesOpenRef.current = false;
-        setActiveStories([]);
+        setOverlayState(null);
+        setCityOverlayFilters(getDefaultCityOverlayFilters());
         setTrackedLatLng(null);
         setRoutePlaying(false);
         setActiveRouteKey(null);
@@ -315,12 +399,12 @@ export default function Map() {
                         story.cittaArrivo === fromName),
             );
 
-            openStories(
+            openRouteOverlay(
                 matches,
                 preferredRouteKey ?? pairKey(fromName, toName),
             );
         },
-        [locations, mapRef, openStories],
+        [locations, mapRef, openRouteOverlay],
     );
 
     const handlePinClick = useCallback(
@@ -339,20 +423,19 @@ export default function Map() {
                 }
             }
 
-            const matches = filteredStoriesRef.current.filter(
+            const matches = allStories.filter(
                 (story) =>
                     story.cittaArrivo === locationName ||
                     story.cittaPartenza === locationName,
             );
-            openStories(matches);
+            const { departureStories, arrivalStories } = splitStoriesByCity(
+                matches,
+                locationName,
+            );
+            openCityOverlay(locationName, departureStories, arrivalStories);
         },
-        [locations, mapRef, openStories],
+        [allStories, locations, mapRef, openCityOverlay],
     );
-
-    const handleResetFilters = useCallback(() => {
-        setDepartureFilter("");
-        setArrivalFilter("");
-    }, []);
 
     const wasdTooltipRef = useRef(null);
     const handleCityReached = useCallback(
@@ -416,7 +499,7 @@ export default function Map() {
     });
 
     const showOverlay = ready && dataReady;
-    const storiesOpen = activeStories.length > 0;
+    const storiesOpen = overlayState !== null;
     const overlayActive = storiesOpen || formOpen;
     const showMapControls = !overlayActive;
 
@@ -436,8 +519,8 @@ export default function Map() {
                             handleConnectionClick(from, to, routeKey)
                         }
                         activeRouteKey={activeRouteKey}
-                        visibleRouteKeys={filteredRouteKeys}
-                        hasActiveFilters={hasActiveFilters}
+                        visibleRouteKeys={visibleRouteKeys}
+                        hasActiveFilters={hasVisualStoryFilter}
                         onTrackedPosition={handleTrackedPosition}
                     />
                 )}
@@ -450,26 +533,11 @@ export default function Map() {
                         map={mapRef.current}
                         location={location}
                         hasStories={allStoryLocations.has(location.name)}
-                        isInteractive={visibleStoryLocations.has(location.name)}
-                        isDimmed={!visibleStoryLocations.has(location.name)}
+                        isInteractive={allStoryLocations.has(location.name)}
+                        isDimmed={false}
                         onClick={handlePinClick}
                     />
                 ))}
-
-            {showMapControls && (
-                <StoryFilters
-                    isOpen={filtersOpen}
-                    onToggle={() => setFiltersOpen((prev) => !prev)}
-                    departureValue={departureFilter}
-                    arrivalValue={arrivalFilter}
-                    cities={cityOptions}
-                    onDepartureChange={setDepartureFilter}
-                    onArrivalChange={setArrivalFilter}
-                    onReset={handleResetFilters}
-                    storyCount={filteredStories.length}
-                    routeCount={filteredRouteKeys.size}
-                />
-            )}
 
             {showMapControls && QR_ENABLED && (
                 <QRcode link={QR_LINK} size={QR_SIZE} />
@@ -482,7 +550,38 @@ export default function Map() {
             <Banner overlayActive={overlayActive} />
 
             <StoriesOverlay
-                stories={activeStories}
+                isOpen={storiesOpen}
+                mode={overlayState?.type ?? "route"}
+                stories={
+                    overlayState?.type === "route" ? overlayState.stories : []
+                }
+                cityName={
+                    overlayState?.type === "city" ? overlayState.cityName : ""
+                }
+                departureStories={
+                    overlayState?.type === "city"
+                        ? overlayState.departureStories
+                        : []
+                }
+                arrivalStories={
+                    overlayState?.type === "city"
+                        ? overlayState.arrivalStories
+                        : []
+                }
+                showDepartures={cityOverlayFilters.showDepartures}
+                showArrivals={cityOverlayFilters.showArrivals}
+                onToggleDepartures={() =>
+                    setCityOverlayFilters((prev) => ({
+                        ...prev,
+                        showDepartures: !prev.showDepartures,
+                    }))
+                }
+                onToggleArrivals={() =>
+                    setCityOverlayFilters((prev) => ({
+                        ...prev,
+                        showArrivals: !prev.showArrivals,
+                    }))
+                }
                 onClose={closeStories}
                 currentLatLng={trackedLatLng}
                 isPlaying={routePlaying}

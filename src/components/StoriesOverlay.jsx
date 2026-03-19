@@ -7,13 +7,23 @@ const FOLLOW_INTERVAL_MS = 350;
 function truncate(text, maxLen) {
     if (!text) return "";
     if (text.length <= maxLen) return text;
-    return `${text.slice(0, maxLen).trimEnd()}…`;
+    return `${text.slice(0, maxLen).trimEnd()}...`;
 }
 
 function abbrCity(name) {
     const safe = (name || "").trim();
-    if (!safe) return "—";
+    if (!safe) return "---";
     return safe.slice(0, 3).toUpperCase();
+}
+
+function getStoryKey(story, index = 0) {
+    return [
+        story?.nome || "anonimo",
+        story?.cittaPartenza || "partenza",
+        story?.cittaArrivo || "arrivo",
+        story?.data || "data",
+        index,
+    ].join("::");
 }
 
 export function SplitFlapText({ text = "" }) {
@@ -32,7 +42,6 @@ export function SplitFlapText({ text = "" }) {
 export function StoryPostIt({ story }) {
     if (!story) return null;
 
-    // Map real JSON shape → display-safe fields
     const passenger =
         (story.nome && String(story.nome).trim()) ||
         (story.eta != null ? `Anon (${story.eta})` : "Anonimo");
@@ -44,7 +53,7 @@ export function StoryPostIt({ story }) {
     const dataText =
         (story.data && String(story.data).trim()) ||
         (story.anno && String(story.anno).trim()) ||
-        "—";
+        "---";
 
     const body = truncate(story.storia || story.testo || "", 500);
 
@@ -70,18 +79,17 @@ export function StoryPostIt({ story }) {
     );
 }
 
-/**
- * Floating stories panel with glassmorphism backdrop and story navigation.
- *
- * Extra optional props:
- * - currentLatLng: { lat, lng } of moving dot
- * - focusTrackedLatLng: callback that keeps the tracked route in view
- * - isPlaying: whether the route animation is active
- * - initialIndex: starting story index
- * - onStoryChange: callback when current story changes
- */
 export default function StoriesOverlay({
+    isOpen = false,
+    mode = "route",
     stories = [],
+    cityName = "",
+    departureStories = [],
+    arrivalStories = [],
+    showDepartures = true,
+    showArrivals = true,
+    onToggleDepartures,
+    onToggleArrivals,
     onClose,
     currentLatLng,
     focusTrackedLatLng,
@@ -89,45 +97,82 @@ export default function StoriesOverlay({
     initialIndex = 0,
     onStoryChange,
 }) {
-    const isOpen = Array.isArray(stories) && stories.length > 0;
     const [currentStoryIndex, setCurrentStoryIndex] = useState(initialIndex);
     const currentLatLngRef = useRef(currentLatLng);
+    const isRouteMode = mode === "route";
+    const isCityMode = mode === "city";
 
-    // keep latest coords in a ref so interval sees fresh values
+    const visibleCitySections = useMemo(() => {
+        if (!isCityMode) return [];
+
+        const sections = [];
+
+        if (showDepartures && departureStories.length > 0) {
+            sections.push({
+                id: "departures",
+                label: "Partenze",
+                stories: departureStories,
+            });
+        }
+
+        if (showArrivals && arrivalStories.length > 0) {
+            sections.push({
+                id: "arrivals",
+                label: "Arrivi",
+                stories: arrivalStories,
+            });
+        }
+
+        return sections;
+    }, [
+        arrivalStories,
+        departureStories,
+        isCityMode,
+        showArrivals,
+        showDepartures,
+    ]);
+
     useEffect(() => {
         currentLatLngRef.current = currentLatLng;
     }, [currentLatLng]);
 
-    // close on Escape
     useEffect(() => {
         if (!isOpen) return;
+
         const onKeyDown = (e) => {
             if (e.key === "Escape") onClose?.();
         };
+
         window.addEventListener("keydown", onKeyDown);
         return () => window.removeEventListener("keydown", onKeyDown);
     }, [isOpen, onClose]);
 
-    // reset index when a new story list opens
     useEffect(() => {
-        if (!isOpen) return;
+        if (!isOpen || !isRouteMode) return;
+
         const lastIndex = Math.max(stories.length - 1, 0);
         const nextIndex = Math.min(Math.max(initialIndex, 0), lastIndex);
         setCurrentStoryIndex((prev) => (prev === nextIndex ? prev : nextIndex));
-    }, [initialIndex, isOpen, stories]);
+    }, [initialIndex, isOpen, isRouteMode, stories]);
 
-    // notify parent when story changes (optional)
     useEffect(() => {
-        if (!isOpen || !onStoryChange) return;
+        if (!isOpen || !isRouteMode || !onStoryChange) return;
+
         const story = stories[currentStoryIndex];
         if (story) {
             onStoryChange({ index: currentStoryIndex, story });
         }
-    }, [currentStoryIndex, isOpen, onStoryChange, stories]);
+    }, [currentStoryIndex, isOpen, isRouteMode, onStoryChange, stories]);
 
-    // Keep following the moving dot while the route animation is active.
     useEffect(() => {
-        if (!isOpen || !isPlaying || !focusTrackedLatLng) return;
+        if (
+            !isOpen ||
+            !isRouteMode ||
+            !isPlaying ||
+            !focusTrackedLatLng
+        ) {
+            return;
+        }
 
         const intervalId = setInterval(() => {
             const coords = currentLatLngRef.current;
@@ -137,12 +182,12 @@ export default function StoriesOverlay({
         }, FOLLOW_INTERVAL_MS);
 
         return () => clearInterval(intervalId);
-    }, [focusTrackedLatLng, isOpen, isPlaying]);
+    }, [focusTrackedLatLng, isOpen, isPlaying, isRouteMode]);
 
     if (!isOpen) return null;
 
-    const hasMultipleStories = stories.length > 1;
-    const currentStory = stories[currentStoryIndex];
+    const hasMultipleStories = isRouteMode && stories.length > 1;
+    const currentStory = isRouteMode ? stories[currentStoryIndex] : null;
 
     const handleNextStory = () => {
         if (!hasMultipleStories) return;
@@ -171,34 +216,112 @@ export default function StoriesOverlay({
                     <X size={20} />
                 </button>
 
-                <header className="stories-overlay__header">
-                    <div className="stories-overlay__title">Storie</div>
-                    <div className="stories-overlay__subtitle">
-                        {currentStoryIndex + 1} / {stories.length} post-it
-                    </div>
-                </header>
+                {isCityMode ? (
+                    <>
+                        <header className="stories-overlay__header">
+                            <div className="stories-overlay__title">
+                                {cityName || "Storie"}
+                            </div>
+                            <div className="stories-overlay__subtitle">
+                                Partenze {departureStories.length} · Arrivi{" "}
+                                {arrivalStories.length}
+                            </div>
+                        </header>
 
-                <div className="stories-overlay__content">
-                    <div
-                        key={currentStory?.id ?? currentStoryIndex}
-                        className="stories-overlay__story-slide"
-                    >
-                        <StoryPostIt story={currentStory} />
-                    </div>
-                </div>
+                        <div
+                            className="stories-overlay__toggles"
+                            role="group"
+                            aria-label={`Mostra le storie per ${cityName || "questa citta"}`}
+                        >
+                            <button
+                                type="button"
+                                className={`stories-overlay__toggle${showDepartures ? " stories-overlay__toggle--active" : ""}`}
+                                onClick={() => onToggleDepartures?.()}
+                                aria-pressed={showDepartures}
+                            >
+                                <span>Partenze</span>
+                                <span className="stories-overlay__toggle-count">
+                                    {departureStories.length}
+                                </span>
+                            </button>
 
-                {hasMultipleStories && (
-                    <button
-                        type="button"
-                        className="stories-overlay__next"
-                        onClick={handleNextStory}
-                        aria-label="Prossima storia"
-                    >
-                        <ChevronDown size={20} />
-                    </button>
+                            <button
+                                type="button"
+                                className={`stories-overlay__toggle${showArrivals ? " stories-overlay__toggle--active" : ""}`}
+                                onClick={() => onToggleArrivals?.()}
+                                aria-pressed={showArrivals}
+                            >
+                                <span>Arrivi</span>
+                                <span className="stories-overlay__toggle-count">
+                                    {arrivalStories.length}
+                                </span>
+                            </button>
+                        </div>
+
+                        <div className="stories-overlay__content stories-overlay__content--stacked">
+                            {visibleCitySections.map((section) => (
+                                <section
+                                    key={section.id}
+                                    className="stories-overlay__section"
+                                >
+                                    <div className="stories-overlay__section-header">
+                                        <div className="stories-overlay__section-title">
+                                            {section.label}
+                                        </div>
+                                        <div className="stories-overlay__section-count">
+                                            {section.stories.length}
+                                        </div>
+                                    </div>
+
+                                    <div className="stories-overlay__section-list">
+                                        {section.stories.map((story, index) => (
+                                            <div
+                                                key={getStoryKey(story, index)}
+                                                className="stories-overlay__story-slide"
+                                            >
+                                                <StoryPostIt story={story} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            ))}
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <header className="stories-overlay__header">
+                            <div className="stories-overlay__title">Storie</div>
+                            <div className="stories-overlay__subtitle">
+                                {stories.length > 0
+                                    ? `${currentStoryIndex + 1} / ${stories.length} post-it`
+                                    : "0 / 0 post-it"}
+                            </div>
+                        </header>
+
+                        <div className="stories-overlay__content">
+                            {currentStory && (
+                                <div
+                                    key={getStoryKey(currentStory, currentStoryIndex)}
+                                    className="stories-overlay__story-slide"
+                                >
+                                    <StoryPostIt story={currentStory} />
+                                </div>
+                            )}
+                        </div>
+
+                        {hasMultipleStories && (
+                            <button
+                                type="button"
+                                className="stories-overlay__next"
+                                onClick={handleNextStory}
+                                aria-label="Prossima storia"
+                            >
+                                <ChevronDown size={20} />
+                            </button>
+                        )}
+                    </>
                 )}
             </div>
         </div>
     );
 }
-
