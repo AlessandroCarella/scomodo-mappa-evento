@@ -17,6 +17,10 @@ export const DATA_PATHS = {
 export const LOCATIONS_URL = `${BASE}/data/Locations.json`;
 export const STORIES_URL = `${BASE}/data/storie.json`;
 
+// Minimum number of stories shown on the map at all times.
+// True stories are always shown; fake ones (tipo: false) fill up to this count.
+export const MIN_STORIES_COUNT = 30;
+
 // ── Map tile layer ─────────────────────────────────────────────
 export const TILE_URL =
     "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"

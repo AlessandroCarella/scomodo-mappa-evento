@@ -26,6 +26,7 @@ import {
     FORM_ENABLED,
     STORY_FILTERS_CONFIG,
     STORY_FILTER_MODES,
+    MIN_STORIES_COUNT,
 } from "../config";
 
 function isMobileViewport() {
@@ -179,7 +180,15 @@ export default function Map() {
                 return r.json();
             }),
         ])
-            .then(([rawLocations, rawStories]) => {
+            .then(([rawLocations, allRawStories]) => {
+                const trueStories = allRawStories.filter((s) => s.tipo === true);
+                const fakeStories = allRawStories.filter((s) => s.tipo === false);
+                const needed = Math.max(0, MIN_STORIES_COUNT - trueStories.length);
+                const shuffledFakes = fakeStories
+                    .slice()
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, needed);
+                const rawStories = [...trueStories, ...shuffledFakes];
                 const locByName = {};
                 rawLocations.forEach((location) => {
                     locByName[location.name] = location;
