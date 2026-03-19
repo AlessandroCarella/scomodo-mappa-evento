@@ -21,6 +21,8 @@ export default function Pin({
     hasStories = false,
     isInteractive = false,
     isDimmed = false,
+    onHoverStart,
+    onHoverEnd,
 }) {
     const markerRef = useRef(null);
 
@@ -46,14 +48,22 @@ export default function Pin({
         if (hasStories && isInteractive && typeof onClick === "function") {
             handleMarkerClick = () => onClick(location.name);
             marker.on("click", handleMarkerClick);
+            if (typeof onHoverStart === "function")
+                marker.on("mouseover", () => onHoverStart(location.name));
+            if (typeof onHoverEnd === "function")
+                marker.on("mouseout", () => onHoverEnd());
         }
 
         markerRef.current = marker;
         return () => {
-            if (handleMarkerClick) marker.off("click", handleMarkerClick);
+            if (handleMarkerClick) {
+                marker.off("click", handleMarkerClick);
+                marker.off("mouseover");
+                marker.off("mouseout");
+            }
             marker.remove();
         };
-    }, [map, location, onClick, hasStories, isInteractive]);
+    }, [map, location, onClick, hasStories, isInteractive, onHoverStart, onHoverEnd]);
 
     useEffect(() => {
         const marker = markerRef.current;

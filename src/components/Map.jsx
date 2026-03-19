@@ -140,6 +140,9 @@ export default function Map() {
         return keys;
     }, [highlightedStories]);
 
+    // ── Tracks which city pin is currently hovered (tooltip visible) ─────────
+    const hoveredCityRef = useRef(null);
+
     // ── Ref for WASD / gamepad: knows whether the overlay is open ────────────
     const isStoriesOpenRef = useRef(false);
     const filteredStoriesRef = useRef([]);
@@ -270,6 +273,8 @@ export default function Map() {
                         visibleRouteKeys={visibleRouteKeys}
                         hasActiveFilters={hasVisualStoryFilter}
                         onTrackedPosition={handleTrackedPosition}
+                        hoveredCityRef={hoveredCityRef}
+                        onCityClick={handlePinClick}
                     />
                 )}
             </div>
@@ -284,6 +289,8 @@ export default function Map() {
                         isInteractive={allStoryLocations.has(location.name)}
                         isDimmed={false}
                         onClick={handlePinClick}
+                        onHoverStart={(name) => { hoveredCityRef.current = name; }}
+                        onHoverEnd={() => { hoveredCityRef.current = null; }}
                     />
                 ))}
 

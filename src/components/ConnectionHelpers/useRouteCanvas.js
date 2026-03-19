@@ -33,6 +33,8 @@ export function useRouteCanvas({
     stateRef,
     getHit,
     onParticleClickRef,
+    onCityClickRef,
+    hoveredCityRef,
     activeRouteKeyRef,
     visibleRouteKeysRef,
     hasActiveFiltersRef,
@@ -61,6 +63,11 @@ export function useRouteCanvas({
         };
 
         const onClick = (e) => {
+            const hoveredCity = hoveredCityRef?.current;
+            if (hoveredCity && onCityClickRef?.current) {
+                onCityClickRef.current(hoveredCity);
+                return;
+            }
             const hit = getHit(e.clientX, e.clientY);
             if (hit && onParticleClickRef.current) {
                 onParticleClickRef.current({
@@ -72,6 +79,11 @@ export function useRouteCanvas({
         };
 
         const onTouchEnd = (e) => {
+            const hoveredCity = hoveredCityRef?.current;
+            if (hoveredCity && onCityClickRef?.current) {
+                onCityClickRef.current(hoveredCity);
+                return;
+            }
             const t = e.changedTouches?.[0];
             if (!t) return;
             const hit = getHit(t.clientX, t.clientY);

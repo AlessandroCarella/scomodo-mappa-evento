@@ -86,6 +86,8 @@ export default function RouteConnections({
     visibleRouteKeys,
     hasActiveFilters = false,
     onTrackedPosition,
+    hoveredCityRef,
+    onCityClick,
 }) {
     const canvasRef = useRef(null);
 
@@ -101,6 +103,11 @@ export default function RouteConnections({
     useEffect(() => {
         onParticleClickRef.current = onParticleClick;
     }, [onParticleClick]);
+
+    const onCityClickRef = useRef(onCityClick);
+    useEffect(() => {
+        onCityClickRef.current = onCityClick;
+    }, [onCityClick]);
 
     const activeRouteKeyRef = useRef(activeRouteKey);
     useEffect(() => {
@@ -217,6 +224,8 @@ export default function RouteConnections({
         stateRef,
         getHit,
         onParticleClickRef,
+        onCityClickRef,
+        hoveredCityRef,
         activeRouteKeyRef,
         visibleRouteKeysRef,
         hasActiveFiltersRef,
