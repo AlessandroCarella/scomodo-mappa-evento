@@ -50,7 +50,7 @@
 .banner-panel--left::before {
     background: linear-gradient(
         to right,
-        rgba(230, 47, 63, 0.5) var(--banner-mask-stop, 55%),
+        rgba(230, 47, 63, 0.8) 0%,
         transparent 100%
     );
 }
@@ -62,7 +62,7 @@
 .banner-panel--right::before {
     background: linear-gradient(
         to left,
-        rgba(230, 47, 63, 0.5) var(--banner-mask-stop, 55%),
+        rgba(230, 47, 63, 0.8) 0%,
         transparent 100%
     );
 }
