@@ -101,6 +101,25 @@ export const PIN_STYLE = {
 };
 
 // ── Stories overlay / connection interaction ────────────────────
+// STORY FILTERS - EDIT THIS BLOCK
+// Tutti i filtri della mappa si controllano solo da qui.
+// mode: "partenza" | "arrivo" | "citta"
+// city: deve combaciare esattamente con il nome usato in storie.json / Locations.json
+export const STORY_FILTER_MODES = {
+    departure: "partenza",
+    arrival: "arrivo",
+    city: "citta",
+};
+
+export const STORY_FILTERS_CONFIG = {
+    mode: STORY_FILTER_MODES.city,
+    city: "Bari",
+    cityOverlay: {
+        showDeparturesByDefault: true,
+        showArrivalsByDefault: true,
+    },
+};
+
 export const ENABLE_CONNECTION_HITBOX = true;
 export const CONNECTION_HITBOX_WIDTH = 25;
 

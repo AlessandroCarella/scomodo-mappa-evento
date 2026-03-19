@@ -126,12 +126,117 @@
     color: rgba(20, 20, 22, 0.68);
 }
 
+.stories-overlay__toggles {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.stories-overlay__toggle {
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(20, 20, 22, 0.18);
+    background: rgba(255, 255, 255, 0.58);
+    color: rgba(20, 20, 22, 0.75);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-family: "Syne", system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    transition:
+        transform 0.16s ease-out,
+        background 0.18s ease-out,
+        color 0.18s ease-out,
+        box-shadow 0.18s ease-out;
+}
+
+.stories-overlay__toggle:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.stories-overlay__toggle--active {
+    background: rgba(20, 20, 22, 0.9);
+    color: rgba(247, 241, 226, 0.96);
+    box-shadow:
+        0 12px 22px rgba(0, 0, 0, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.stories-overlay__toggle-count {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(20, 20, 22, 0.1);
+    font-family: "Syne Mono", ui-monospace, monospace;
+    font-size: 11px;
+}
+
+.stories-overlay__toggle--active .stories-overlay__toggle-count {
+    background: rgba(255, 255, 255, 0.14);
+}
+
 /* Scrollable content inside card */
 .stories-overlay__content {
     margin-top: 8px;
     padding-right: 4px;
     flex: 1 1 auto;
     overflow-y: auto;
+}
+
+.stories-overlay__content--stacked {
+    display: grid;
+    gap: 18px;
+}
+
+.stories-overlay__section {
+    display: grid;
+    gap: 12px;
+}
+
+.stories-overlay__section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(20, 20, 22, 0.16);
+}
+
+.stories-overlay__section-title {
+    font-family: "Syne", system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(20, 20, 22, 0.74);
+}
+
+.stories-overlay__section-count {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(20, 20, 22, 0.08);
+    color: rgba(20, 20, 22, 0.76);
+    font-family: "Syne Mono", ui-monospace, monospace;
+    font-size: 11px;
+}
+
+.stories-overlay__section-list {
+    display: grid;
+    gap: 14px;
 }
 
 /* Simple slide / fade for story change */
