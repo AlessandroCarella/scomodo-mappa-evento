@@ -1,13 +1,13 @@
-/* ── Modal backdrop ─────────────────────────────────────────── */
+/* Fullscreen overlay with dark glassmorphism blur over the map */
 .stories-overlay {
     position: fixed;
     inset: 0;
     z-index: 1000;
     background: rgba(0, 0, 0, 0.55);
+    pointer-events: auto;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 18px;
+    align-items: stretch;
+    justify-content: stretch;
 }
 
 /* ── Panel ──────────────────────────────────────────────────── */
@@ -22,6 +22,54 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    pointer-events: auto;
+}
+/* Floating glassmorphism card on the left ("middle third") */
+.stories-overlay__panel--floating {
+    position: absolute;
+    top: 50%;
+    left: 4vw;
+    transform: translateY(-50%);
+    width: min(92vw, 650px);
+    max-width: 650px;
+    min-width: min(90vw, 320px);
+    max-height: 80vh;
+    padding: 16px 16px 12px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(245, 239, 220, 0.92),
+            rgba(220, 210, 188, 0.94)
+        ),
+        rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    box-shadow:
+        0 22px 45px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(0, 0, 0, 0.25);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Mobile: center horizontally but keep vertical centering and 60vh height */
+@media (max-width: 767px) {
+    .stories-overlay__panel--floating {
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        max-height: min(58vh, 520px);
+        padding: 14px 16px calc(10px + env(safe-area-inset-bottom));
+        border-radius: 24px 24px 0 0;
+        box-shadow:
+            0 -16px 36px rgba(0, 0, 0, 0.42),
+            0 0 0 1px rgba(0, 0, 0, 0.16);
+    }
 }
 
 /* ── Close button — red square ──────────────────────────────── */
@@ -33,7 +81,7 @@
     height: 42px;
     border-radius: 0;
     border: none;
-    background: #E62F3F;
+    background: #e62f3f;
     color: #ffffff;
     font-size: 22px;
     font-weight: 700;
@@ -48,12 +96,51 @@
 
 .stories-overlay__close:hover {
     background: #c0222f;
+    top: 10px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(20, 20, 22, 0.28);
+    background:
+        radial-gradient(
+            circle at 30% 0%,
+            rgba(255, 255, 255, 0.9),
+            rgba(230, 230, 230, 0.7)
+        ),
+        rgba(255, 255, 255, 0.6);
+    color: rgba(20, 20, 22, 0.9);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition:
+        background 0.18s ease-out,
+        transform 0.16s ease-out,
+        box-shadow 0.18s ease-out;
+}
+
+.stories-overlay__close:hover {
+    transform: translateY(-1px);
+    background:
+        radial-gradient(
+            circle at 30% 0%,
+            rgba(255, 255, 255, 0.98),
+            rgba(240, 240, 240, 0.9)
+        ),
+        rgba(255, 255, 255, 0.85);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 /* ── Header (teal band) ─────────────────────────────────────── */
 .stories-overlay__header {
     padding: 20px 60px 20px 22px;
-    background: #007C8B;
+    background: #007c8b;
     border-bottom: none;
     flex-shrink: 0;
 }
@@ -84,6 +171,73 @@
     max-height: calc(min(84vh, 900px) - 74px);
     display: grid;
     gap: 0;
+}
+/* Scrollable content inside card */
+.stories-overlay__content {
+    margin-top: 8px;
+    padding-right: 4px;
+    flex: 1 1 auto;
+    overflow-y: auto;
+}
+
+/* Simple slide / fade for story change */
+.stories-overlay__story-slide {
+    animation: stories-slide-in 260ms ease-out;
+}
+
+@keyframes stories-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Down arrow button for next story */
+.stories-overlay__next {
+    margin-top: 8px;
+    margin-bottom: 2px;
+    align-self: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid rgba(20, 20, 22, 0.3);
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 255, 255, 0.95),
+            rgba(230, 225, 210, 0.9)
+        ),
+        rgba(255, 255, 255, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(20, 20, 22, 0.9);
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    transition:
+        transform 0.16s ease-out,
+        box-shadow 0.18s ease-out,
+        background 0.18s ease-out;
+}
+
+.stories-overlay__next:hover {
+    transform: translateY(1px);
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 255, 255, 1),
+            rgba(240, 235, 220, 0.96)
+        ),
+        rgba(255, 255, 255, 0.18);
+    box-shadow:
+        0 10px 26px rgba(0, 0, 0, 0.48),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 /* ── Story card — departure-board style ─────────────────────── */
@@ -125,7 +279,7 @@
 
 /* Tratta row (2nd child) → dark teal bg */
 .story-postit__row:nth-child(2) {
-    background: #053C3C;
+    background: #053c3c;
 }
 
 /* ── Label cell ─────────────────────────────────────────────── */
@@ -145,7 +299,7 @@
 
 /* Tratta row label → yellow */
 .story-postit__row:nth-child(2) .story-postit__label {
-    color: #FFCB00;
+    color: #ffcb00;
     border-right-color: rgba(255, 203, 0, 0.5);
 }
 
@@ -183,7 +337,7 @@
     height: 26px;
     padding: 0 6px;
     border-radius: 0;
-    background: #007C8B;
+    background: #007c8b;
     color: #ffffff;
     font-size: 13px;
     font-weight: 700;
@@ -192,7 +346,7 @@
 
 /* Tratta row splitflap → yellow tiles */
 .story-postit__row:nth-child(2) .splitflap__char {
-    background: #FFCB00;
+    background: #ffcb00;
     color: #000000;
 }
 

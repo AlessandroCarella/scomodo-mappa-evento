@@ -20,6 +20,7 @@ import {
  *   maxCount : dataset maximum (drives colour + opacity normalisation)
  *   shape    : "arc" | "line"
  *   index    : render order (used for animation stagger)
+ *   onClick  : optional click handler (used to open stories)
  */
 export default function ConnectionAlt({
     from,
@@ -28,6 +29,7 @@ export default function ConnectionAlt({
     maxCount,
     shape = "arc",
     index = 0,
+    onClick,
 }) {
     const color = colorForCount(count, maxCount);
 
@@ -40,7 +42,10 @@ export default function ConnectionAlt({
     const pathRef = useConnectionAnim(arcLen, index);
 
     return (
-        <g>
+        <g
+            style={{ cursor: "pointer", pointerEvents: "auto" }}
+            onClick={onClick}
+        >
             {/* glow halo — opacity-driven */}
             <path
                 d={d}
