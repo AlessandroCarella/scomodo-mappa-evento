@@ -43,12 +43,13 @@ export function StoryPostIt({ story }) {
     if (!story) return null;
 
     const passenger =
-        (story.nome && String(story.nome).trim()) ||
-        (story.eta != null ? `Anon (${story.eta})` : "Anonimo");
+        (story.nome && String(story.nome).trim().toUpperCase()) ||
+        "ANONIMO";
 
-    const tratta = `${abbrCity(story.cittaPartenza)}-${abbrCity(
-        story.cittaArrivo,
-    )}`;
+    const eta = story.eta != null ? String(story.eta) : "---";
+
+    const partenza = (story.cittaPartenza || "---").toUpperCase();
+    const arrivo = (story.cittaArrivo || "---").toUpperCase();
 
     const dataText =
         (story.data && String(story.data).trim()) ||
@@ -62,15 +63,23 @@ export function StoryPostIt({ story }) {
             <div className="story-postit__meta">
                 <div className="story-postit__row">
                     <div className="story-postit__label">Passeggero</div>
-                    <SplitFlapText text={passenger} />
+                    <div className="story-postit__value">{passenger}</div>
                 </div>
                 <div className="story-postit__row">
-                    <div className="story-postit__label">Tratta</div>
-                    <SplitFlapText text={tratta} />
+                    <div className="story-postit__label">Età</div>
+                    <div className="story-postit__value">{eta}</div>
                 </div>
                 <div className="story-postit__row">
-                    <div className="story-postit__label">Data</div>
-                    <SplitFlapText text={dataText} />
+                    <div className="story-postit__label">Partenza</div>
+                    <div className="story-postit__value">{partenza}</div>
+                </div>
+                <div className="story-postit__row">
+                    <div className="story-postit__label">Arrivo</div>
+                    <div className="story-postit__value">{arrivo}</div>
+                </div>
+                <div className="story-postit__row">
+                    <div className="story-postit__label">Storia</div>
+                    <div className="story-postit__value">{dataText}</div>
                 </div>
             </div>
 
