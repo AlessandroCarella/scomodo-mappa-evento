@@ -123,6 +123,10 @@ export function useRouteCanvas({
                     trail: [],
                     _hx: null,
                     _hy: null,
+                    _fx: null,
+                    _fy: null,
+                    _tx: null,
+                    _ty: null,
                     _et: 0,
                     _curLat: a.lat,
                     _curLng: a.lng,
@@ -195,6 +199,8 @@ export function useRouteCanvas({
                 const fp = cpt(p.from.lat, p.from.lng);
                 const tp = cpt(p.to.lat, p.to.lng);
                 const cur = cpt(p._curLat, p._curLng);
+                p._fx = fp.x; p._fy = fp.y;
+                p._tx = tp.x; p._ty = tp.y;
                 const isVisible =
                     !filtersActive ||
                     !visibleRouteKeys ||

@@ -222,6 +222,8 @@ export const ROUTE_PCOLORS = [
 
 // Pixel radius used for click / hover hit detection
 export const ROUTE_HIT_RADIUS = 22;
+// Max distance from the moving dot allowed for a trajectory-line click to register
+export const ROUTE_LINE_HIT_DOT_RADIUS = 100;
 
 // Ghost route
 export const ROUTE_GHOST_COLOR = "rgba(150, 150, 150, 0.22)";
