@@ -120,7 +120,7 @@ export const CONNECTION_HITBOX_WIDTH = 25;
 export const BANNER_ENABLED = import.meta.env.VITE_BANNER_ENABLED !== "false";
 
 // Width of each side panel as a percentage of the viewport width
-export const BANNER_WIDTH_PERCENT = 30;
+export const BANNER_WIDTH_PERCENT = 35;
 
 // Text shown in each panel (each word will be measured independently)
 export const BANNER_TEXT_LEFT = "BARI CITTÀ DEL VIAGGIO";
