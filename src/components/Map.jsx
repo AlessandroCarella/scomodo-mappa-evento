@@ -29,6 +29,7 @@ import {
     QR_LINK,
     QR_SIZE,
     FORM_ENABLED,
+    PARTENZE_ARRIVI,
 } from "../config";
 import { useState } from "react";
 
@@ -39,6 +40,7 @@ export default function Map() {
     const { allStories, locations, paths, dataReady } = useMapData();
 
     const [formOpen, setFormOpen] = useState(false);
+    const [mapCityFilter, setMapCityFilter] = useState(null); // only used in "All" mode
 
     const {
         overlayState,
@@ -80,12 +82,32 @@ export default function Map() {
     }, [ready, dataReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // ── Derived story lists ───────────────────────────────────────────────────
+
+    // In "All" mode collect unique city names for the picker
+    const allCityNames = useMemo(() => {
+        if (PARTENZE_ARRIVI !== "All") return [];
+        const names = new Set();
+        allStories.forEach((s) => {
+            if (s.cittaPartenza) names.add(s.cittaPartenza);
+            if (s.cittaArrivo) names.add(s.cittaArrivo);
+        });
+        return [...names].sort();
+    }, [allStories]);
+
+    // In "All" mode the picker selection acts as a live CITTA_SCELTA
+    const activeFilterConfig = useMemo(() => {
+        if (PARTENZE_ARRIVI === "All" && mapCityFilter) {
+            return { ...CONFIGURED_STORY_FILTER, city: mapCityFilter };
+        }
+        return CONFIGURED_STORY_FILTER;
+    }, [mapCityFilter]);
+
     const baseFilteredStories = useMemo(
         () =>
             allStories.filter((story) =>
-                storyMatchesConfiguredFilter(story, CONFIGURED_STORY_FILTER),
+                storyMatchesConfiguredFilter(story, activeFilterConfig),
             ),
-        [allStories],
+        [allStories, activeFilterConfig],
     );
 
     const overlayVisibleStories = useMemo(() => {
@@ -100,7 +122,7 @@ export default function Map() {
 
     const highlightedStories = overlayVisibleStories ?? baseFilteredStories;
 
-    const hasConfiguredStoryFilter = Boolean(CONFIGURED_STORY_FILTER.city);
+    const hasConfiguredStoryFilter = Boolean(activeFilterConfig.city);
     const hasVisualStoryFilter =
         hasConfiguredStoryFilter || overlayState?.type === "city";
 
@@ -264,6 +286,24 @@ export default function Map() {
                         onClick={handlePinClick}
                     />
                 ))}
+
+            {showMapControls && PARTENZE_ARRIVI === "All" && allCityNames.length > 0 && (
+                <div className="map-city-picker">
+                    <select
+                        value={mapCityFilter ?? ""}
+                        onChange={(e) =>
+                            setMapCityFilter(e.target.value || null)
+                        }
+                    >
+                        <option value="">Tutte le città</option>
+                        {allCityNames.map((city) => (
+                            <option key={city} value={city}>
+                                {city}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            )}
 
             {showMapControls && QR_ENABLED && (
                 <QRcode link={QR_LINK} size={QR_SIZE} />

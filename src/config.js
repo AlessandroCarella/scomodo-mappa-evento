@@ -4,6 +4,43 @@
 //  Change things here; nothing else needs to be touched.
 // ─────────────────────────────────────────────────────────────
 
+// ── Stories overlay / connection interaction ────────────────────
+// STORY FILTERS - EDIT THIS BLOCK
+// Controlla cosa viene mostrato sulla mappa cambiando solo questi due valori:
+//
+//   PARTENZE_ARRIVI: "Partenze" → solo partenze da CITTA_SCELTA
+//                   "Arrivi"   → solo arrivi a CITTA_SCELTA
+//                   "All"      → tutte le storie; filtro città in alto a sinistra
+//
+//   CITTA_SCELTA: nome della città (deve combaciare con storie.json / Locations.json)
+//                ignorato quando PARTENZE_ARRIVI è "All"
+export const PARTENZE_ARRIVI = "All"; // "Partenze" | "Arrivi" | "All"
+export const CITTA_SCELTA = "Ravenna";
+
+export const STORY_FILTER_MODES = {
+    departure: "partenza",
+    arrival: "arrivo",
+    city: "citta",
+};
+
+const _PA_MODE_MAP = {
+    Partenze: STORY_FILTER_MODES.departure,
+    Arrivi: STORY_FILTER_MODES.arrival,
+    All: STORY_FILTER_MODES.city,
+};
+
+export const STORY_FILTERS_CONFIG = {
+    mode: _PA_MODE_MAP[PARTENZE_ARRIVI] ?? STORY_FILTER_MODES.city,
+    city: PARTENZE_ARRIVI === "All" ? "" : CITTA_SCELTA,
+    cityOverlay: {
+        showDeparturesByDefault: true,
+        showArrivalsByDefault: true,
+    },
+};
+
+export const ENABLE_CONNECTION_HITBOX = true;
+export const CONNECTION_HITBOX_WIDTH = 25;
+
 // ── Data paths (served from /public, fetched at runtime) ─────
 export const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 export const DATA_PATHS = {
@@ -23,23 +60,23 @@ export const MIN_STORIES_COUNT = 30;
 
 // ── Map tile layer ─────────────────────────────────────────────
 export const TILE_URL =
-    "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
-    // "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
-    // "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png";
-    // "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
-    // satellite carino
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}";
-    // // scuro ma con i nomi delle regioni
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}"
-    // "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png"
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
-    // "https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}"
+    "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png";
+// "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
+// "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png";
+// "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
+// satellite carino
+// "https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}";
+// // scuro ma con i nomi delle regioni
+// "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+// "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}"
+// "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png"
+// "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+// "https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}"
 
-    // "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //base
-    // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
-    // "https://{s}.basemaps.cartocdn .com/dark_nolabels/{z}/{x}/{y}.png"
-    // "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"; //bianco nera
+// "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //base
+// "https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
+// "https://{s}.basemaps.cartocdn .com/dark_nolabels/{z}/{x}/{y}.png"
+// "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"; //bianco nera
 
 export const TILE_ATTRIBUTION =
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors ' +
@@ -111,29 +148,6 @@ export const PIN_STYLE = {
     opacity: 0.9,
 };
 
-// ── Stories overlay / connection interaction ────────────────────
-// STORY FILTERS - EDIT THIS BLOCK
-// Tutti i filtri della mappa si controllano solo da qui.
-// mode: "partenza" | "arrivo" | "citta"
-// city: deve combaciare esattamente con il nome usato in storie.json / Locations.json
-export const STORY_FILTER_MODES = {
-    departure: "partenza",
-    arrival: "arrivo",
-    city: "citta",
-};
-
-export const STORY_FILTERS_CONFIG = {
-    mode: STORY_FILTER_MODES.departure,
-    city: "Bari",
-    cityOverlay: {
-        showDeparturesByDefault: true,
-        showArrivalsByDefault: true,
-    },
-};
-
-export const ENABLE_CONNECTION_HITBOX = true;
-export const CONNECTION_HITBOX_WIDTH = 25;
-
 // ── Banner ────────────────────────────────────────────────────
 
 // Set VITE_BANNER_ENABLED=false in .env or CLI to disable at build time:
@@ -172,8 +186,10 @@ export const BANNER_TEXT_COLOR = "#000000";
 
 // Font families — can differ between left and right panels.
 // Any Google Font or system font is valid; make sure it is loaded in global.css.
-export const BANNER_FONT_FAMILY_LEFT = "'Helvetica Neue', Helvetica, Arial, sans-serif";
-export const BANNER_FONT_FAMILY_RIGHT = "'Helvetica Neue', Helvetica, Arial, sans-serif";
+export const BANNER_FONT_FAMILY_LEFT =
+    "'Helvetica Neue', Helvetica, Arial, sans-serif";
+export const BANNER_FONT_FAMILY_RIGHT =
+    "'Helvetica Neue', Helvetica, Arial, sans-serif";
 
 // Font weight applied when measuring and rendering
 export const BANNER_FONT_WEIGHT = 700;

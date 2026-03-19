@@ -1,5 +1,6 @@
 import "./styles/StoriesOverlay.css";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { PARTENZE_ARRIVI } from "../config";
 import { ChevronDown, X } from "lucide-react";
 
 const FOLLOW_INTERVAL_MS = 350;
@@ -237,37 +238,37 @@ export default function StoriesOverlay({
                             </div>
                         </header>
 
-                        {/* FILTRI DISABILITATI
-                        <div
-                            className="stories-overlay__toggles"
-                            role="group"
-                            aria-label={`Mostra le storie per ${cityName || "questa citta"}`}
-                        >
-                            <button
-                                type="button"
-                                className={`stories-overlay__toggle${showDepartures ? " stories-overlay__toggle--active" : ""}`}
-                                onClick={() => onToggleDepartures?.()}
-                                aria-pressed={showDepartures}
+                        {PARTENZE_ARRIVI === "All" && (
+                            <div
+                                className="stories-overlay__toggles"
+                                role="group"
+                                aria-label={`Mostra le storie per ${cityName || "questa citta"}`}
                             >
-                                <span>Partenze</span>
-                                <span className="stories-overlay__toggle-count">
-                                    {departureStories.length}
-                                </span>
-                            </button>
+                                <button
+                                    type="button"
+                                    className={`stories-overlay__toggle${showDepartures ? " stories-overlay__toggle--active" : ""}`}
+                                    onClick={() => _onToggleDepartures?.()}
+                                    aria-pressed={showDepartures}
+                                >
+                                    <span>Partenze</span>
+                                    <span className="stories-overlay__toggle-count">
+                                        {departureStories.length}
+                                    </span>
+                                </button>
 
-                            <button
-                                type="button"
-                                className={`stories-overlay__toggle${showArrivals ? " stories-overlay__toggle--active" : ""}`}
-                                onClick={() => onToggleArrivals?.()}
-                                aria-pressed={showArrivals}
-                            >
-                                <span>Arrivi</span>
-                                <span className="stories-overlay__toggle-count">
-                                    {arrivalStories.length}
-                                </span>
-                            </button>
-                        </div>
-                        */}
+                                <button
+                                    type="button"
+                                    className={`stories-overlay__toggle${showArrivals ? " stories-overlay__toggle--active" : ""}`}
+                                    onClick={() => _onToggleArrivals?.()}
+                                    aria-pressed={showArrivals}
+                                >
+                                    <span>Arrivi</span>
+                                    <span className="stories-overlay__toggle-count">
+                                        {arrivalStories.length}
+                                    </span>
+                                </button>
+                            </div>
+                        )}
 
                         <div className="stories-overlay__content stories-overlay__content--stacked">
                             {visibleCitySections.map((section) => (
