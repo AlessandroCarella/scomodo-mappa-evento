@@ -271,7 +271,7 @@ export const FORM_ETA_MAX = 120;
 
 // ── Story Form UI strings ─────────────────────────────────────
 // Change these to localise or rebrand the form without touching JSX.
-export const FORM_EYEBROW = "Scomodo · Mappa dei viaggi";
+export const FORM_EYEBROW = "Scomodo · Partenze";
 export const FORM_TITLE = "La tua storia";
 export const FORM_DESC =
     "Bari è una città di partenze, attese e arrivi. Aggiungi la tua rotta alla mappa — la tua storia diventerà parte di una narrazione collettiva.";

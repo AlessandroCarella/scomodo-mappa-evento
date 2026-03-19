@@ -22,9 +22,6 @@ export default function InDevelopmentPage() {
             <div className={styles.page}>
                 <main className={styles.main}>
                     <div className={styles.card}>
-                        <p className={styles.eyebrow}>
-                            Scomodo · Mappa dei viaggi
-                        </p>
 
                         <div className={styles.iconWrap} aria-hidden="true">
                             🚧
@@ -33,7 +30,7 @@ export default function InDevelopmentPage() {
                         <h1 className={styles.title}>In sviluppo</h1>
 
                         <p className={styles.body}>
-                            Questa pagina è ancora in costruzione.
+                            Questa pagina è ancora in sviluppo.
                             <br />
                             Torna a trovarci presto!
                         </p>
