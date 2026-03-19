@@ -34,7 +34,7 @@
     border-radius: 0;
     overflow: hidden;
 
-    background: #FFCB00;
+    background: #007c8b;
     border: none;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
 
@@ -64,7 +64,7 @@
     justify-content: center;
     padding: 0 10%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    background: #053C3C;
+    background: #007c8b;
 }
 
 .form-btn-label {
@@ -83,7 +83,7 @@
     position: relative;
     flex: 1;
     min-height: 0;
-    background: #FFCB00;
+    background: #007c8b;
 }
 
 .form-btn-qr-img {

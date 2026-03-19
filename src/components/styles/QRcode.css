@@ -32,8 +32,8 @@
     border-radius: 0;
     overflow: hidden;
 
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #007c8b;
+    border: none;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 
     cursor: pointer;
