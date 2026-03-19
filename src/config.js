@@ -281,11 +281,11 @@ export const FORM_QR_LINK = "https://scomodo-mappa-evento.pages.dev/form";
 // Centralised route strings — change here, everything updates automatically.
 
 // Where the "← back" button in the Form page navigates to.
-export const NAV_FORM_BACK = "/sviluppo";
+export const NAV_FORM_BACK = "/";
 
 // Where the user lands after closing/submitting the form
 // (both the success "Chiudi" button and the overlay dismiss).
-export const NAV_FORM_AFTER_SUBMIT = "/sviluppo";
+export const NAV_FORM_AFTER_SUBMIT = "/";
 
 // ── Story Form field constraints ──────────────────────────────
 export const FORM_STORIA_MAX_LENGTH = 500;
