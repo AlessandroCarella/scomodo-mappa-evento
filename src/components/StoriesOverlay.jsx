@@ -225,8 +225,11 @@ export default function StoriesOverlay({
                                 {cityName || "Storie"}
                             </div>
                             <div className="stories-overlay__subtitle">
-                                Partenze {departureStories.length} · Arrivi{" "}
-                                {arrivalStories.length}
+                                {PARTENZE_ARRIVI === "Partenze"
+                                    ? `Partenze ${departureStories.length}`
+                                    : PARTENZE_ARRIVI === "Arrivi"
+                                      ? `Arrivi ${arrivalStories.length}`
+                                      : `Partenze ${departureStories.length} · Arrivi ${arrivalStories.length}`}
                             </div>
                         </header>
 

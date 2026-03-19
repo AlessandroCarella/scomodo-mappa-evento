@@ -213,11 +213,13 @@ export default function Map() {
                 }
             }
 
-            const matches = allStories.filter(
-                (story) =>
-                    story.cittaArrivo === locationName ||
-                    story.cittaPartenza === locationName,
-            );
+            const matches = allStories.filter((story) => {
+                const isPartenza = story.cittaPartenza === locationName;
+                const isArrivo = story.cittaArrivo === locationName;
+                if (PARTENZE_ARRIVI === "Partenze") return isPartenza;
+                if (PARTENZE_ARRIVI === "Arrivi") return isArrivo;
+                return isPartenza || isArrivo;
+            });
             const { departureStories, arrivalStories } = splitStoriesByCity(
                 matches,
                 locationName,
