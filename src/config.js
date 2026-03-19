@@ -14,8 +14,8 @@
 //
 //   CITTA_SCELTA: nome della città (deve combaciare con storie.json / Locations.json)
 //                ignorato quando PARTENZE_ARRIVI è "All"
-export const PARTENZE_ARRIVI = "All"; // "Partenze" | "Arrivi" | "All"
-export const CITTA_SCELTA = "Ravenna";
+export const PARTENZE_ARRIVI = "Partenze"; // "Partenze" | "Arrivi" | "All"
+export const CITTA_SCELTA = "Bari";
 
 export const STORY_FILTER_MODES = {
     departure: "partenza",
