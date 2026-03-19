@@ -1,7 +1,7 @@
 import "./styles/StoriesOverlay.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { PARTENZE_ARRIVI } from "../config";
-import { ChevronDown, X } from "lucide-react";
+import { X } from "lucide-react";
 
 const FOLLOW_INTERVAL_MS = 350;
 
@@ -196,14 +196,6 @@ export default function StoriesOverlay({
 
     if (!isOpen) return null;
 
-    const hasMultipleStories = isRouteMode && stories.length > 1;
-    const currentStory = isRouteMode ? stories[currentStoryIndex] : null;
-
-    const handleNextStory = () => {
-        if (!hasMultipleStories) return;
-        setCurrentStoryIndex((prev) => (prev + 1) % stories.length);
-    };
-
     return (
         <div
             className="stories-overlay"
@@ -305,32 +297,23 @@ export default function StoriesOverlay({
                             <div className="stories-overlay__title">Storie</div>
                             <div className="stories-overlay__subtitle">
                                 {stories.length > 0
-                                    ? `${currentStoryIndex + 1} / ${stories.length} post-it`
-                                    : "0 / 0 post-it"}
+                                    ? `${stories.length} post-it`
+                                    : "0 post-it"}
                             </div>
                         </header>
 
-                        <div className="stories-overlay__content">
-                            {currentStory && (
-                                <div
-                                    key={getStoryKey(currentStory, currentStoryIndex)}
-                                    className="stories-overlay__story-slide"
-                                >
-                                    <StoryPostIt story={currentStory} />
-                                </div>
-                            )}
+                        <div className="stories-overlay__content stories-overlay__content--stacked">
+                            <div className="stories-overlay__section-list">
+                                {stories.map((story, index) => (
+                                    <div
+                                        key={getStoryKey(story, index)}
+                                        className="stories-overlay__story-slide"
+                                    >
+                                        <StoryPostIt story={story} />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-
-                        {hasMultipleStories && (
-                            <button
-                                type="button"
-                                className="stories-overlay__next"
-                                onClick={handleNextStory}
-                                aria-label="Prossima storia"
-                            >
-                                <ChevronDown size={20} />
-                            </button>
-                        )}
                     </>
                 )}
             </div>
