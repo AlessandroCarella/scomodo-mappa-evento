@@ -97,8 +97,8 @@ export default function StoriesOverlay({
     arrivalStories = [],
     showDepartures = true,
     showArrivals = true,
-    onToggleDepartures,
-    onToggleArrivals,
+    onToggleDepartures: _onToggleDepartures,
+    onToggleArrivals: _onToggleArrivals,
     onClose,
     currentLatLng,
     focusTrackedLatLng,
@@ -237,6 +237,7 @@ export default function StoriesOverlay({
                             </div>
                         </header>
 
+                        {/* FILTRI DISABILITATI
                         <div
                             className="stories-overlay__toggles"
                             role="group"
@@ -266,6 +267,7 @@ export default function StoriesOverlay({
                                 </span>
                             </button>
                         </div>
+                        */}
 
                         <div className="stories-overlay__content stories-overlay__content--stacked">
                             {visibleCitySections.map((section) => (

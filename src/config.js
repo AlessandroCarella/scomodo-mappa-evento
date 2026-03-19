@@ -123,7 +123,7 @@ export const STORY_FILTER_MODES = {
 };
 
 export const STORY_FILTERS_CONFIG = {
-    mode: STORY_FILTER_MODES.city,
+    mode: STORY_FILTER_MODES.departure,
     city: "Bari",
     cityOverlay: {
         showDeparturesByDefault: true,
