@@ -27,37 +27,42 @@
     align-items: center;
     justify-content: center;
 
-    background: var(--banner-bg, rgba(0, 124, 139, 0.9));
+    /* Background is handled by ::before so text stays fully opaque */
+    background: transparent !important;
 
     opacity: 1;
     transition: opacity var(--banner-transition, 0.6s)
         cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Gradient background at 50% opacity — does not affect text opacity */
+.banner-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
 .banner-panel--left {
     left: 0;
-    -webkit-mask-image: linear-gradient(
+}
+
+.banner-panel--left::before {
+    background: linear-gradient(
         to right,
-        black var(--banner-mask-stop, 55%),
-        transparent 100%
-    );
-    mask-image: linear-gradient(
-        to right,
-        black var(--banner-mask-stop, 55%),
+        rgba(230, 47, 63, 0.5) var(--banner-mask-stop, 55%),
         transparent 100%
     );
 }
 
 .banner-panel--right {
     right: 0;
-    -webkit-mask-image: linear-gradient(
+}
+
+.banner-panel--right::before {
+    background: linear-gradient(
         to left,
-        black var(--banner-mask-stop, 55%),
-        transparent 100%
-    );
-    mask-image: linear-gradient(
-        to left,
-        black var(--banner-mask-stop, 55%),
+        rgba(230, 47, 63, 0.5) var(--banner-mask-stop, 55%),
         transparent 100%
     );
 }
@@ -69,12 +74,12 @@
 
 /* ── Inner content wrapper ─────────────────────────────────── */
 .banner-inner {
-    width: calc(var(--banner-mask-stop, 55%) * 0.85);
+    position: relative;
+    z-index: 1;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 0 8px;
+    padding: 0;
     user-select: none;
 }
 
@@ -87,14 +92,38 @@
     display: block;
     width: 100%;
     text-transform: uppercase;
-    color: var(--banner-text-color, #ffffff);
-    text-align: center;
+    color: var(--banner-text-color, #000000);
     line-height: 1.25;
 
-    /* Allow wrapping so long text fills multiple lines */
+    /* Wrap without splitting words */
     white-space: normal;
-    word-break: break-word;
-    overflow-wrap: break-word;
+    word-break: normal;
+    overflow-wrap: normal;
+}
+
+/* ── Side-specific alignment ────────────────────────────────── */
+.banner-panel--left {
+    justify-content: flex-start;
+}
+.banner-panel--left .banner-inner {
+    justify-content: flex-start;
+    padding-left: 2.5vw;
+    padding-right: 0;
+}
+.banner-panel--left .banner-text {
+    text-align: left;
+}
+
+.banner-panel--right {
+    justify-content: flex-end;
+}
+.banner-panel--right .banner-inner {
+    justify-content: flex-end;
+    padding-right: 2.5vw;
+    padding-left: 0;
+}
+.banner-panel--right .banner-text {
+    text-align: right;
 }
 
 /* ── Mobile: hide panels ───────────────────────────────────── */

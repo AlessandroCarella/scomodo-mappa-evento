@@ -120,7 +120,7 @@ export const CONNECTION_HITBOX_WIDTH = 25;
 export const BANNER_ENABLED = import.meta.env.VITE_BANNER_ENABLED !== "false";
 
 // Width of each side panel as a percentage of the viewport width
-export const BANNER_WIDTH_PERCENT = 35;
+export const BANNER_WIDTH_PERCENT = 30;
 
 // Text shown in each panel (each word will be measured independently)
 export const BANNER_TEXT_LEFT = "BARI CITTÀ DEL VIAGGIO";
@@ -139,13 +139,13 @@ export const BANNER_DESKTOP_MIN_WIDTH = 1024;
 export const BANNER_BLUR_PX = 6;
 
 // Background tint — keep alpha low to let map show through
-export const BANNER_BG_COLOR = "rgba(6, 10, 20, 0.25)";
+export const BANNER_BG_COLOR = "rgba(230, 47, 63, 0.9)";
 
 // Inner-edge fade solid stop (%) — higher = sharper edge
 export const BANNER_MASK_SOLID_STOP = 55;
 
 // Text color
-export const BANNER_TEXT_COLOR = "rgba(224, 208, 176, 0.90)";
+export const BANNER_TEXT_COLOR = "#000000";
 
 // Font families — can differ between left and right panels.
 // Any Google Font or system font is valid; make sure it is loaded in global.css.
@@ -160,7 +160,7 @@ export const BANNER_LETTER_SPACING = "0.10em";
 
 // Fraction of the panel's inner width the longest word should fill (0–1).
 // 0.9 = the longest word occupies 90 % of the available space.
-export const BANNER_FONT_FILL_RATIO = 0.9;
+export const BANNER_FONT_FILL_RATIO = 0.8;
 
 // Fade in/out transition duration
 export const BANNER_TRANSITION_DURATION = "0.6s";
