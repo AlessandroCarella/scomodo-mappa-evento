@@ -1,5 +1,14 @@
 [
     {
+        "nome": "Silvio",
+        "eta": 31,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Belgrado",
+        "data": "22-04-2025",
+        "storia": "Partire significa anche perdere il peso delle proprie barriere. Durante l'Erasmus+ ho lasciato andare il timore della lingua per abbracciare la vicinanza degli altri e una nuova identità dietro l'obiettivo. Due settimane che hanno cambiato il modo in cui mi vedo e come vedo il mondo.",
+        "tipo": true
+    },
+    {
         "nome": "Alessandro",
         "eta": 25,
         "cittaPartenza": "Bari",

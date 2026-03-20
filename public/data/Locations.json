@@ -1,5 +1,10 @@
 [
     {
+        "name": "Belgrade",
+        "lat": 44.80401,
+        "lng": 20.46513
+    },
+    {
         "name": "Marsiglia",
         "lat": 43.2965,
         "lng": 5.3811
