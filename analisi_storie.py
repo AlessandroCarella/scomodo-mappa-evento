@@ -78,7 +78,8 @@ def readStories ():
         data = json.load(f) 
     stories = []
     for story in data:
-        stories.append(story["storia"])
+        if story["tipo"]:
+            stories.append(story["storia"])
     return stories
 
 prev_texts = readStories()
