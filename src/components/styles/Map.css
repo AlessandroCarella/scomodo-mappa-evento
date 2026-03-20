@@ -60,6 +60,21 @@
     text-transform: uppercase;
 }
 
+/* ── Logo ──────────────────────────────────────────────────── */
+.map-logo {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 15%;
+    z-index: 1000;
+    pointer-events: none;
+    display: block;
+    padding-bottom: 18px;
+    /* turn the black SVG paths red (#e62f3f) */
+    filter: brightness(0) saturate(100%) invert(19%) sepia(90%) saturate(3500%) hue-rotate(340deg) brightness(97%) contrast(107%);
+}
+
 /* ── Map root ──────────────────────────────────────────────── */
 .map-root {
     position: relative;

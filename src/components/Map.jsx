@@ -343,6 +343,8 @@ export default function Map() {
                 <StoryFormButton onClick={() => setFormOpen(true)} />
             )}
 
+            <img src="/logo.svg" className="map-logo" alt="" aria-hidden draggable={false} />
+
             <Banner overlayActive={overlayActive} />
 
             <StoriesOverlay
