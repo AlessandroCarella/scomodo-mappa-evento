@@ -100,9 +100,24 @@
         "lng": 12.4829321
     },
     {
+        "name": "Pisa",
+        "lat": 43.70853,
+        "lng": 10.4036
+    },
+    {
         "name": "Vienna",
         "lat": 48.2083537,
         "lng": 16.3725042
+    },
+    {
+        "name": "Rionero in Vulture",
+        "lat": 40.92439779865538,
+        "lng": 15.672561560912765
+    },
+    {
+        "name": "New York",
+        "lat": 40.71427,
+        "lng": -74.00597
     },
     {
         "name": "Bruxelles",

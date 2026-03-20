@@ -1,5 +1,37 @@
 [
     {
+        "nome": "Alessandro",
+        "eta": 25,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Pisa",
+        "data": "01-10-2023",
+        "storia": "Ho lasciato Bari per iniziare la magistrale a Pisa. Non ho trovato una città ma un mondo completamente diverso da quello a cui ero abituato. Le serate in piazza della Pera, l'ex-wide e gli eventi auto organizzati in Cavalieri resteranno per sempre un ricordo indelebile nella mia testa, insieme a tutte le persone che ho conosciuto e ciò che ho vissuto mentre ero lì. Tornato a Bari ho cercato di ricreare quello che era diventato il MIO ambiente; con Scomodo ho trovato ciò che cercavo :)"
+    },
+    {
+        "nome": "Marie Read",
+        "eta": 34,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Rionero in Vulture",
+        "data": "30-09-2025",
+        "storia": "Il nord della Basilicata è la parte migliore della Basilicata."
+    },
+    {
+        "nome": "Marie Read",
+        "eta": 34,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "New York",
+        "data": "19-09-2024",
+        "storia": "Ho trovato le celebrazioni di San Gennaro a Little Italy, ho lasciato la ricetta della vera focaccia barese ad un ristorante italiano gestito da un italo-americano simpaticissimo. Il volo non era ancora diretto, ho passato 3 ore di notte in aeroporto: adesso c'è un volo molto più comodo."
+    },
+    {
+        "nome": "Riccardo",
+        "eta": 26,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Copenaghen",
+        "data": "01-09-2025",
+        "storia": "Parlo per mio fratello. Studiare qualcosa come quello che ha scelto lui è nobile, importante e impegnativo, fa deciso di metterci tutto se stesso. Per quanto non ci sentiamo spesso, so che sta facendo la cosa giusta. Mi manca"
+    },
+    {
         "nome": "Michela",
         "eta": 28,
         "cittaPartenza": "Massafra",
