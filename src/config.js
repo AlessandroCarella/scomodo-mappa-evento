@@ -4,17 +4,68 @@
 //  Change things here; nothing else needs to be touched.
 // ─────────────────────────────────────────────────────────────
 
+// ── Stories overlay / connection interaction ────────────────────
+// STORY FILTERS - EDIT THIS BLOCK
+// Controlla cosa viene mostrato sulla mappa cambiando solo questi due valori:
+//
+//   PARTENZE_ARRIVI: "Partenze" → solo partenze da CITTA_SCELTA
+//                   "Arrivi"   → solo arrivi a CITTA_SCELTA
+//                   "All"      → tutte le storie; filtro città in alto a sinistra
+//
+//   CITTA_SCELTA: nome della città (deve combaciare con storie.json / Locations.json)
+//                ignorato quando PARTENZE_ARRIVI è "All"
+export const PARTENZE_ARRIVI = "All"; // "Partenze" | "Arrivi" | "All"
+export const CITTA_SCELTA = "Bari";
+
+export const STORY_FILTER_MODES = {
+    departure: "partenza",
+    arrival: "arrivo",
+    city: "citta",
+};
+
+const _PA_MODE_MAP = {
+    Partenze: STORY_FILTER_MODES.departure,
+    Arrivi: STORY_FILTER_MODES.arrival,
+    All: STORY_FILTER_MODES.city,
+};
+
+export const STORY_FILTERS_CONFIG = {
+    mode: _PA_MODE_MAP[PARTENZE_ARRIVI] ?? STORY_FILTER_MODES.city,
+    city: PARTENZE_ARRIVI === "All" ? "" : CITTA_SCELTA,
+    cityOverlay: {
+        showDeparturesByDefault: true,
+        showArrivalsByDefault: true,
+    },
+};
+
+export const ENABLE_CONNECTION_HITBOX = true;
+export const CONNECTION_HITBOX_WIDTH = 25;
+
 // ── Data paths (served from /public, fetched at runtime) ─────
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+export const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 export const DATA_PATHS = {
     locations: `${BASE}/data/Locations.json`,
     connections: `${BASE}/data/Connections.json`,
 };
 
+// Vite's BASE_URL respects the `base` option in vite.config.js.
+// Without this prefix, fetches return index.html (→ JSON parse error)
+// when the app is served from a non-root path.
+export const LOCATIONS_URL = `${BASE}/data/Locations.json`;
+export const STORIES_URL = `${BASE}/data/storie.json`;
+
+// Minimum number of stories shown on the map at all times.
+// True stories are always shown; fake ones (tipo: false) fill up to this count.
+export const MIN_STORIES_COUNT = 30;
+
 // ── Map tile layer ─────────────────────────────────────────────
 export const TILE_URL =
-    // satellite carino
-    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}";
+    "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png";
+// "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
+// "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png";
+// "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
+// satellite carino
+// "https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}";
 // // scuro ma con i nomi delle regioni
 // "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
 // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}"
@@ -24,10 +75,7 @@ export const TILE_URL =
 
 // "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //base
 // "https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
-// "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
-// "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
-// "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png"
-// "https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png"
+// "https://{s}.basemaps.cartocdn .com/dark_nolabels/{z}/{x}/{y}.png"
 // "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"; //bianco nera
 
 export const TILE_ATTRIBUTION =
@@ -36,7 +84,7 @@ export const TILE_ATTRIBUTION =
 
 // ── Zoom ──────────────────────────────────────────────────────
 export const MAP_MIN_ZOOM = 5;
-export const MAP_MAX_ZOOM = 8.25;
+export const MAP_MAX_ZOOM = 100;
 export const MAP_ZOOM_SNAP = 0.25;
 
 // Italy bounding box: [[south, west], [north, east]]
@@ -100,10 +148,6 @@ export const PIN_STYLE = {
     opacity: 0.9,
 };
 
-// ── Stories overlay / connection interaction ────────────────────
-export const ENABLE_CONNECTION_HITBOX = true;
-export const CONNECTION_HITBOX_WIDTH = 25;
-
 // ── Banner ────────────────────────────────────────────────────
 
 // Set VITE_BANNER_ENABLED=false in .env or CLI to disable at build time:
@@ -116,7 +160,7 @@ export const BANNER_ENABLED = import.meta.env.VITE_BANNER_ENABLED !== "false";
 export const BANNER_WIDTH_PERCENT = 35;
 
 // Text shown in each panel (each word will be measured independently)
-export const BANNER_TEXT_LEFT = "BARI CITTÀ DEL VIAGGIO";
+export const BANNER_TEXT_LEFT = "Bari città del viaggio";
 export const BANNER_TEXT_RIGHT =
     "PERCHÉ PARTIAMO? ESPLORA, LEGGI O RACCONTA UN'ESPERIENZA";
 
@@ -132,18 +176,20 @@ export const BANNER_DESKTOP_MIN_WIDTH = 1024;
 export const BANNER_BLUR_PX = 6;
 
 // Background tint — keep alpha low to let map show through
-export const BANNER_BG_COLOR = "rgba(6, 10, 20, 0.25)";
+export const BANNER_BG_COLOR = "rgba(230, 47, 63, 0.9)";
 
 // Inner-edge fade solid stop (%) — higher = sharper edge
 export const BANNER_MASK_SOLID_STOP = 55;
 
 // Text color
-export const BANNER_TEXT_COLOR = "rgba(224, 208, 176, 0.90)";
+export const BANNER_TEXT_COLOR = "#000000";
 
 // Font families — can differ between left and right panels.
 // Any Google Font or system font is valid; make sure it is loaded in global.css.
-export const BANNER_FONT_FAMILY_LEFT = "'Syne', sans-serif";
-export const BANNER_FONT_FAMILY_RIGHT = "'Syne', sans-serif";
+export const BANNER_FONT_FAMILY_LEFT =
+    "'Helvetica Neue', Helvetica, Arial, sans-serif";
+export const BANNER_FONT_FAMILY_RIGHT =
+    "'Helvetica Neue', Helvetica, Arial, sans-serif";
 
 // Font weight applied when measuring and rendering
 export const BANNER_FONT_WEIGHT = 700;
@@ -153,7 +199,7 @@ export const BANNER_LETTER_SPACING = "0.10em";
 
 // Fraction of the panel's inner width the longest word should fill (0–1).
 // 0.9 = the longest word occupies 90 % of the available space.
-export const BANNER_FONT_FILL_RATIO = 0.9;
+export const BANNER_FONT_FILL_RATIO = 0.8;
 
 // Fade in/out transition duration
 export const BANNER_TRANSITION_DURATION = "0.6s";
@@ -176,6 +222,8 @@ export const ROUTE_PCOLORS = [
 
 // Pixel radius used for click / hover hit detection
 export const ROUTE_HIT_RADIUS = 22;
+// Max distance from the moving dot allowed for a trajectory-line click to register
+export const ROUTE_LINE_HIT_DOT_RADIUS = 100;
 
 // Ghost route
 export const ROUTE_GHOST_COLOR = "rgba(150, 150, 150, 0.22)";
@@ -200,7 +248,7 @@ export const ROUTE_TRAIL_ALPHA_MAX = 0.7; // scaled by frac
 export const ROUTE_DOT_RADIUS = 6; // px base radius
 export const ROUTE_DOT_PULSE_AMP = 0.1; // fraction of radius
 export const ROUTE_DOT_PULSE_SPEED = 400; // ms per cycle
-export const ROUTE_DOT_STROKE = "#111";
+export const ROUTE_DOT_STROKE = "#e62f3f";
 export const ROUTE_DOT_STROKE_WIDTH = 1.5; // px
 
 // Paused dot
@@ -251,11 +299,11 @@ export const FORM_QR_LINK = "https://scomodo-mappa-evento.pages.dev/form";
 // Centralised route strings — change here, everything updates automatically.
 
 // Where the "← back" button in the Form page navigates to.
-export const NAV_FORM_BACK = "/sviluppo";
+export const NAV_FORM_BACK = "/";
 
 // Where the user lands after closing/submitting the form
 // (both the success "Chiudi" button and the overlay dismiss).
-export const NAV_FORM_AFTER_SUBMIT = "/sviluppo";
+export const NAV_FORM_AFTER_SUBMIT = "/";
 
 // ── Story Form field constraints ──────────────────────────────
 export const FORM_STORIA_MAX_LENGTH = 500;
@@ -264,7 +312,7 @@ export const FORM_ETA_MAX = 120;
 
 // ── Story Form UI strings ─────────────────────────────────────
 // Change these to localise or rebrand the form without touching JSX.
-export const FORM_EYEBROW = "Scomodo · Mappa dei viaggi";
+export const FORM_EYEBROW = "Scomodo · Partenze";
 export const FORM_TITLE = "La tua storia";
 export const FORM_DESC =
     "Bari è una città di partenze, attese e arrivi. Aggiungi la tua rotta alla mappa — la tua storia diventerà parte di una narrazione collettiva.";
@@ -284,7 +332,8 @@ export const FORM_ERROR_RETRY = "Riprova";
 export const FORM_STORIA_LABEL = "Racconta la tua storia";
 export const FORM_STORIA_HINT =
     "Cosa hai lasciato? Cosa hai trovato? Raccontaci la tua partenza in {max} caratteri.";
-export const FORM_STORIA_PLACEHOLDER = "Da dove sei partitə, e cos'hai portato con te?";
+export const FORM_STORIA_PLACEHOLDER =
+    "Da dove sei partitə, e cos'hai portato con te?";
 
 /**
  * FIELDS

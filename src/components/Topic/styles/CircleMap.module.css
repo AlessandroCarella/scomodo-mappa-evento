@@ -58,7 +58,7 @@
 }
 
 .labelKeyword {
-    font-family: "DM Sans", "Segoe UI", sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 600;
     text-anchor: middle;
     dominant-baseline: middle;
@@ -70,7 +70,7 @@
 .tooltip {
     position: fixed;
     padding: 10px 14px;
-    font-family: "DM Sans", "Segoe UI", sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 12px;
     line-height: 1.5;
     background: rgba(15, 17, 23, 0.92);

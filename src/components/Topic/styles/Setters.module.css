@@ -19,7 +19,7 @@
 }
 
 .label {
-    font-family: "DM Sans", "Segoe UI", sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 13px;
     font-weight: 600;
     color: #1a2336;
@@ -86,7 +86,7 @@
     padding: 0 8px;
     background: #3498db;
     color: #fff;
-    font-family: "DM Mono", "Fira Code", monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 12px;
     font-weight: 600;
     border-radius: 6px;
@@ -99,7 +99,7 @@
     border-radius: 8px;
     background: #fff;
     color: #1a2336;
-    font-family: "DM Sans", "Segoe UI", sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;

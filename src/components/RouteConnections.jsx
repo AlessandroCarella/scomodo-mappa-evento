@@ -5,18 +5,23 @@
  * City coordinates are read from `locationsUrl` (Locations.json).
  *
  * Props
- * ─────
- *   map              L.Map     Leaflet map instance  (required)
- *   paths            Array     [{ from: "Roma", to: "Milano" }, ...]  (required)
- *   speedMult        number    Playback speed multiplier  (default: 2)
- *   locationsUrl     string    Full URL to Locations.json, already BASE_URL-prefixed
- *   loop             bool      Restart each route on completion  (default: true)
- *   onParticleClick  function  Called with { from, to } when a moving dot is clicked
+ * -----
+ *   map               L.Map       Leaflet map instance (required)
+ *   paths             Array       [{ from: "Roma", to: "Milano" }, ...] (required)
+ *   speedMult         number      Playback speed multiplier (default: 2)
+ *   locationsUrl      string      Full URL to Locations.json, already BASE_URL-prefixed
+ *   loop              bool        Restart each route on completion (default: true)
+ *   onParticleClick   function    Called with { from, to, routeKey } on route click
+ *   activeRouteKey    string?     Selected/tracked route key
+ *   visibleRouteKeys  Set<string> Route keys that should stay fully visible
+ *   hasActiveFilters  boolean     Whether non-matching routes should be dimmed
+ *   onTrackedPosition function?   Called with {lat,lng,isPlaying} for the tracked route
  */
 
 import { useEffect, useRef, useCallback } from "react";
 import {
     ROUTE_HIT_RADIUS as HIT_RADIUS,
+    ROUTE_LINE_HIT_DOT_RADIUS as LINE_HIT_DOT_RADIUS,
     ROUTE_GHOST_COLOR,
     ROUTE_GHOST_WIDTH,
     ROUTE_COLOR_GREY,
@@ -44,8 +49,6 @@ import {
 import { useRouteCanvas } from "./ConnectionHelpers/useRouteCanvas";
 import "./styles/RouteConnections.css";
 
-// CSS custom properties populated from config — consumed by useRouteCanvas
-// via getComputedStyle, keeping all visual values in one place.
 const CANVAS_STYLE = {
     "--route-ghost-color": ROUTE_GHOST_COLOR,
     "--route-ghost-width": ROUTE_GHOST_WIDTH,
@@ -79,10 +82,18 @@ export default function RouteConnections({
     locationsUrl,
     loop = true,
     onParticleClick,
+    activeRouteKey,
+    visibleRouteKeys,
+    hasActiveFilters = false,
+    onTrackedPosition,
+    hoveredCityRef,
+    onCityClick,
+    interactionsEnabled = true,
+    interactiveCityNames,
+    interactionLockRef,
 }) {
     const canvasRef = useRef(null);
 
-    // Mutable animation state — never triggers re-renders
     const stateRef = useRef({
         particles: [],
         colorIdx: 0,
@@ -91,15 +102,46 @@ export default function RouteConnections({
         animFrame: null,
     });
 
-    // Stable ref so event-listener closures always see the latest callback
-    // without needing to re-register on every render.
     const onParticleClickRef = useRef(onParticleClick);
     useEffect(() => {
         onParticleClickRef.current = onParticleClick;
     }, [onParticleClick]);
 
-    // Patch speedMult into shared state without restarting the render loop.
-    // Reset lastTime on all particles so dt stays accurate after a speed change.
+    const onCityClickRef = useRef(onCityClick);
+    useEffect(() => {
+        onCityClickRef.current = onCityClick;
+    }, [onCityClick]);
+
+    const activeRouteKeyRef = useRef(activeRouteKey);
+    useEffect(() => {
+        activeRouteKeyRef.current = activeRouteKey || null;
+    }, [activeRouteKey]);
+
+    const visibleRouteKeysRef = useRef(visibleRouteKeys);
+    useEffect(() => {
+        visibleRouteKeysRef.current = visibleRouteKeys;
+    }, [visibleRouteKeys]);
+
+    const hasActiveFiltersRef = useRef(hasActiveFilters);
+    useEffect(() => {
+        hasActiveFiltersRef.current = hasActiveFilters;
+    }, [hasActiveFilters]);
+
+    const onTrackedPositionRef = useRef(onTrackedPosition);
+    useEffect(() => {
+        onTrackedPositionRef.current = onTrackedPosition || null;
+    }, [onTrackedPosition]);
+
+    const interactionsEnabledRef = useRef(interactionsEnabled);
+    useEffect(() => {
+        interactionsEnabledRef.current = interactionsEnabled;
+    }, [interactionsEnabled]);
+
+    const interactiveCityNamesRef = useRef(interactiveCityNames);
+    useEffect(() => {
+        interactiveCityNamesRef.current = interactiveCityNames;
+    }, [interactiveCityNames]);
+
     useEffect(() => {
         const S = stateRef.current;
         const now = performance.now();
@@ -144,28 +186,48 @@ export default function RouteConnections({
         };
     }, [map]);
 
+    // Distance from point (px,py) to segment (ax,ay)→(bx,by).
+    const distToSegment = useCallback((px, py, ax, ay, bx, by) => {
+        const dx = bx - ax, dy = by - ay;
+        const lenSq = dx * dx + dy * dy;
+        if (lenSq === 0) return Math.hypot(px - ax, py - ay);
+        const t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / lenSq));
+        return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
+    }, []);
+
     // Hit-test the nearest particle to a pointer position.
-    // Reads canvasRef for the bounding rect; safe to call from any listener.
+    // Checks both the moving dot and the full from→to line segment.
     const getHit = useCallback((clientX, clientY) => {
         const canvas = canvasRef.current;
         if (!canvas) return null;
         const rect = canvas.getBoundingClientRect();
         const mx = clientX - rect.left;
         const my = clientY - rect.top;
-        let hit = null,
-            best = HIT_RADIUS;
+        let hit = null;
+        let best = HIT_RADIUS;
+        const filtersActive = hasActiveFiltersRef.current;
+        const routeKeys = visibleRouteKeysRef.current;
+
         for (const p of stateRef.current.particles) {
+            if (filtersActive && routeKeys && !routeKeys.has(p.routeKey)) {
+                continue;
+            }
             if (p._hx == null) continue;
-            const d = Math.hypot(p._hx - mx, p._hy - my);
+            // Dot hit (original behaviour)
+            const dDot = Math.hypot(p._hx - mx, p._hy - my);
+            // Line segment hit — only counts when the moving dot is within LINE_HIT_DOT_RADIUS
+            const dLine = (p._fx != null && dDot <= LINE_HIT_DOT_RADIUS)
+                ? distToSegment(mx, my, p._fx, p._fy, p._tx, p._ty)
+                : Infinity;
+            const d = Math.min(dDot, dLine);
             if (d < best) {
                 best = d;
                 hit = p;
             }
         }
         return hit;
-    }, []);
+    }, [distToSegment]);
 
-    // Attach the canvas lifecycle: resize sync, pointer events, fetch, rAF loop.
     useRouteCanvas({
         map,
         paths,
@@ -175,9 +237,17 @@ export default function RouteConnections({
         stateRef,
         getHit,
         onParticleClickRef,
+        onCityClickRef,
+        hoveredCityRef,
+        activeRouteKeyRef,
+        visibleRouteKeysRef,
+        hasActiveFiltersRef,
+        onTrackedPositionRef,
+        interactionsEnabledRef,
+        interactiveCityNamesRef,
+        interactionLockRef,
     });
 
-    // pointer-events: none → all events fall through to Leaflet beneath
     return (
         <canvas
             ref={canvasRef}

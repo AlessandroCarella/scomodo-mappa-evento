@@ -1,133 +1,442 @@
-/* Modal backdrop */
+/* Fullscreen overlay with dark glassmorphism blur over the map */
 .stories-overlay {
     position: fixed;
     inset: 0;
     z-index: 1000;
-    background: rgba(10, 10, 12, 0.68);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: transparent;
+    pointer-events: none;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 18px;
+    align-items: stretch;
+    justify-content: stretch;
 }
 
+/* ── Panel ──────────────────────────────────────────────────── */
 .stories-overlay__panel {
     width: min(1000px, 96vw);
     max-height: min(84vh, 900px);
     overflow: hidden;
-    border-radius: 18px;
-    background: rgba(245, 239, 220, 0.92);
-    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
-    border: 1px solid rgba(20, 20, 22, 0.15);
+    border-radius: 0;
+    background: #000000;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+    border: none;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+}
+/* Floating glassmorphism card on the left (50% width) */
+.stories-overlay__panel--floating {
+    position: absolute;
+    top: 50%;
+    left: 4vw;
+    transform: translateY(-50%);
+    width: calc(60% - 8vw);
+    max-width: none;
+    min-width: min(90vw, 320px);
+    max-height: 80vh;
+    padding: 16px 16px 12px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    background: #007c8b;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    box-shadow:
+        0 22px 45px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(0, 0, 0, 0.25);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
+/* Mobile: center horizontally but keep vertical centering and 60vh height */
+@media (max-width: 1200px) {
+    .stories-overlay__panel--floating {
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        max-height: min(58vh, 520px);
+        padding: 14px 16px calc(10px + env(safe-area-inset-bottom));
+        border-radius: 24px 24px 0 0;
+        box-shadow:
+            0 -16px 36px rgba(0, 0, 0, 0.42),
+            0 0 0 1px rgba(0, 0, 0, 0.16);
+    }
+}
+
+/* ── Close button — red square ──────────────────────────────── */
 .stories-overlay__close {
     position: absolute;
     top: 10px;
     right: 12px;
-    width: 42px;
-    height: 42px;
+    width: 34px;
+    height: 34px;
     border-radius: 999px;
-    border: 1px solid rgba(20, 20, 22, 0.2);
-    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(20, 20, 22, 0.28);
+    background:
+        radial-gradient(
+            circle at 30% 0%,
+            rgba(255, 255, 255, 0.9),
+            rgba(230, 230, 230, 0.7)
+        ),
+        rgba(255, 255, 255, 0.6);
     color: rgba(20, 20, 22, 0.9);
-    font-size: 28px;
+    font-size: 22px;
+    font-weight: 700;
     line-height: 1;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition:
+        background 0.18s ease-out,
+        transform 0.16s ease-out,
+        box-shadow 0.18s ease-out;
 }
 
 .stories-overlay__close:hover {
-    background: rgba(255, 255, 255, 0.85);
+    transform: translateY(-1px);
+    background:
+        radial-gradient(
+            circle at 30% 0%,
+            rgba(255, 255, 255, 0.98),
+            rgba(240, 240, 240, 0.9)
+        ),
+        rgba(255, 255, 255, 0.85);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
+/* ── Header (teal band) ─────────────────────────────────────── */
 .stories-overlay__header {
-    padding: 18px 18px 12px;
-    border-bottom: 1px dashed rgba(20, 20, 22, 0.18);
+    padding: 20px 60px 20px 22px;
+    background: #007c8b;
+    border-bottom: none;
+    flex-shrink: 0;
 }
 
 .stories-overlay__title {
-    font-family: "Syne", system-ui, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 22px;
-    letter-spacing: 0.02em;
-    color: rgba(20, 20, 22, 0.92);
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    text-transform: uppercase;
 }
 
 .stories-overlay__subtitle {
-    margin-top: 6px;
-    font-family: "Syne Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
-        Consolas, "Liberation Mono", "Courier New", monospace;
+    margin-top: 4px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
     font-size: 12px;
-    color: rgba(20, 20, 22, 0.68);
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.75);
+    text-transform: uppercase;
 }
 
+/* ── Story list ─────────────────────────────────────────────── */
 .stories-overlay__list {
-    padding: 16px;
+    padding: 0;
     overflow: auto;
     max-height: calc(min(84vh, 900px) - 74px);
     display: grid;
-    gap: 14px;
+    gap: 0;
 }
 
-/* Post-it card */
-.story-postit {
-    border-radius: 14px;
-    padding: 16px;
-    background: linear-gradient(180deg, #fff6b8 0%, #ffe98f 100%);
-    border: 1px solid rgba(40, 35, 18, 0.18);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
-    display: grid;
-    gap: 14px;
-}
-
-.story-postit:nth-child(3n + 1) {
-    transform: rotate(-0.35deg);
-}
-.story-postit:nth-child(3n + 2) {
-    transform: rotate(0.25deg);
-}
-.story-postit:nth-child(3n) {
-    transform: rotate(-0.1deg);
-}
-
-.story-postit__meta {
-    display: grid;
+.stories-overlay__toggles {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
-.story-postit__row {
-    display: grid;
-    grid-template-columns: 110px 1fr;
+.stories-overlay__toggle {
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(20, 20, 22, 0.18);
+    background: #e62f3f;
+    color: #ffffff;
+    display: inline-flex;
     align-items: center;
     gap: 10px;
-}
-
-.story-postit__label {
+    cursor: pointer;
     font-family: "Syne", system-ui, sans-serif;
-    font-weight: 650;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: rgba(20, 20, 22, 0.75);
+    font-size: 13px;
+    font-weight: 700;
+    transition:
+        transform 0.16s ease-out,
+        background 0.18s ease-out,
+        color 0.18s ease-out,
+        box-shadow 0.18s ease-out;
 }
 
-.story-postit__text {
+.stories-overlay__toggle:hover {
+    transform: translateY(-1px);
+}
+
+.stories-overlay__toggle--active {
+    background: #007c8b;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.stories-overlay__toggle-count {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2);
+    font-family: "Syne Mono", ui-monospace, monospace;
+    font-size: 11px;
+}
+
+.stories-overlay__toggle--active .stories-overlay__toggle-count {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Scrollable content inside card */
+.stories-overlay__content {
+    margin-top: 8px;
+    padding-right: 4px;
+    flex: 1 1 auto;
+    overflow-y: auto;
+}
+
+.stories-overlay__content--stacked {
+    display: grid;
+    gap: 18px;
+}
+
+.stories-overlay__section {
+    display: grid;
+    gap: 12px;
+}
+
+.stories-overlay__section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(20, 20, 22, 0.16);
+}
+
+.stories-overlay__section-title {
     font-family: "Syne", system-ui, sans-serif;
     font-size: 14px;
-    line-height: 1.5;
-    color: rgba(20, 20, 22, 0.9);
-    white-space: pre-wrap;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(20, 20, 22, 0.74);
 }
 
-/* Split-flap */
+.stories-overlay__section-count {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(20, 20, 22, 0.08);
+    color: rgba(20, 20, 22, 0.76);
+    font-family: "Syne Mono", ui-monospace, monospace;
+    font-size: 11px;
+}
+
+.stories-overlay__section-list {
+    display: grid;
+    gap: 14px;
+}
+
+/* Simple slide / fade for story change */
+.stories-overlay__story-slide {
+    animation: stories-slide-in 260ms ease-out;
+}
+
+@keyframes stories-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Down arrow button for next story */
+.stories-overlay__next {
+    margin-top: 8px;
+    margin-bottom: 2px;
+    align-self: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid rgba(20, 20, 22, 0.3);
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 255, 255, 0.95),
+            rgba(230, 225, 210, 0.9)
+        ),
+        rgba(255, 255, 255, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(20, 20, 22, 0.9);
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    transition:
+        transform 0.16s ease-out,
+        box-shadow 0.18s ease-out,
+        background 0.18s ease-out;
+}
+
+.stories-overlay__next:hover {
+    transform: translateY(1px);
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 255, 255, 1),
+            rgba(240, 235, 220, 0.96)
+        ),
+        rgba(255, 255, 255, 0.18);
+    box-shadow:
+        0 10px 26px rgba(0, 0, 0, 0.48),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* ── Story card — departure-board style ─────────────────────── */
+.story-postit {
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+    display: grid;
+    gap: 0;
+}
+
+/* Remove the stories rotation effects */
+.story-postit:nth-child(3n + 1),
+.story-postit:nth-child(3n + 2),
+.story-postit:nth-child(3n) {
+    transform: none;
+}
+
+/* ── Meta section (the three rows) ─────────────────────────── */
+.story-postit__meta {
+    display: grid;
+    gap: 0;
+    padding-right: 0;
+    border-right: none;
+}
+
+/* ── Each data row ──────────────────────────────────────────── */
+.story-postit__row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    align-items: center;
+    gap: 0;
+    min-height: 44px;
+    background: #000000;
+}
+
+/* Even rows → dark teal */
+.story-postit__row:nth-child(even) {
+    background: #053c3c;
+}
+
+/* ── Label cell ─────────────────────────────────────────────── */
+.story-postit__label {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+}
+
+/* Even rows label → yellow */
+.story-postit__row:nth-child(even) .story-postit__label {
+    color: #ffcb00;
+}
+
+/* ── Value cell ─────────────────────────────────────────────── */
+.story-postit__value {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.story-postit__value::before {
+    content: "|";
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 300;
+}
+
+/* Even rows value → yellow */
+.story-postit__row:nth-child(even) .story-postit__value {
+    color: #ffcb00;
+}
+
+.story-postit__row:nth-child(even) .story-postit__value::before {
+    color: rgba(255, 203, 0, 0.5);
+}
+
+/* ── Story text area (white bg, black text) ─────────────────── */
+.story-postit__text {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #000000;
+    background: #ffffff;
+    padding: 14px 18px;
+    white-space: pre-wrap;
+    align-self: stretch;
+}
+
+/* ── Split-flap display ─────────────────────────────────────── */
 .splitflap {
     display: inline-flex;
-    gap: 4px;
+    gap: 3px;
     flex-wrap: wrap;
-    font-family: "Syne Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
-        Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    min-width: 0;
+}
+
+.story-postit__row > .splitflap {
+    max-width: 100%;
+    padding-right: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    justify-self: start;
 }
 
 .splitflap__char {
@@ -138,49 +447,72 @@
     min-width: 18px;
     height: 26px;
     padding: 0 6px;
-    border-radius: 6px;
-    background: rgba(18, 18, 20, 0.92);
-    color: rgba(245, 245, 245, 0.95);
+    border-radius: 0;
+    background: #007c8b;
+    color: #ffffff;
     font-size: 13px;
+    font-weight: 700;
     letter-spacing: 0.02em;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.4);
 }
 
 .splitflap__char::after {
     content: "";
     position: absolute;
-    left: 6px;
-    right: 6px;
+    left: 0;
+    right: 0;
     top: 50%;
     height: 1px;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.15);
 }
 
-/* Responsive: stack meta on top of text on mobile, side-by-side on desktop */
+/* ── Responsive ─────────────────────────────────────────────── */
 @media (min-width: 820px) {
     .story-postit {
         grid-template-columns: 340px 1fr;
-        align-items: start;
-        gap: 18px;
+        align-items: stretch;
     }
 
     .story-postit__meta {
-        padding-right: 10px;
-        border-right: 1px dashed rgba(40, 35, 18, 0.22);
-    }
-
-    .story-postit__text {
-        padding-left: 8px;
-        font-size: 15px;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
     }
 }
 
 @media (max-width: 420px) {
     .story-postit__row {
-        grid-template-columns: 1fr;
-        gap: 6px;
+        grid-template-columns: 90px 1fr;
     }
 }
 
+/* ── Scrollbar styling ──────────────────────────────────────── */
+.stories-overlay__panel--floating,
+.stories-overlay__list,
+.stories-overlay__content {
+    scrollbar-width: thin;
+    scrollbar-color: #007c8b transparent;
+}
+
+.stories-overlay__panel--floating::-webkit-scrollbar,
+.stories-overlay__list::-webkit-scrollbar,
+.stories-overlay__content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.stories-overlay__panel--floating::-webkit-scrollbar-track,
+.stories-overlay__list::-webkit-scrollbar-track,
+.stories-overlay__content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.stories-overlay__panel--floating::-webkit-scrollbar-thumb,
+.stories-overlay__list::-webkit-scrollbar-thumb,
+.stories-overlay__content::-webkit-scrollbar-thumb {
+    background: #007c8b;
+    border-radius: 999px;
+}
+
+.stories-overlay__panel--floating::-webkit-scrollbar-thumb:hover,
+.stories-overlay__list::-webkit-scrollbar-thumb:hover,
+.stories-overlay__content::-webkit-scrollbar-thumb:hover {
+    background: #009aad;
+}

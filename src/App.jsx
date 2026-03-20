@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./components/styles/global.css";
 import Map from "./components/Map";
 import TopicPage from "./pages/Topic";
 import FormPage from "./pages/Form";

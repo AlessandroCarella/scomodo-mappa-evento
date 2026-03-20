@@ -83,8 +83,8 @@ export default function FormPage() {
                     </button>
 
                     <div className={styles.topBarMeta}>
-                        <p className={styles.eyebrow}>{FORM_EYEBROW}</p>
-                        <h1 className={styles.pageTitle}>{FORM_TITLE}</h1>
+                        <p className={styles.pageTitle}>{FORM_EYEBROW}</p>
+                        {/* <h1 className={styles.pageTitle}>{FORM_TITLE}</h1> */}
                     </div>
 
                     {/* spacer mirrors the back-button width so the title stays centred */}
@@ -94,13 +94,15 @@ export default function FormPage() {
                 {/* ── card ── */}
                 <main className={styles.main}>
                     <div className={styles.card}>
-                        {/* description — hidden on mobile to save space */}
-                        <p className={styles.desc}>
-                            {FORM_DESC}
-                            {/* <strong> Tutti i campi sono obbligatori.</strong> */}
-                            {/* GDPR notice — art. 13 Reg. UE 2016/679 */}
-                            <GdprNotice />
-                        </p>
+                        {/* ── blue header — same as popup ── */}
+                        <div className="sf-header">
+                            <div className="sf-header-meta">
+                                {/* <p className="sf-eyebrow">{FORM_EYEBROW}</p> */}
+                                <h1 className="sf-title">{FORM_TITLE}</h1>
+                                <p className="sf-desc">{FORM_DESC}</p>
+                                <GdprNotice />
+                            </div>
+                        </div>
 
                         {/* ── feedback states ── */}
                         {(isSuccess || isError) && (

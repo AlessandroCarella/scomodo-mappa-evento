@@ -126,7 +126,7 @@
 /* ── Mailto link ─────────────────────────────────────────────── */
 
 .popup-alert__mailto {
-    color: #5b9bd5;
+    color: #007C8B;
     text-decoration: underline;
     text-underline-offset: 2px;
     word-break: break-all;
@@ -135,7 +135,7 @@
 
 .popup-alert__mailto:hover,
 .popup-alert__mailto:focus-visible {
-    color: #82b8e8;
+    color: #053C3C;
     outline: none;
 }
 
@@ -154,7 +154,7 @@
     border-radius: 6px;
     background: rgba(0, 0, 0, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.07);
-    font-family: "Courier New", Courier, monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.75rem;
     line-height: 1.55;
     color: var(--popup-text);

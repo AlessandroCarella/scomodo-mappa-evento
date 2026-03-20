@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import L from "leaflet";
+import * as L from "leaflet";
 import { buildItalyMask } from "./buildItalyMask";
 import {
     TILE_URL,
@@ -32,48 +32,65 @@ export function useMapInit(containerRef) {
     useEffect(() => {
         if (mapRef.current) return; // StrictMode guard
 
-        const map = L.map(containerRef.current, {
-            zoomControl: true,
-            attributionControl: true,
-            zoomSnap: MAP_ZOOM_SNAP,
-        });
+        let disposed = false;
+        let map = null;
+        let initFrame = 0;
+        let fitFrame = 0;
 
-        L.tileLayer(TILE_URL, {
-            attribution: TILE_ATTRIBUTION,
-            maxZoom: MAP_MAX_ZOOM,
-            minZoom: MAP_MIN_ZOOM,
-        }).addTo(map);
+        const initMap = () => {
+            if (disposed || mapRef.current || !containerRef.current) return;
 
-        map.fitBounds(ITALY_BOUNDS, { padding: ITALY_BOUNDS_PADDING });
-
-        mapRef.current = map;
-
-        fetch(ITALY_GEOJSON_URL)
-            .then((r) => r.json())
-            .then((geoJSON) => {
-                // Bail if StrictMode destroyed this instance before the fetch resolved
-                if (!mapRef.current || mapRef.current !== map) return;
-
-                // Italy highlight polygon
-                // L.geoJSON(geoJSON, { style: ITALY_POLYGON_STYLE }).addTo(map);
-
-                // // World dim-mask (inverted polygon)
-                // L.polygon(buildItalyMask(geoJSON), {
-                //     fillColor: "#000",
-                //     fillOpacity: WORLD_MASK_OPACITY,
-                //     stroke: false,
-                //     interactive: false,
-                // }).addTo(map);
-
-                setReady(true);
-            })
-            .catch((err) => {
-                console.error("Failed to load Italy GeoJSON:", err);
-                setReady(true); // degrade gracefully — show pins/connections anyway
+            map = L.map(containerRef.current, {
+                zoomControl: false,
+                attributionControl: true,
+                zoomSnap: MAP_ZOOM_SNAP,
             });
 
+            L.tileLayer(TILE_URL, {
+                attribution: TILE_ATTRIBUTION,
+                maxZoom: MAP_MAX_ZOOM,
+                minZoom: MAP_MIN_ZOOM,
+            }).addTo(map);
+
+            mapRef.current = map;
+            fitFrame = requestAnimationFrame(() => {
+                if (!mapRef.current || mapRef.current !== map) return;
+                map.invalidateSize(false);
+                map.fitBounds(ITALY_BOUNDS, { padding: ITALY_BOUNDS_PADDING });
+            });
+
+            fetch(ITALY_GEOJSON_URL)
+                .then((r) => r.json())
+                .then((geoJSON) => {
+                    // Bail if StrictMode destroyed this instance before the fetch resolved
+                    if (!mapRef.current || mapRef.current !== map) return;
+
+                    // Italy highlight polygon
+                    // L.geoJSON(geoJSON, { style: ITALY_POLYGON_STYLE }).addTo(map);
+
+                    // // World dim-mask (inverted polygon)
+                    // L.polygon(buildItalyMask(geoJSON), {
+                    //     fillColor: "#000",
+                    //     fillOpacity: WORLD_MASK_OPACITY,
+                    //     stroke: false,
+                    //     interactive: false,
+                    // }).addTo(map);
+
+                    setReady(true);
+                })
+                .catch((err) => {
+                    console.error("Failed to load Italy GeoJSON:", err);
+                    setReady(true); // degrade gracefully — show pins/connections anyway
+                });
+        };
+
+        initFrame = requestAnimationFrame(initMap);
+
         return () => {
-            map.remove();
+            disposed = true;
+            cancelAnimationFrame(initFrame);
+            cancelAnimationFrame(fitFrame);
+            map?.remove();
             mapRef.current = null;
         };
     }, []);
