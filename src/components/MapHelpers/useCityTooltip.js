@@ -1,4 +1,5 @@
 import { useRef, useCallback } from "react";
+import * as L from "leaflet";
 
 /**
  * Shows a brief floating tooltip on the map when WASD navigation reaches a city.
@@ -21,29 +22,26 @@ export function useCityTooltip(mapRef, locations) {
             );
             if (!city) return;
 
-            import("leaflet").then(({ default: leaflet }) => {
-                const tooltip = leaflet
-                    .tooltip({
-                        permanent: true,
-                        direction: "top",
-                        offset: [0, -14],
-                        className: "pin-tooltip pin-tooltip--wasd",
-                    })
-                    .setLatLng([city.lat, city.lng])
-                    .setContent(
-                        `<span class="pin-tooltip-name">${city.name}</span>`,
-                    )
-                    .addTo(map);
+            const tooltip = L.tooltip({
+                permanent: true,
+                direction: "top",
+                offset: [0, -14],
+                className: "pin-tooltip pin-tooltip--wasd",
+            })
+                .setLatLng([city.lat, city.lng])
+                .setContent(
+                    `<span class="pin-tooltip-name">${city.name}</span>`,
+                )
+                .addTo(map);
 
-                wasdTooltipRef.current = tooltip;
+            wasdTooltipRef.current = tooltip;
 
-                setTimeout(() => {
-                    if (wasdTooltipRef.current === tooltip) {
-                        tooltip.remove();
-                        wasdTooltipRef.current = null;
-                    }
-                }, 2500);
-            });
+            setTimeout(() => {
+                if (wasdTooltipRef.current === tooltip) {
+                    tooltip.remove();
+                    wasdTooltipRef.current = null;
+                }
+            }, 2500);
         },
         [mapRef, locations],
     );

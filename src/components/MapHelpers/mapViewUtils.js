@@ -1,4 +1,4 @@
-import L from "leaflet";
+import * as L from "leaflet";
 
 export function isMobileViewport() {
     return typeof window !== "undefined" && window.innerWidth < 768;

@@ -88,6 +88,9 @@ export default function RouteConnections({
     onTrackedPosition,
     hoveredCityRef,
     onCityClick,
+    interactionsEnabled = true,
+    interactiveCityNames,
+    interactionLockRef,
 }) {
     const canvasRef = useRef(null);
 
@@ -128,6 +131,16 @@ export default function RouteConnections({
     useEffect(() => {
         onTrackedPositionRef.current = onTrackedPosition || null;
     }, [onTrackedPosition]);
+
+    const interactionsEnabledRef = useRef(interactionsEnabled);
+    useEffect(() => {
+        interactionsEnabledRef.current = interactionsEnabled;
+    }, [interactionsEnabled]);
+
+    const interactiveCityNamesRef = useRef(interactiveCityNames);
+    useEffect(() => {
+        interactiveCityNamesRef.current = interactiveCityNames;
+    }, [interactiveCityNames]);
 
     useEffect(() => {
         const S = stateRef.current;
@@ -230,6 +243,9 @@ export default function RouteConnections({
         visibleRouteKeysRef,
         hasActiveFiltersRef,
         onTrackedPositionRef,
+        interactionsEnabledRef,
+        interactiveCityNamesRef,
+        interactionLockRef,
     });
 
     return (

@@ -1,7 +1,12 @@
 import "./styles/Pin.css";
 import { useEffect, useRef } from "react";
-import L from "leaflet";
+import * as L from "leaflet";
 import { PIN_STYLE } from "../config";
+
+function canUseMarkerInteractions() {
+    if (typeof window === "undefined" || !window.matchMedia) return false;
+    return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
 
 /**
  * Pin - renders a single Leaflet circleMarker with a hover tooltip.
@@ -25,13 +30,15 @@ export default function Pin({
     onHoverEnd,
 }) {
     const markerRef = useRef(null);
+    const markerInteractionsEnabled =
+        canUseMarkerInteractions() && hasStories && isInteractive;
 
     useEffect(() => {
         if (!map || !location) return;
 
         const marker = L.circleMarker([location.lat, location.lng], {
             ...PIN_STYLE,
-            interactive: hasStories && isInteractive,
+            interactive: markerInteractionsEnabled,
         }).addTo(map);
 
         marker.bindTooltip(
@@ -45,25 +52,38 @@ export default function Pin({
         );
 
         let handleMarkerClick;
-        if (hasStories && isInteractive && typeof onClick === "function") {
+        let handleMarkerMouseOver;
+        let handleMarkerMouseOut;
+        if (markerInteractionsEnabled && typeof onClick === "function") {
             handleMarkerClick = () => onClick(location.name);
             marker.on("click", handleMarkerClick);
-            if (typeof onHoverStart === "function")
-                marker.on("mouseover", () => onHoverStart(location.name));
-            if (typeof onHoverEnd === "function")
-                marker.on("mouseout", () => onHoverEnd());
+            if (typeof onHoverStart === "function") {
+                handleMarkerMouseOver = () => onHoverStart(location.name);
+                marker.on("mouseover", handleMarkerMouseOver);
+            }
+            if (typeof onHoverEnd === "function") {
+                handleMarkerMouseOut = () => onHoverEnd();
+                marker.on("mouseout", handleMarkerMouseOut);
+            }
         }
 
         markerRef.current = marker;
         return () => {
             if (handleMarkerClick) {
                 marker.off("click", handleMarkerClick);
-                marker.off("mouseover");
-                marker.off("mouseout");
             }
+            if (handleMarkerMouseOver) marker.off("mouseover", handleMarkerMouseOver);
+            if (handleMarkerMouseOut) marker.off("mouseout", handleMarkerMouseOut);
             marker.remove();
         };
-    }, [map, location, onClick, hasStories, isInteractive, onHoverStart, onHoverEnd]);
+    }, [
+        map,
+        location,
+        markerInteractionsEnabled,
+        onClick,
+        onHoverStart,
+        onHoverEnd,
+    ]);
 
     useEffect(() => {
         const marker = markerRef.current;
@@ -73,17 +93,16 @@ export default function Pin({
 
         marker.setStyle({
             ...PIN_STYLE,
-            interactive: hasStories && isInteractive,
+            interactive: markerInteractionsEnabled,
             fillOpacity: isDimmed ? 0.18 : 0.95,
             opacity: isDimmed ? 0.28 : 0.9,
             color: isDimmed ? "rgba(176,160,128,0.52)" : PIN_STYLE.color,
         });
 
         if (markerElement) {
-            markerElement.style.cursor =
-                hasStories && isInteractive ? "pointer" : "";
+            markerElement.style.cursor = markerInteractionsEnabled ? "pointer" : "";
         }
-    }, [hasStories, isDimmed, isInteractive]);
+    }, [isDimmed, markerInteractionsEnabled]);
 
     return null;
 }

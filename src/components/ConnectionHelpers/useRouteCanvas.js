@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import L from "leaflet";
+import * as L from "leaflet";
 import {
     ROUTE_TRAIL_LEN as TRAIL_LEN,
     ROUTE_PCOLORS as PCOLORS,
@@ -16,6 +16,11 @@ import {
     haversineKm,
 } from "./routeUtils";
 import { pairKey } from "./connectionUtils";
+
+const TAP_MOVE_TOLERANCE_PX = 8;
+const TAP_MAX_DURATION_MS = 450;
+const SYNTHETIC_CLICK_SUPPRESSION_MS = 700;
+const CITY_TAP_HIT_RADIUS_PX = 20;
 
 /**
  * useRouteCanvas
@@ -41,6 +46,9 @@ export function useRouteCanvas({
     visibleRouteKeysRef,
     hasActiveFiltersRef,
     onTrackedPositionRef,
+    interactionsEnabledRef,
+    interactiveCityNamesRef,
+    interactionLockRef,
 }) {
     useEffect(() => {
         if (!map || !locationsUrl) return;
@@ -49,6 +57,10 @@ export function useRouteCanvas({
         if (!canvas) return;
 
         const container = map.getContainer();
+        let trackedTouch = null;
+        let suppressClickUntil = 0;
+        const isInteractionLocked = () =>
+            (interactionLockRef?.current ?? 0) > performance.now();
 
         const syncSize = () => {
             canvas.width = container.offsetWidth;
@@ -59,12 +71,22 @@ export function useRouteCanvas({
         map.on("resize", syncSize);
 
         const onMouseMove = (e) => {
+            if (interactionsEnabledRef && !interactionsEnabledRef.current) {
+                container.style.cursor = "";
+                return;
+            }
             container.style.cursor = getHit(e.clientX, e.clientY)
                 ? "pointer"
                 : "";
         };
 
         const onClick = (e) => {
+            if (interactionsEnabledRef && !interactionsEnabledRef.current) {
+                return;
+            }
+            if (isInteractionLocked()) return;
+            if (performance.now() < suppressClickUntil) return;
+
             const hoveredCity = hoveredCityRef?.current;
             if (hoveredCity && onCityClickRef?.current) {
                 onCityClickRef.current(hoveredCity);
@@ -80,15 +102,125 @@ export function useRouteCanvas({
             }
         };
 
-        const onTouchEnd = (e) => {
-            const hoveredCity = hoveredCityRef?.current;
-            if (hoveredCity && onCityClickRef?.current) {
-                onCityClickRef.current(hoveredCity);
+        const getTrackedTouch = (touchList) => {
+            if (!trackedTouch) return null;
+
+            return (
+                Array.from(touchList || []).find(
+                    (touch) => touch.identifier === trackedTouch.identifier,
+                ) || null
+            );
+        };
+
+        const resetTrackedTouch = () => {
+            trackedTouch = null;
+        };
+
+        const getCityHit = (clientX, clientY) => {
+            const interactiveCityNames = interactiveCityNamesRef?.current;
+            if (
+                !S.locations ||
+                !interactiveCityNames ||
+                interactiveCityNames.size === 0
+            ) {
+                return null;
+            }
+
+            const rect = container.getBoundingClientRect();
+            const mx = clientX - rect.left;
+            const my = clientY - rect.top;
+            let best = CITY_TAP_HIT_RADIUS_PX;
+            let hit = null;
+
+            for (const location of S.locations) {
+                if (!interactiveCityNames.has(location.name)) continue;
+                const point = cpt(location.lat, location.lng);
+                const distance = Math.hypot(point.x - mx, point.y - my);
+                if (distance < best) {
+                    best = distance;
+                    hit = location;
+                }
+            }
+
+            return hit;
+        };
+
+        const onTouchStart = (e) => {
+            if (hoveredCityRef) {
+                hoveredCityRef.current = null;
+            }
+
+            if (interactionsEnabledRef && !interactionsEnabledRef.current) {
+                resetTrackedTouch();
                 return;
             }
-            const t = e.changedTouches?.[0];
-            if (!t) return;
-            const hit = getHit(t.clientX, t.clientY);
+            if (isInteractionLocked()) {
+                resetTrackedTouch();
+                return;
+            }
+
+            if (e.touches.length !== 1) {
+                resetTrackedTouch();
+                return;
+            }
+
+            const touch = e.touches[0];
+            trackedTouch = {
+                identifier: touch.identifier,
+                startX: touch.clientX,
+                startY: touch.clientY,
+                moved: false,
+                startedAt: performance.now(),
+            };
+        };
+
+        const onTouchMove = (e) => {
+            const touch = getTrackedTouch(e.touches);
+            if (!trackedTouch || !touch) return;
+
+            if (e.touches.length !== 1) {
+                trackedTouch.moved = true;
+                return;
+            }
+
+            const dx = touch.clientX - trackedTouch.startX;
+            const dy = touch.clientY - trackedTouch.startY;
+            if (Math.hypot(dx, dy) > TAP_MOVE_TOLERANCE_PX) {
+                trackedTouch.moved = true;
+            }
+        };
+
+        const onTouchEnd = (e) => {
+            if (interactionsEnabledRef && !interactionsEnabledRef.current) {
+                resetTrackedTouch();
+                return;
+            }
+            if (isInteractionLocked()) {
+                resetTrackedTouch();
+                return;
+            }
+
+            const touch = getTrackedTouch(e.changedTouches);
+            if (!trackedTouch || !touch) {
+                resetTrackedTouch();
+                return;
+            }
+
+            const duration = performance.now() - trackedTouch.startedAt;
+            const isTap =
+                !trackedTouch.moved && duration <= TAP_MAX_DURATION_MS;
+            resetTrackedTouch();
+            if (!isTap) return;
+            suppressClickUntil =
+                performance.now() + SYNTHETIC_CLICK_SUPPRESSION_MS;
+
+            const cityHit = getCityHit(touch.clientX, touch.clientY);
+            if (cityHit && onCityClickRef?.current) {
+                onCityClickRef.current(cityHit.name);
+                return;
+            }
+
+            const hit = getHit(touch.clientX, touch.clientY);
             if (hit && onParticleClickRef.current) {
                 onParticleClickRef.current({
                     from: hit.from.name,
@@ -98,9 +230,16 @@ export function useRouteCanvas({
             }
         };
 
+        const onTouchCancel = () => {
+            resetTrackedTouch();
+        };
+
         container.addEventListener("mousemove", onMouseMove);
         container.addEventListener("click", onClick);
+        container.addEventListener("touchstart", onTouchStart);
+        container.addEventListener("touchmove", onTouchMove);
         container.addEventListener("touchend", onTouchEnd);
+        container.addEventListener("touchcancel", onTouchCancel);
 
         const cpt = (lat, lng) =>
             map.latLngToContainerPoint(L.latLng(lat, lng));
@@ -344,7 +483,10 @@ export function useRouteCanvas({
             map.off("resize", syncSize);
             container.removeEventListener("mousemove", onMouseMove);
             container.removeEventListener("click", onClick);
+            container.removeEventListener("touchstart", onTouchStart);
+            container.removeEventListener("touchmove", onTouchMove);
             container.removeEventListener("touchend", onTouchEnd);
+            container.removeEventListener("touchcancel", onTouchCancel);
             container.style.cursor = "";
             cancelAnimationFrame(S.animFrame);
             S.particles = [];
@@ -363,5 +505,6 @@ export function useRouteCanvas({
         visibleRouteKeysRef,
         hasActiveFiltersRef,
         onTrackedPositionRef,
+        interactionsEnabledRef,
     ]); // eslint-disable-line react-hooks/exhaustive-deps
 }

@@ -1,5 +1,6 @@
 import "./styles/Map.css";
 import { useRef, useEffect, useCallback, useMemo } from "react";
+import * as L from "leaflet";
 import Pin from "./Pin";
 import RouteConnections from "./RouteConnections";
 import StoriesOverlay from "./StoriesOverlay";
@@ -36,6 +37,7 @@ import { useState } from "react";
 export default function Map() {
     const containerRef = useRef(null);
     const { mapRef, ready } = useMapInit(containerRef);
+    const interactionLockRef = useRef(0);
 
     const { allStories, locations, paths, dataReady } = useMapData();
 
@@ -73,11 +75,8 @@ export default function Map() {
 
         if (points.length === 0) return;
 
-        import("leaflet").then(({ default: L }) => {
-            if (!mapRef.current) return;
-            mapRef.current.fitBounds(L.latLngBounds(points), {
-                padding: ITALY_BOUNDS_PADDING,
-            });
+        mapRef.current.fitBounds(L.latLngBounds(points), {
+            padding: ITALY_BOUNDS_PADDING,
         });
     }, [ready, dataReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -172,6 +171,7 @@ export default function Map() {
         (fromName, toName, preferredRouteKey = null) => {
             const map = mapRef.current;
             if (!map) return;
+            interactionLockRef.current = performance.now() + 450;
 
             const fromLoc = locations.find((l) => l.name === fromName);
             const toLoc = locations.find((l) => l.name === toName);
@@ -202,6 +202,7 @@ export default function Map() {
     const handlePinClick = useCallback(
         (locationName) => {
             if (!locationName) return;
+            interactionLockRef.current = performance.now() + 450;
 
             const map = mapRef.current;
             if (map) {
@@ -229,6 +230,12 @@ export default function Map() {
         [allStories, locations, mapRef, openCityOverlay],
     );
 
+    const handleCloseStories = useCallback(() => {
+        interactionLockRef.current = performance.now() + 450;
+        hoveredCityRef.current = null;
+        closeStories();
+    }, [closeStories]);
+
     // ── WASD & gamepad ────────────────────────────────────────────────────────
     const { handleCityReached } = useCityTooltip(mapRef, locations);
 
@@ -246,7 +253,7 @@ export default function Map() {
         currentCityRef,
         isAnimatingRef,
         isStoriesOpenRef,
-        onCloseStories: closeStories,
+        onCloseStories: handleCloseStories,
         navigateToRef,
     });
 
@@ -255,6 +262,12 @@ export default function Map() {
     const storiesOpen = overlayState !== null;
     const overlayActive = storiesOpen || formOpen;
     const showMapControls = !overlayActive;
+
+    useEffect(() => {
+        if (overlayActive) {
+            hoveredCityRef.current = null;
+        }
+    }, [overlayActive]);
 
     return (
         <div className="map-root">
@@ -277,6 +290,9 @@ export default function Map() {
                         onTrackedPosition={handleTrackedPosition}
                         hoveredCityRef={hoveredCityRef}
                         onCityClick={handlePinClick}
+                        interactionsEnabled={!overlayActive}
+                        interactiveCityNames={allStoryLocations}
+                        interactionLockRef={interactionLockRef}
                     />
                 )}
             </div>
@@ -288,7 +304,10 @@ export default function Map() {
                         map={mapRef.current}
                         location={location}
                         hasStories={allStoryLocations.has(location.name)}
-                        isInteractive={allStoryLocations.has(location.name)}
+                        isInteractive={
+                            !overlayActive &&
+                            allStoryLocations.has(location.name)
+                        }
                         isDimmed={false}
                         onClick={handlePinClick}
                         onHoverStart={(name) => { hoveredCityRef.current = name; }}
@@ -349,7 +368,7 @@ export default function Map() {
                 showArrivals={cityOverlayFilters.showArrivals}
                 onToggleDepartures={toggleDepartures}
                 onToggleArrivals={toggleArrivals}
-                onClose={closeStories}
+                onClose={handleCloseStories}
                 currentLatLng={trackedLatLng}
                 isPlaying={routePlaying}
                 onStoryChange={handleStoryChange}
