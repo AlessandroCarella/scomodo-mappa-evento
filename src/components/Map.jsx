@@ -217,8 +217,14 @@ export default function Map() {
             const matches = allStories.filter((story) => {
                 const isPartenza = story.cittaPartenza === locationName;
                 const isArrivo = story.cittaArrivo === locationName;
-                if (PARTENZE_ARRIVI === "Partenze") return isPartenza;
-                if (PARTENZE_ARRIVI === "Arrivi") return isArrivo;
+                if (PARTENZE_ARRIVI === "Partenze")
+                    return locationName === CONFIGURED_STORY_FILTER.city
+                        ? isPartenza
+                        : story.cittaPartenza === CONFIGURED_STORY_FILTER.city && isArrivo;
+                if (PARTENZE_ARRIVI === "Arrivi")
+                    return locationName === CONFIGURED_STORY_FILTER.city
+                        ? isArrivo
+                        : story.cittaArrivo === CONFIGURED_STORY_FILTER.city && isPartenza;
                 return isPartenza || isArrivo;
             });
             const { departureStories, arrivalStories } = splitStoriesByCity(
