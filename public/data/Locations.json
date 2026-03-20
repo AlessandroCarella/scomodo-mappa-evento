@@ -1,5 +1,15 @@
 [
     {
+        "name": "Monaco di Baviera",
+        "lat": 48.13743,
+        "lng": 11.57549
+    },
+    {
+        "name": "Padova",
+        "lat": 45.40797,
+        "lng": 11.88586
+    },
+    {
         "name": "Belgrado",
         "lat": 44.80401,
         "lng": 20.46513

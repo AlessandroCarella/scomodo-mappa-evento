@@ -1,5 +1,23 @@
 [
     {
+        "nome": "Marco",
+        "eta": 26,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Monaco di Baviera",
+        "data": "09-04-2025",
+        "storia": "Ho lasciato bari dopo aver visto tutto quello che credevo sarebbe stato il mio mondo sgretolarsi tra le mie mani. Sono partito per monaco e ho iniziato un lavoro in un ristorante a duemila metri sulle alpi. La mia vecchia vita non tornerà mai indietro, ma il nuovo me non sarebbe comunque in grado di starci. Ho imparato a vivere nella solitudine della montagna, e a respirare piano e a pieno come fa il vento sulle vette.",
+        "tipo": true
+    },
+    {
+        "nome": "Fabiola",
+        "eta": 28,
+        "cittaPartenza": "Bari",
+        "cittaArrivo": "Padova",
+        "data": "20-09-2019",
+        "storia": "Ho lasciato i miei amici, la mia associazione e la mia famiglia. Ho trovato la forza della mia relazione e un'esperienza di studio e di vita che non avrei mai potuto fare se non fossi andata via",
+        "tipo": true
+    },
+    {
         "nome": "Silvio",
         "eta": 31,
         "cittaPartenza": "Bari",
