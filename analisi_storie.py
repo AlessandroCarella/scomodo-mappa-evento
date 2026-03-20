@@ -27,7 +27,9 @@ nltk.download('stopwords', quiet=True)
 nltk.download('punkt',     quiet=True)
 nltk.download('punkt_tab', quiet=True)
 
+print("Loading spaCy model...")
 nlp = spacy.load("it_core_news_sm")
+print("spaCy model loaded.")
 italian_stopwords = set(stopwords.words('italian'))
 stemmer = SnowballStemmer('italian')
 
@@ -82,15 +84,18 @@ def readStories ():
             stories.append(story["storia"])
     return stories
 
+print(f"Reading stories from '{INPUT_FILE}'...")
 prev_texts = readStories()
+print(f"Loaded {len(prev_texts)} stories. Saving backup to '{INPUT_BACKUP_FILE}'...")
 with open (INPUT_BACKUP_FILE, "w", encoding="utf-8") as f:
     json.dump(prev_texts, f, indent=4, ensure_ascii=False)
-    
+print("Backup saved. Watching for file changes...")
+
 while True:
     texts = readStories()
-    
+
     if texts == prev_texts:
-        print("Waiting a minute for file to update...")
+        print(f"No changes detected. Waiting {TIMEOUT_TIME}s...")
         time.sleep (TIMEOUT_TIME)
     else:
         df = pd.DataFrame({'response': texts, 'id': range(len(texts))})
@@ -99,11 +104,14 @@ while True:
         preprocessor  = ItalianTextPreprocessor(nlp_model=nlp)
         processed_data = []
 
+        print("Preprocessing texts...")
         for i, text in enumerate(texts):
             result = preprocessor.preprocess_full(text)
             result['original_text'] = text
             result['id'] = i
             processed_data.append(result)
+            if (i + 1) % 50 == 0 or (i + 1) == len(texts):
+                print(f"  {i + 1}/{len(texts)} texts preprocessed")
 
         df['cleaned_text']   = [d['cleaned_text']   for d in processed_data]
         df['tokens']         = [d['tokens']         for d in processed_data]
@@ -115,7 +123,9 @@ while True:
 
         texts_for_modeling = [' '.join(tokens) for tokens in df['tokens']]
 
+        print("Loading sentence transformer model...")
         sentence_model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+        print("Sentence transformer loaded.")
 
         topic_model = BERTopic(
             language="italian",
@@ -124,7 +134,9 @@ while True:
             verbose=True,
         )
 
+        print("Running BERTopic fit_transform...")
         topics, probs = topic_model.fit_transform(texts_for_modeling)
+        print("BERTopic fit_transform complete.")
 
         df['bertopic']      = topics
         df['bertopic_prob'] = probs
@@ -204,11 +216,15 @@ while True:
 
             return streamlined_topic_info
 
+        print("Building streamlined analysis...")
         streamlined_analysis = get_streamlined_representative_docs(
             topic_model, texts_for_modeling, df
         )
+        print(f"Analysis complete: {len(streamlined_analysis)} topics processed.")
 
+        print(f"Writing output to '{OUTPUT_FILE}'...")
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as file:
             json.dump(streamlined_analysis, file, ensure_ascii=False, indent=4)
+        print("Output saved successfully.")
 
     prev_texts = texts # update previous text
