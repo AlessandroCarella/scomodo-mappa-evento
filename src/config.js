@@ -274,7 +274,7 @@ export const QR_LINK = "https://scomodo-mappa-evento.pages.dev/";
 // Size of the QR card.
 // Any valid CSS length works: px, vw, vh, min(), clamp(), etc.
 // Default: 1/16 of a 16:9 screen — one cell of a 4×4 grid.
-const QR_SIDE_SIZE = 17;
+const QR_SIDE_SIZE = 20;
 export const QR_SIZE = `min(${QR_SIDE_SIZE}vw, ${QR_SIDE_SIZE}vh)`;
 
 // ── Story Form ────────────────────────────────────────────────
@@ -284,7 +284,7 @@ export const FORM_ENABLED = true;
 
 // Size of the trigger button — same logic as QR_SIZE.
 // Any valid CSS length: px, vw, vh, min(), clamp(), etc.
-const FORM_SIDE_SIZE = 17;
+const FORM_SIDE_SIZE = 20;
 export const FORM_BUTTON_SIZE = `min(${FORM_SIDE_SIZE}vw, ${FORM_SIDE_SIZE}vh)`;
 
 // Height of the text-label strip that sits above the QR image inside the

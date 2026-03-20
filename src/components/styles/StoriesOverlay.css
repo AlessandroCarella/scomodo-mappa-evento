@@ -27,13 +27,14 @@
 /* Floating glassmorphism card on the left (50% width) */
 .stories-overlay__panel--floating {
     position: absolute;
-    top: 50%;
+    top: 4vh;
     left: 4vw;
-    transform: translateY(-50%);
+    transform: none;
     width: calc(60% - 8vw);
     max-width: none;
     min-width: min(90vw, 320px);
-    max-height: 80vh;
+    /* Leave room at the bottom for the QR card (min(25vw,25vh) tall + ~74px gap) */
+    max-height: calc(100vh - 4vh - min(25vw, 25vh) - 54px);
     padding: 16px 16px 12px;
     box-sizing: border-box;
     border-radius: 3px;

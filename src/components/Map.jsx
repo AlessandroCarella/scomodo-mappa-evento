@@ -341,11 +341,11 @@ export default function Map() {
                 </div>
             )}
 
-            {showMapControls && QR_ENABLED && (
+            {!formOpen && QR_ENABLED && (
                 <QRcode link={QR_LINK} size={QR_SIZE} />
             )}
 
-            {showMapControls && FORM_ENABLED && (
+            {!formOpen && FORM_ENABLED && (
                 <StoryFormButton onClick={() => setFormOpen(true)} />
             )}
 
