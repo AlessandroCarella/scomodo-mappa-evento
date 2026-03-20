@@ -1,10 +1,17 @@
 import "./styles/StoriesOverlay.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { PARTENZE_ARRIVI } from "../config";
-import { ChevronDown, X } from "lucide-react";
+import { X } from "lucide-react";
 
 const FOLLOW_INTERVAL_MS = 350;
 const OPEN_INTERACTION_GUARD_MS = 350;
+
+
+function truncate(text, maxLen) {
+    if (!text) return "";
+    if (text.length <= maxLen) return text;
+    return `${text.slice(0, maxLen).trimEnd()}...`;
+}
 
 function abbrCity(name) {
     const safe = (name || "").trim();
@@ -39,46 +46,26 @@ export function StoryPostIt({ story }) {
     if (!story) return null;
 
     const passenger =
-        (story.nome && String(story.nome).trim()) ||
-        (story.eta != null ? `Anon (${story.eta})` : "Anonimo");
-    const passengerDisplay = passenger.toUpperCase();
+        (story.nome && String(story.nome).trim().toUpperCase()) || "ANONIMO";
 
     const eta = story.eta != null ? String(story.eta) : "---";
 
     const partenza = (story.cittaPartenza || "---").toUpperCase();
     const arrivo = (story.cittaArrivo || "---").toUpperCase();
-    const tratta = `${abbrCity(story.cittaPartenza)}-${abbrCity(
-        story.cittaArrivo,
-    )}`;
 
     const dataText =
         (story.data && String(story.data).trim()) ||
         (story.anno && String(story.anno).trim()) ||
         "---";
 
-    const body = String(story.storia || story.testo || "");
+    const body = truncate(story.storia || story.testo || "", 500);
 
     return (
         <article className="story-postit">
-            <div className="story-postit__meta story-postit__meta--desktop">
+            <div className="story-postit__meta">
                 <div className="story-postit__row">
                     <div className="story-postit__label">Passeggero</div>
-                    <SplitFlapText text={passengerDisplay} />
-                </div>
-                <div className="story-postit__row">
-                    <div className="story-postit__label">Tratta</div>
-                    <SplitFlapText text={tratta} />
-                </div>
-                <div className="story-postit__row">
-                    <div className="story-postit__label">Data</div>
-                    <SplitFlapText text={dataText} />
-                </div>
-            </div>
-
-            <div className="story-postit__meta story-postit__meta--mobile">
-                <div className="story-postit__row">
-                    <div className="story-postit__label">Passeggero</div>
-                    <div className="story-postit__value">{passengerDisplay}</div>
+                    <div className="story-postit__value">{passenger}</div>
                 </div>
                 <div className="story-postit__row">
                     <div className="story-postit__label">Età</div>
@@ -199,12 +186,7 @@ export default function StoriesOverlay({
     }, [currentStoryIndex, isOpen, isRouteMode, onStoryChange, stories]);
 
     useEffect(() => {
-        if (
-            !isOpen ||
-            !isRouteMode ||
-            !isPlaying ||
-            !focusTrackedLatLng
-        ) {
+        if (!isOpen || !isRouteMode || !isPlaying || !focusTrackedLatLng) {
             return;
         }
 
@@ -220,34 +202,24 @@ export default function StoriesOverlay({
 
     if (!isOpen) return null;
 
-    const hasMultipleStories = isRouteMode && stories.length > 1;
-    const currentStory = isRouteMode ? stories[currentStoryIndex] : null;
-
-    const handleNextStory = () => {
-        if (!hasMultipleStories) return;
-        setCurrentStoryIndex((prev) => (prev + 1) % stories.length);
-    };
-
-    const handleCloseRequest = () => {
-        if (performance.now() < openGuardUntilRef.current) return;
-        onClose?.();
-    };
-
     return (
         <div
             className="stories-overlay"
             role="dialog"
             aria-modal="true"
-            onClick={(e) => {
-                if (e.target === e.currentTarget) handleCloseRequest();
+            onPointerDown={(e) => {
+                if (e.target === e.currentTarget) onClose?.();
             }}
         >
-            <div className="stories-overlay__panel stories-overlay__panel--floating">
+            <div
+                className="stories-overlay__panel stories-overlay__panel--floating"
+                onPointerDown={(e) => e.stopPropagation()}
+            >
                 <button
                     type="button"
                     className="stories-overlay__close"
                     aria-label="Chiudi"
-                    onClick={handleCloseRequest}
+                    onClick={() => onClose?.()}
                 >
                     <X size={20} />
                 </button>
@@ -332,54 +304,23 @@ export default function StoriesOverlay({
                     <>
                         <header className="stories-overlay__header">
                             <div className="stories-overlay__title">Storie</div>
-                            <div className="stories-overlay__subtitle stories-overlay__subtitle--desktop">
-                                {stories.length > 0
-                                    ? `${currentStoryIndex + 1} / ${stories.length} post-it`
-                                    : "0 / 0 post-it"}
-                            </div>
-                            <div className="stories-overlay__subtitle stories-overlay__subtitle--mobile">
+                            <div className="stories-overlay__subtitle">
                                 {stories.length > 0
                                     ? `${stories.length} storie`
                                     : "0 storie"}
                             </div>
                         </header>
 
-                        <div className="stories-overlay__route-view stories-overlay__route-view--desktop">
-                            <div className="stories-overlay__content">
-                                {currentStory && (
+                        <div className="stories-overlay__content stories-overlay__content--stacked">
+                            <div className="stories-overlay__section-list">
+                                {stories.map((story, index) => (
                                     <div
-                                        key={getStoryKey(currentStory, currentStoryIndex)}
+                                        key={getStoryKey(story, index)}
                                         className="stories-overlay__story-slide"
                                     >
-                                        <StoryPostIt story={currentStory} />
+                                        <StoryPostIt story={story} />
                                     </div>
-                                )}
-                            </div>
-
-                            {hasMultipleStories && (
-                                <button
-                                    type="button"
-                                    className="stories-overlay__next"
-                                    onClick={handleNextStory}
-                                    aria-label="Prossima storia"
-                                >
-                                    <ChevronDown size={20} />
-                                </button>
-                            )}
-                        </div>
-
-                        <div className="stories-overlay__route-view stories-overlay__route-view--mobile">
-                            <div className="stories-overlay__content stories-overlay__content--stacked">
-                                <div className="stories-overlay__section-list">
-                                    {stories.map((story, index) => (
-                                        <div
-                                            key={getStoryKey(story, index)}
-                                            className="stories-overlay__story-slide"
-                                        >
-                                            <StoryPostIt story={story} />
-                                        </div>
-                                    ))}
-                                </div>
+                                ))}
                             </div>
                         </div>
                     </>
