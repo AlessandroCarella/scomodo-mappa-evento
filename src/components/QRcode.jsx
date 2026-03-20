@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./styles/QRcode.css";
 import { generateQRUrl } from "./QRcodeHelpers/generateQRUrl";
+import { QR_LABEL_TEXT_H } from "../config";
 
 const IS_EMBEDDED = window.self !== window.top;
 
@@ -21,6 +22,7 @@ export default function QRcode({
     link = "https://scomodo-mappa-evento.pages.dev/",
     size = "min(25vw, 25vh)",
     imgSizePx = 512,
+    labelTextH = QR_LABEL_TEXT_H,
 }) {
     const [status, setStatus] = useState("loading"); // "loading" | "ready" | "error"
 
@@ -36,7 +38,7 @@ export default function QRcode({
         <div className="qr-anchor">
             <div
                 className="qr-card"
-                style={{ "--qr-size": size }}
+                style={{ "--qr-size": size, "--qr-label-text-h": labelTextH }}
                 onClick={handleClick}
                 role="link"
                 tabIndex={0}
@@ -50,37 +52,49 @@ export default function QRcode({
                 <span className="qr-corner qr-corner--bl" aria-hidden />
                 <span className="qr-corner qr-corner--br" aria-hidden />
 
-                {/* Loading / error placeholder */}
-                {status !== "ready" && (
-                    <div className="qr-placeholder" aria-hidden>
-                        {status === "loading" ? (
-                            <>
-                                <div className="qr-spinner" />
-                                <span className="qr-placeholder-label">
-                                    loading
-                                </span>
-                            </>
-                        ) : (
-                            <span className="qr-placeholder-label">
-                                unavailable
-                            </span>
-                        )}
-                    </div>
-                )}
+                {/* Text strip */}
+                <div className="qr-label-strip">
+                    <span className="qr-label">
+                        Esplora la mappa
+                        <br />
+                        dal tuo telefono
+                    </span>
+                </div>
 
-                {/* QR image — always in the DOM so the browser can pre-load */}
-                <img
-                    className="qr-img"
-                    src={src}
-                    alt={`QR code linking to ${link}`}
-                    draggable={false}
-                    style={{
-                        opacity: status === "ready" ? 1 : 0,
-                        transition: "opacity 0.4s ease",
-                    }}
-                    onLoad={() => setStatus("ready")}
-                    onError={() => setStatus("error")}
-                />
+                {/* QR image area */}
+                <div className="qr-img-area">
+                    {/* Loading / error placeholder */}
+                    {status !== "ready" && (
+                        <div className="qr-placeholder" aria-hidden>
+                            {status === "loading" ? (
+                                <>
+                                    <div className="qr-spinner" />
+                                    <span className="qr-placeholder-label">
+                                        loading
+                                    </span>
+                                </>
+                            ) : (
+                                <span className="qr-placeholder-label">
+                                    unavailable
+                                </span>
+                            )}
+                        </div>
+                    )}
+
+                    {/* QR image — always in the DOM so the browser can pre-load */}
+                    <img
+                        className="qr-img"
+                        src={src}
+                        alt={`QR code linking to ${link}`}
+                        draggable={false}
+                        style={{
+                            opacity: status === "ready" ? 1 : 0,
+                            transition: "opacity 0.4s ease",
+                        }}
+                        onLoad={() => setStatus("ready")}
+                        onError={() => setStatus("error")}
+                    />
+                </div>
             </div>
         </div>
     );

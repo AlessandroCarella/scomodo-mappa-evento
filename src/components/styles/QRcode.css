@@ -27,7 +27,12 @@
 .qr-card {
     position: relative;
     width: var(--qr-size, min(25vw, 25vh));
-    height: var(--qr-size, min(25vw, 25vh));
+    height: calc(
+        var(--qr-size, min(25vw, 25vh)) + var(--qr-label-text-h, 38px)
+    );
+
+    display: flex;
+    flex-direction: column;
 
     border-radius: 0;
     overflow: hidden;
@@ -47,6 +52,37 @@
     border-color: #007C8B;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
     transform: translateY(-2px) scale(1.015);
+}
+
+/* ── Text strip ──────────────────────────────────────────────── */
+.qr-label-strip {
+    flex-shrink: 0;
+    height: var(--qr-label-text-h, 38px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    background: #e62f3f;
+}
+
+.qr-label {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(7px, 1.3vmin, 10px);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.35;
+    user-select: none;
+}
+
+/* ── QR image area ───────────────────────────────────────────── */
+.qr-img-area {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    background: #007c8b;
 }
 
 /* ── QR image ────────────────────────────────────────────────── */
