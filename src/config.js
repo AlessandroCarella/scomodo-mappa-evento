@@ -162,8 +162,8 @@ export const BANNER_WIDTH_PERCENT = 35;
 // Text shown in each panel (each word will be measured independently)
 export const BANNER_TEXT_LEFT = "Bari città del viaggio";
 export const BANNER_TEXT_RIGHT =
-    "PERCHÉ PARTIAMO? ESPLORA, LEGGI O RACCONTA UN'ESPERIENZA";
-
+    // "PERCHÉ PARTIAMO? ESPLORA, LEGGI O RACCONTA UN'ESPERIENZA";
+    "Perchè partiamo? Esplora, leggi o racconta un'esperienza";
 // Milliseconds of mouse inactivity before the banner reappears
 export const BANNER_REAPPEAR_DELAY = 1000;
 

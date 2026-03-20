@@ -92,7 +92,7 @@
 .banner-text {
     display: block;
     width: 100%;
-    text-transform: uppercase;
+    /* text-transform: lowercase; */
     color: var(--banner-text-color, #000000);
     /* line-height: 1.25; */
     line-height: 1.25;
