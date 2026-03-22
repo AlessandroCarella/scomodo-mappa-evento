@@ -1,5 +1,14 @@
 [
     {
+        "nome": "Dalila",
+        "eta": 22,
+        "cittaPartenza": "Troia",
+        "cittaArrivo": "Bari",
+        "data": "22-10-2023",
+        "storia": "Nel 2023 ho lasciato il paese per l’università, sospesa tra un entusiasmo bruciante e una tristezza muta. Ero pronta a mangiarmi il mondo, ma appena arrivata, il silenzio della mia nuova stanza mi ha travolta. Mi sono sentita improvvisamente piccola, un numero tra tanti in una città che non mi conosceva. Quel distacco faceva male: era l'addio alle sicurezze dell'infanzia. Eppure, proprio in quel vuoto e in quella malinconia dei primi giorni, ho iniziato a costruire la mia vera indipendenza.",
+        "tipo": true
+    },
+    {
         "nome": "Marco",
         "eta": 26,
         "cittaPartenza": "Bari",
