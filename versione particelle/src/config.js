@@ -12,13 +12,12 @@ export const DATA_PATHS = {
     connections: `${BASE}/data/Connections.json`,
 };
 
-// ── Map tile layer ─────────────────────────────────────────────
-export const TILE_URL =
-    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png";
+// ── Basemap (OpenFreeMap Positron, see MapHelpers/positronLayer.js) ──
+export const BASEMAP_STYLE_URL = "https://tiles.openfreemap.org/styles/positron";
 
-export const TILE_ATTRIBUTION =
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors ' +
-    '&copy; <a href="https://carto.com/attributions">CARTO</a>';
+export const BASEMAP_ATTRIBUTION =
+    '<a href="https://openfreemap.org">OpenFreeMap</a> &copy; <a href="https://www.openmaptiles.org/">OpenMapTiles</a> ' +
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 // ── Zoom ──────────────────────────────────────────────────────
 export const MAP_MIN_ZOOM = 5;

@@ -2,7 +2,8 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { TILE_URL, TILE_ATTRIBUTION, ITALY_BOUNDS } from "../../config";
+import { ITALY_BOUNDS } from "../../config";
+import { positronLayer } from "../MapHelpers/positronLayer";
 import "./ViaggioMap.css";
 
 const BASE     = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -72,7 +73,7 @@ export default function ViaggioMap() {
             doubleClickZoom: true, touchZoom: true,
             keyboard: true, boxZoom: true,
         });
-        L.tileLayer(TILE_URL, { attribution: TILE_ATTRIBUTION }).addTo(map);
+        positronLayer().addTo(map);
         map.fitBounds(ITALY_BOUNDS, { padding: [32, 32], animate: false });
         S.map = map;
 

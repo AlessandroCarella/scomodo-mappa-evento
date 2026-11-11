@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import { buildItalyMask } from "./buildItalyMask";
+import { positronLayer } from "./positronLayer";
 import {
-    TILE_URL,
-    TILE_ATTRIBUTION,
     MAP_MIN_ZOOM,
     MAP_MAX_ZOOM,
     MAP_ZOOM_SNAP,
@@ -38,11 +37,8 @@ export function useMapInit(containerRef) {
             zoomSnap: MAP_ZOOM_SNAP,
         });
 
-        L.tileLayer(TILE_URL, {
-            attribution: TILE_ATTRIBUTION,
-            maxZoom: MAP_MAX_ZOOM,
-            minZoom: MAP_MIN_ZOOM,
-        }).addTo(map);
+        positronLayer().addTo(map);
+        map.setMinZoom(MAP_MIN_ZOOM).setMaxZoom(MAP_MAX_ZOOM);
 
         map.fitBounds(ITALY_BOUNDS, { padding: ITALY_BOUNDS_PADDING });
 
